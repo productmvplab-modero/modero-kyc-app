@@ -1,28 +1,22 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion } from "framer-motion";
 
-export default function RevenueChart({ data }) {
+export default function CustomerGrowthChart({ data }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
+      transition={{ delay: 0.5 }}
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-slate-900">Revenue Trend</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-900">Customer Growth</CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={data}>
-              <defs>
-                <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
+            <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis 
                 dataKey="date" 
@@ -32,7 +26,6 @@ export default function RevenueChart({ data }) {
               <YAxis 
                 stroke="#64748b"
                 style={{ fontSize: '12px' }}
-                tickFormatter={(value) => `$${value}`}
               />
               <Tooltip 
                 contentStyle={{ 
@@ -41,16 +34,16 @@ export default function RevenueChart({ data }) {
                   borderRadius: '12px',
                   boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
                 }}
-                formatter={(value) => [`$${value}`, 'Revenue']}
+                formatter={(value) => [value, 'Customers']}
               />
-              <Area
+              <Line
                 type="monotone"
-                dataKey="amount"
-                stroke="#10b981"
+                dataKey="count"
+                stroke="#3b82f6"
                 strokeWidth={3}
-                fill="url(#revenueGradient)"
+                dot={{ fill: '#3b82f6', r: 4 }}
               />
-            </AreaChart>
+            </LineChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
