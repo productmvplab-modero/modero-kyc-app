@@ -3,8 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function StatCard({ title, value, change, icon: Icon, gradient, index = 0 }) {
-  const isPositive = change >= 0;
+export default function StatCard({ title, value, subtitle, icon: Icon, gradient, trend, index = 0 }) {
+  const isPositive = trend && trend >= 0;
   
   return (
     <motion.div
@@ -19,17 +19,20 @@ export default function StatCard({ title, value, change, icon: Icon, gradient, i
             <div className="space-y-2">
               <p className="text-sm font-medium text-slate-600">{title}</p>
               <p className="text-3xl font-bold text-slate-900">{value}</p>
-              {change !== undefined && (
-                <div className="flex items-center gap-1">
+              {subtitle && (
+                <p className="text-xs text-slate-500">{subtitle}</p>
+              )}
+              {trend !== undefined && (
+                <div className="flex items-center gap-1 mt-2">
                   {isPositive ? (
                     <TrendingUp className="w-4 h-4 text-emerald-600" />
                   ) : (
                     <TrendingDown className="w-4 h-4 text-rose-600" />
                   )}
                   <span className={`text-sm font-semibold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {Math.abs(change)}%
+                    {Math.abs(trend)}%
                   </span>
-                  <span className="text-xs text-slate-500">vs last month</span>
+                  <span className="text-xs text-slate-500">vs last week</span>
                 </div>
               )}
             </div>
