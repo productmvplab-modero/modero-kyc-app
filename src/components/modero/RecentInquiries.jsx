@@ -59,7 +59,7 @@ export default function RecentInquiries({ inquiries }) {
                         <TableCell>
                           <div className="flex items-center gap-3">
                             <Avatar className="h-9 w-9">
-                              <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${inquiry.tenant_name}`} />
+                              <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
                               <AvatarFallback>{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <span className="font-medium text-slate-900">{inquiry.tenant_name}</span>
