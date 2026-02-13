@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
@@ -55,8 +56,14 @@ export default function RecentInquiries({ inquiries }) {
                     const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
                     return (
                       <TableRow key={inquiry.id} className="hover:bg-slate-50 transition-colors">
-                        <TableCell className="font-medium text-slate-900">
-                          {inquiry.tenant_name}
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-9 w-9">
+                              <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${inquiry.tenant_name}`} />
+                              <AvatarFallback>{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                            </Avatar>
+                            <span className="font-medium text-slate-900">{inquiry.tenant_name}</span>
+                          </div>
                         </TableCell>
                         <TableCell className="text-sm text-slate-600">
                           {inquiry.tenant_email}
