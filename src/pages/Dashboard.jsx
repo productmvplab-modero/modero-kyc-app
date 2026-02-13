@@ -53,16 +53,14 @@ export default function Dashboard() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+          className="flex flex-col items-start gap-4"
         >
-          <div>
-            <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/d9f3ad180_Screenshot_2026-02-12_at_080153-removebg-preview.png" 
-              alt="Modero Logo" 
-              className="h-16 mb-4"
-            />
-            <p className="text-slate-600 text-lg">Turning rental inquiry overload into qualified tenants</p>
-          </div>
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/d9f3ad180_Screenshot_2026-02-12_at_080153-removebg-preview.png" 
+            alt="Modero Logo" 
+            className="h-24 mb-2"
+          />
+          <p className="text-slate-600 text-lg">Turning rental inquiry overload into qualified tenants</p>
         </motion.div>
 
         <Card className="border-0 shadow-lg bg-white">
