@@ -59,7 +59,7 @@ export default function Dashboard() {
             <img 
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/d9f3ad180_Screenshot_2026-02-12_at_080153-removebg-preview.png" 
               alt="Modero Logo" 
-              className="h-12 mb-3"
+              className="h-20 mb-3"
             />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Modero Dashboard
