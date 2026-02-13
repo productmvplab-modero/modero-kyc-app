@@ -53,13 +53,11 @@ export default function Dashboard() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-start gap-3"
+          className="flex flex-col items-start gap-2"
         >
-          <img 
-            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/d9f3ad180_Screenshot_2026-02-12_at_080153-removebg-preview.png" 
-            alt="Modero Logo" 
-            className="h-36"
-          />
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Modero Dashboard
+          </h1>
           <p className="text-slate-600 text-lg">Turning rental inquiry overload into qualified tenants</p>
         </motion.div>
 
