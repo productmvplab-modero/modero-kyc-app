@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
+import TenantDetailsDialog from "./TenantDetailsDialog";
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-700 border-blue-200', icon: Clock },
@@ -17,9 +18,17 @@ const statusConfig = {
 };
 
 export default function RecentInquiries({ inquiries }) {
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const recentInquiries = [...inquiries]
     .sort((a, b) => new Date(b.created_date) - new Date(a.created_date))
     .slice(0, 10);
+
+  const handleRowClick = (inquiry) => {
+    setSelectedInquiry(inquiry);
+    setDialogOpen(true);
+  };
 
   return (
     <motion.div
@@ -37,6 +46,7 @@ export default function RecentInquiries({ inquiries }) {
               <TableHeader>
                 <TableRow className="bg-slate-50">
                   <TableHead className="font-semibold">Tenant</TableHead>
+                  <TableHead className="font-semibold">Idealista ID</TableHead>
                   <TableHead className="font-semibold">Contact</TableHead>
                   <TableHead className="font-semibold">Income</TableHead>
                   <TableHead className="font-semibold">Score</TableHead>
@@ -47,7 +57,7 @@ export default function RecentInquiries({ inquiries }) {
               <TableBody>
                 {recentInquiries.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-slate-500">
+                    <TableCell colSpan={7} className="text-center py-8 text-slate-500">
                       No inquiries yet
                     </TableCell>
                   </TableRow>
@@ -55,15 +65,24 @@ export default function RecentInquiries({ inquiries }) {
                   recentInquiries.map((inquiry) => {
                     const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
                     return (
-                      <TableRow key={inquiry.id} className="hover:bg-slate-50 transition-colors">
+                      <TableRow 
+                        key={inquiry.id} 
+                        className="hover:bg-slate-50 transition-colors cursor-pointer"
+                        onClick={() => handleRowClick(inquiry)}
+                      >
                         <TableCell>
                           <div className="flex items-center gap-3">
                             <Avatar className="h-9 w-9">
-                              <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
+                              <AvatarImage src={inquiry.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
                               <AvatarFallback>{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <span className="font-medium text-slate-900">{inquiry.tenant_name}</span>
                           </div>
+                        </TableCell>
+                        <TableCell className="text-sm text-slate-600">
+                          {inquiry.idealista_id ? (
+                            <Badge variant="outline">{inquiry.idealista_id}</Badge>
+                          ) : '—'}
                         </TableCell>
                         <TableCell className="text-sm text-slate-600">
                           {inquiry.tenant_email}
@@ -110,6 +129,16 @@ export default function RecentInquiries({ inquiries }) {
           </div>
         </CardContent>
       </Card>
+
+      <TenantDetailsDialog
+        inquiry={selectedInquiry}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onUpdate={() => {
+          // Refresh the inquiries list if needed
+          window.location.reload();
+        }}
+      />
     </motion.div>
   );
 }
