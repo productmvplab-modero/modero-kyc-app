@@ -50,17 +50,6 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-start gap-2"
-        >
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Modero Dashboard
-          </h1>
-          <p className="text-slate-600 text-lg">Turning rental inquiry overload into qualified tenants</p>
-        </motion.div>
-
         <Card className="border-0 shadow-lg bg-white">
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
