@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './components/modero/Header';
+import { Building2 } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
   return (
@@ -13,9 +14,12 @@ export default function Layout({ children, currentPageName }) {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-3">
-                Modero
-              </h3>
+              <div className="flex items-center gap-2 mb-3">
+                <Building2 className="h-8 w-8 text-indigo-400" />
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                  Modero
+                </h3>
+              </div>
               <p className="text-slate-300 text-sm leading-relaxed">
                 Turning rental inquiry overload into qualified tenants. 
                 Streamline your property management with AI-powered tenant screening.
