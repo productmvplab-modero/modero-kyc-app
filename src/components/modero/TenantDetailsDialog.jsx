@@ -24,7 +24,11 @@ import {
   DollarSign,
   CreditCard,
   FileText,
-  AlertCircle
+  AlertCircle,
+  Building,
+  Calendar,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -45,6 +49,14 @@ const creditCheckConfig = {
   rejected: { label: 'Rejected', color: 'bg-rose-100 text-rose-700', icon: XCircle },
 };
 
+const processSteps = [
+  { step: 1, label: 'Initial Contact' },
+  { step: 2, label: 'Document Review' },
+  { step: 3, label: 'Credit Check' },
+  { step: 4, label: 'Final Review' },
+  { step: 5, label: 'Approved' },
+];
+
 export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
   const [uploading, setUploading] = useState(false);
   const queryClient = useQueryClient();
@@ -53,7 +65,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
     mutationFn: ({ id, data }) => base44.entities.Inquiry.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inquiries'] });
-      toast.success('Profile picture updated');
+      toast.success('Updated successfully');
     },
   });
 
@@ -75,6 +87,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
     }
   };
 
+  const handleProgressChange = (newStep) => {
+    updateInquiryMutation.mutate({
+      id: inquiry.id,
+      data: { progress_step: newStep }
+    });
+  };
+
   if (!inquiry) return null;
 
   const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
@@ -91,6 +110,69 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
+          {/* Progress Bar */}
+          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-sm font-semibold text-slate-900">Application Progress</h4>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleProgressChange(Math.max(1, (inquiry.progress_step || 1) - 1))}
+                    disabled={!inquiry.progress_step || inquiry.progress_step <= 1}
+                    className="h-7 w-7 p-0"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <span className="text-xs font-medium text-slate-600">
+                    Step {inquiry.progress_step || 1} of 5
+                  </span>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleProgressChange(Math.min(5, (inquiry.progress_step || 1) + 1))}
+                    disabled={inquiry.progress_step >= 5}
+                    className="h-7 w-7 p-0"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="flex justify-between mb-2">
+                  {processSteps.map((step) => (
+                    <button
+                      key={step.step}
+                      onClick={() => handleProgressChange(step.step)}
+                      className="flex flex-col items-center gap-1 flex-1 group cursor-pointer"
+                    >
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs transition-all ${
+                        (inquiry.progress_step || 1) >= step.step
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-slate-200 text-slate-400'
+                      } group-hover:scale-110`}>
+                        {step.step}
+                      </div>
+                      <span className={`text-xs font-medium text-center ${
+                        (inquiry.progress_step || 1) >= step.step
+                          ? 'text-slate-900'
+                          : 'text-slate-400'
+                      }`}>
+                        {step.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className="absolute top-4 left-0 right-0 h-1 bg-slate-200 -z-10" style={{ marginLeft: '10%', marginRight: '10%' }}>
+                  <div 
+                    className="h-full bg-indigo-600 transition-all duration-300"
+                    style={{ width: `${((inquiry.progress_step || 1) - 1) * 25}%` }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           {/* Tenant Profile */}
           <div className="flex items-start gap-4">
             <div className="relative">
@@ -158,6 +240,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <Calendar className="w-5 h-5 text-slate-400" />
+              <div>
+                <p className="text-xs text-slate-500">Age</p>
+                <p className="text-sm font-medium text-slate-900">{inquiry.age || '—'}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
               <DollarSign className="w-5 h-5 text-slate-400" />
               <div>
                 <p className="text-xs text-slate-500">Monthly Income</p>
@@ -166,13 +255,31 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Briefcase className="w-5 h-5 text-slate-400" />
-              <div>
-                <p className="text-xs text-slate-500">Employment</p>
-                <p className="text-sm font-medium text-slate-900 capitalize">
-                  {inquiry.employment_status?.replace('_', ' ') || '—'}
-                </p>
+          </div>
+
+          <Separator />
+
+          {/* Employment Info */}
+          <div>
+            <h4 className="text-sm font-semibold text-slate-900 mb-3">Employment Information</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3">
+                <Briefcase className="w-5 h-5 text-slate-400" />
+                <div>
+                  <p className="text-xs text-slate-500">Employment Status</p>
+                  <p className="text-sm font-medium text-slate-900 capitalize">
+                    {inquiry.employment_status?.replace('_', ' ') || '—'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Building className="w-5 h-5 text-slate-400" />
+                <div>
+                  <p className="text-xs text-slate-500">Company</p>
+                  <p className="text-sm font-medium text-slate-900">
+                    {inquiry.company_name || '—'}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
