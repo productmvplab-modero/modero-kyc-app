@@ -54,7 +54,21 @@ export default function Dashboard() {
           <CardContent className="p-4">
             <div className="flex items-center gap-4">
               <Filter className="w-4 h-4 text-slate-500" />
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <Select 
+                value={statusFilter} 
+                onValueChange={(value) => {
+                  setStatusFilter(value);
+                  // Scroll to Recent Inquiries section when filter changes
+                  if (value !== 'all') {
+                    setTimeout(() => {
+                      const inquiriesSection = document.getElementById('recent-inquiries');
+                      if (inquiriesSection) {
+                        inquiriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }, 100);
+                  }
+                }}
+              >
                 <SelectTrigger className="w-[180px] border-slate-200">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
@@ -122,7 +136,9 @@ export default function Dashboard() {
 
         <PropertyPerformance properties={properties} />
 
-        <RecentInquiries inquiries={filteredInquiries} />
+        <div id="recent-inquiries">
+          <RecentInquiries inquiries={filteredInquiries} />
+        </div>
       </div>
     </div>
   );
