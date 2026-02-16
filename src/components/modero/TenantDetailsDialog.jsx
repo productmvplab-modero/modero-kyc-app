@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { base44 } from "@/api/base44Client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { base44 } from '@/api/base44Client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  CheckCircle2, 
-  XCircle, 
-  Clock, 
-  Upload, 
-  Mail, 
-  Phone, 
-  Briefcase, 
+} from '@/components/ui/dialog';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Progress } from '@/components/ui/progress';
+import {
+  CheckCircle2,
+  XCircle,
+  Clock,
+  Upload,
+  Mail,
+  Phone,
+  Briefcase,
   DollarSign,
   CreditCard,
   FileText,
@@ -34,40 +34,39 @@ import {
   Paperclip,
   Link,
   MapPin,
-  Shield,
-  Linkedin,
-  Facebook,
   Globe,
-  Target,
+  User,
+  Shield,
+  TrendingUp,
   ThumbsUp,
   ThumbsDown,
-  Minus
-} from "lucide-react";
-import { format } from "date-fns";
-import { toast } from "sonner";
+  Linkedin,
+  Facebook
+} from 'lucide-react';
+import { toast } from 'sonner';
 
 const statusConfig = {
-  new: { label: 'New', color: 'bg-blue-100 text-blue-700 border-blue-200', icon: Clock },
-  screening: { label: 'Screening', color: 'bg-purple-100 text-purple-700 border-purple-200', icon: Clock },
-  kyc_pending: { label: 'KYC Pending', color: 'bg-amber-100 text-amber-700 border-amber-200', icon: AlertCircle },
-  qualified: { label: 'Qualified', color: 'bg-emerald-100 text-emerald-700 border-emerald-200', icon: CheckCircle2 },
-  rejected: { label: 'Rejected', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: XCircle },
-  rented: { label: 'Rented', color: 'bg-slate-100 text-slate-700 border-slate-200', icon: CheckCircle2 },
+  new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },
+  screening: { label: 'Screening', color: 'bg-amber-100 text-amber-800', icon: FileText },
+  kyc_pending: { label: 'KYC Pending', color: 'bg-purple-100 text-purple-800', icon: Shield },
+  qualified: { label: 'Qualified', color: 'bg-emerald-100 text-emerald-800', icon: CheckCircle2 },
+  rejected: { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
+  rented: { label: 'Rented', color: 'bg-indigo-100 text-indigo-800', icon: Building },
 };
 
 const creditCheckConfig = {
-  pending: { label: 'Pending', color: 'bg-slate-100 text-slate-700', icon: Clock },
-  in_review: { label: 'In Review', color: 'bg-blue-100 text-blue-700', icon: Clock },
-  approved: { label: 'Approved', color: 'bg-emerald-100 text-emerald-700', icon: CheckCircle2 },
-  rejected: { label: 'Rejected', color: 'bg-rose-100 text-rose-700', icon: XCircle },
+  pending: { label: 'Pending', color: 'bg-slate-100 text-slate-800', icon: Clock },
+  in_review: { label: 'In Review', color: 'bg-amber-100 text-amber-800', icon: FileText },
+  approved: { label: 'Approved', color: 'bg-emerald-100 text-emerald-800', icon: CheckCircle2 },
+  rejected: { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
 };
 
-const processSteps = [
-  { step: 1, label: 'Initial Contact' },
-  { step: 2, label: 'Document Review' },
-  { step: 3, label: 'Credit Check' },
-  { step: 4, label: 'Final Review' },
-  { step: 5, label: 'Approved' },
+const progressSteps = [
+  { step: 1, label: 'Initial Contact', description: 'First inquiry received' },
+  { step: 2, label: 'Document Upload', description: 'Documents submitted' },
+  { step: 3, label: 'ID Verification', description: 'Identity confirmed' },
+  { step: 4, label: 'Financial Check', description: 'Income & credit verified' },
+  { step: 5, label: 'Final Review', description: 'Ready for decision' },
 ];
 
 export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
@@ -83,6 +82,25 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
     },
   });
 
+  if (!inquiry) return null;
+
+  const currentStatus = statusConfig[inquiry.status] || statusConfig.new;
+  const creditStatus = creditCheckConfig[inquiry.credit_check_status] || creditCheckConfig.pending;
+
+  // Calculate income ratio
+  const incomeRatio = inquiry.monthly_income && inquiry.property_id 
+    ? (1200 / inquiry.monthly_income * 100).toFixed(1) // Assuming rent is €1200 for demo
+    : 0;
+  const incomeRatioHealthy = incomeRatio <= 40;
+
+  // Calculate Modero score
+  const moderoScore = inquiry.modero_score || Math.floor(
+    (inquiry.kyc_verified ? 30 : 0) +
+    (inquiry.credit_score || 0) * 0.3 +
+    (inquiry.bank_account_connected ? 20 : 0) +
+    (inquiry.id_verification_status === 'completed' ? 20 : 0)
+  );
+
   const handleProfilePictureUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -94,6 +112,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
         id: inquiry.id,
         data: { profile_picture_url: file_url }
       });
+      toast.success('Profile picture updated');
     } catch (error) {
       toast.error('Failed to upload profile picture');
     } finally {
@@ -142,137 +161,114 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
   };
 
   const handleLandlordDecision = (decision) => {
-    let newStatus = inquiry.status;
-    if (decision === 'approved') {
-      newStatus = 'qualified';
-    } else if (decision === 'rejected') {
-      newStatus = 'rejected';
-    }
-    
+    const statusMap = {
+      approved: 'qualified',
+      rejected: 'rejected',
+      pending: 'kyc_pending'
+    };
+
     updateInquiryMutation.mutate({
       id: inquiry.id,
       data: { 
         landlord_decision: decision,
-        status: newStatus
+        status: statusMap[decision] || inquiry.status
       }
     });
+    toast.success(`Application ${decision}`);
   };
-
-  if (!inquiry) return null;
-
-  const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
-  const CreditIcon = creditCheckConfig[inquiry.credit_check_status || 'pending']?.icon || Clock;
-
-  const incomeRatio = inquiry.income_ratio || 0;
-  const isIncomeRatioGood = incomeRatio <= 40;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Tenant Application Details</DialogTitle>
-          <DialogDescription>
-            Complete KYC verification and financing information
-          </DialogDescription>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-2xl font-bold">Tenant Profile</DialogTitle>
+            <Badge className={currentStatus.color}>
+              <currentStatus.icon className="w-4 h-4 mr-1" />
+              {currentStatus.label}
+            </Badge>
+          </div>
         </DialogHeader>
 
-        <div className="space-y-6 mt-4">
-          {/* Overall Score Card */}
-          {inquiry.overall_score && (
-            <Card className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white">
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-indigo-100 text-sm mb-1">Modero Overall Score</p>
-                    <p className="text-5xl font-bold">{inquiry.overall_score}<span className="text-2xl">/100</span></p>
-                  </div>
-                  <div className="h-20 w-20 rounded-full bg-white/20 flex items-center justify-center">
-                    <Target className="w-10 h-10" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Progress Bar */}
-          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50">
+        <div className="space-y-6">
+          {/* Modero Score Highlight */}
+          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-sm font-semibold text-slate-900">Application Progress</h4>
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleProgressChange(Math.max(1, (inquiry.progress_step || 1) - 1))}
-                    disabled={!inquiry.progress_step || inquiry.progress_step <= 1}
-                    className="h-8 w-8 p-0 hover:bg-indigo-100 transition-all"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <span className="text-xs font-medium text-slate-600 min-w-[80px] text-center">
-                    Step {inquiry.progress_step || 1} of 5
-                  </span>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleProgressChange(Math.min(5, (inquiry.progress_step || 1) + 1))}
-                    disabled={inquiry.progress_step >= 5}
-                    className="h-8 w-8 p-0 hover:bg-indigo-100 transition-all"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                    <span className="text-3xl font-bold text-white">{moderoScore}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900">Modero Qualification Score</h3>
+                    <p className="text-sm text-slate-600">Overall tenant qualification rating</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">Excellent</Badge>}
+                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">Good</Badge>}
+                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">Needs Review</Badge>}
+                    </div>
+                  </div>
                 </div>
+                <TrendingUp className="w-12 h-12 text-indigo-400" />
               </div>
-              <div className="relative">
-                <div className="flex justify-between mb-2">
-                  {processSteps.map((step) => (
-                    <button
-                      key={step.step}
-                      onClick={() => handleProgressChange(step.step)}
-                      className="flex flex-col items-center gap-1 flex-1 group cursor-pointer"
-                    >
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-all transform ${
-                        (inquiry.progress_step || 1) >= step.step
-                          ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg scale-110'
-                          : 'bg-slate-200 text-slate-400'
-                      } group-hover:scale-125 group-hover:shadow-xl`}>
-                        {step.step}
-                      </div>
-                      <span className={`text-xs font-medium text-center ${
-                        (inquiry.progress_step || 1) >= step.step
-                          ? 'text-slate-900'
-                          : 'text-slate-400'
-                      }`}>
-                        {step.label}
-                      </span>
-                    </button>
-                  ))}
+            </CardContent>
+          </Card>
+
+          {/* Landlord Decision */}
+          <Card className="border-2 border-dashed">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg">Landlord Decision</h3>
+                  <p className="text-sm text-slate-600">Review and approve/reject this application</p>
                 </div>
-                <div className="absolute top-5 left-0 right-0 h-2 bg-slate-200 -z-10 rounded-full" style={{ marginLeft: '10%', marginRight: '10%' }}>
-                  <div 
-                    className="h-full bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full transition-all duration-500"
-                    style={{ width: `${((inquiry.progress_step || 1) - 1) * 25}%` }}
-                  />
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleLandlordDecision('pending')}
+                    className={inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}
+                  >
+                    <Clock className="w-4 h-4 mr-1" />
+                    Pending
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleLandlordDecision('approved')}
+                    className={inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}
+                  >
+                    <ThumbsUp className="w-4 h-4 mr-1" />
+                    Approve
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleLandlordDecision('rejected')}
+                    className={inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}
+                  >
+                    <ThumbsDown className="w-4 h-4 mr-1" />
+                    Reject
+                  </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Tenant Profile */}
-          <div className="flex items-start gap-4">
+          {/* Profile Header */}
+          <div className="flex items-start gap-6">
             <div className="relative">
-              <Avatar className="h-24 w-24 border-4 border-white shadow-lg">
-                <AvatarImage src={inquiry.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
-                <AvatarFallback className="text-2xl bg-gradient-to-br from-indigo-100 to-purple-100">
-                  {inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}
+              <Avatar className="h-24 w-24">
+                <AvatarImage src={inquiry.profile_picture_url} />
+                <AvatarFallback className="text-2xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
+                  {inquiry.tenant_name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <label htmlFor="profile-upload" className="absolute bottom-0 right-0 cursor-pointer">
-                <div className="bg-indigo-600 rounded-full p-2 hover:bg-indigo-700 transition-colors shadow-lg">
-                  <Upload className="w-3 h-3 text-white" />
+              <label className="absolute bottom-0 right-0 cursor-pointer">
+                <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700">
+                  <Upload className="h-4 w-4 text-white" />
                 </div>
                 <input
-                  id="profile-upload"
                   type="file"
                   accept="image/*"
                   className="hidden"
@@ -282,283 +278,327 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
               </label>
             </div>
             <div className="flex-1">
-              <h3 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h3>
-              <div className="flex items-center gap-2 mt-2 flex-wrap">
-                <Badge 
-                  variant="secondary" 
-                  className={`${statusConfig[inquiry.status]?.color || 'bg-slate-100 text-slate-700'} border flex items-center gap-1`}
-                >
-                  <StatusIcon className="w-3 h-3" />
-                  {statusConfig[inquiry.status]?.label || inquiry.status}
-                </Badge>
-                {inquiry.kyc_verified && (
-                  <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
-                    <CheckCircle2 className="w-3 h-3 mr-1" />
-                    KYC Verified
-                  </Badge>
-                )}
-                {inquiry.gdpr_verified && (
-                  <Badge className="bg-blue-100 text-blue-700 border-blue-200">
-                    <Shield className="w-3 h-3 mr-1" />
-                    GDPR Verified
-                  </Badge>
-                )}
-              </div>
-              {inquiry.idealista_id && (
-                <p className="text-sm text-slate-600 mt-2">
-                  Idealista Ref: <span className="font-mono font-medium text-slate-900">{inquiry.idealista_id}</span>
-                </p>
-              )}
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* Personal Information */}
-          <div>
-            <h4 className="text-sm font-semibold text-slate-900 mb-4">Personal Information</h4>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Age</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.age || 32}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Users className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Gender</p>
-                  <p className="text-sm font-medium text-slate-900 capitalize">{inquiry.gender || 'Male'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Globe className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Nationality</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.nationality || 'Spanish'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Place of Birth</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.place_of_birth || 'Madrid'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <FileText className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">DNI/NIE Number</p>
-                  <p className="text-sm font-medium text-slate-900 font-mono">{inquiry.dni_nie_number || '12345678A'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Users className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Occupants</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {inquiry.number_of_occupants || 2} {(inquiry.number_of_occupants || 2) === 1 ? 'person' : 'people'}
-                  </p>
-                </div>
+              <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
+              <p className="text-slate-600">Idealista ID: #{inquiry.idealista_id || '110642442'}</p>
+              <div className="flex gap-2 mt-2">
+                {inquiry.age && <Badge variant="outline">{inquiry.age} years old</Badge>}
+                {inquiry.gender && <Badge variant="outline">{inquiry.gender}</Badge>}
+                {inquiry.nationality && <Badge variant="outline">{inquiry.nationality}</Badge>}
               </div>
             </div>
           </div>
 
-          <Separator />
-
-          {/* Contact & Address */}
-          <div>
-            <h4 className="text-sm font-semibold text-slate-900 mb-4">Contact & Address</h4>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Email {inquiry.email_verified && <CheckCircle2 className="inline w-3 h-3 text-emerald-600 ml-1" />}</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.tenant_email}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Phone {inquiry.phone_verified && <CheckCircle2 className="inline w-3 h-3 text-emerald-600 ml-1" />}</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.tenant_phone || '+34 600 123 456'}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 col-span-2">
-                <MapPin className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Address</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {inquiry.address || 'Calle Gran Via, 123'}, {inquiry.postal_code || '28013'} {inquiry.city || 'Madrid'}, {inquiry.country || 'Spain'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Business Email {inquiry.business_email_verified && <CheckCircle2 className="inline w-3 h-3 text-emerald-600 ml-1" />}</p>
-                  <p className="text-sm font-medium text-slate-900">{inquiry.tenant_email.replace('@', '@company.')}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <PawPrint className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Pets</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {inquiry.has_pets ? (inquiry.pet_details || 'Yes, 1 dog') : 'No'}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Separator />
-
-          {/* ID Verification */}
+          {/* Application Progress */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                ID Verification
-              </CardTitle>
+            <CardHeader>
+              <CardTitle className="text-lg">Application Progress</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <img 
-                    src="https://identomat.com/wp-content/uploads/2023/06/identomat-logo-1.png" 
-                    alt="Identomat"
-                    className="h-8 object-contain"
-                  />
-                  <div>
-                    <p className="text-sm font-medium text-slate-900">Verified by Identomat</p>
-                    <p className="text-xs text-slate-500">Identity verification provider</p>
-                  </div>
+              <div className="space-y-4">
+                <Progress value={(inquiry.progress_step / 5) * 100} className="h-3" />
+                <div className="grid grid-cols-5 gap-2">
+                  {progressSteps.map((step) => (
+                    <button
+                      key={step.step}
+                      onClick={() => handleProgressChange(step.step)}
+                      className={`p-3 rounded-lg border-2 transition-all text-left ${
+                        inquiry.progress_step >= step.step
+                          ? 'border-indigo-600 bg-indigo-50'
+                          : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        {inquiry.progress_step >= step.step ? (
+                          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                        ) : (
+                          <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
+                        )}
+                        <span className="text-xs font-semibold">Step {step.step}</span>
+                      </div>
+                      <p className="text-xs font-medium text-slate-900">{step.label}</p>
+                      <p className="text-xs text-slate-500">{step.description}</p>
+                    </button>
+                  ))}
                 </div>
-                <Badge 
-                  variant="secondary" 
-                  className={`${
-                    inquiry.id_verification_status === 'verified' ? 'bg-emerald-100 text-emerald-700' :
-                    inquiry.id_verification_status === 'failed' ? 'bg-rose-100 text-rose-700' :
-                    'bg-slate-100 text-slate-700'
-                  } flex items-center gap-1`}
-                >
-                  {inquiry.id_verification_status === 'verified' ? <CheckCircle2 className="w-3 h-3" /> :
-                   inquiry.id_verification_status === 'failed' ? <XCircle className="w-3 h-3" /> :
-                   <Clock className="w-3 h-3" />}
-                  {inquiry.id_verification_status === 'verified' ? 'Verified' :
-                   inquiry.id_verification_status === 'failed' ? 'Failed' : 'Pending'}
-                </Badge>
               </div>
             </CardContent>
           </Card>
 
-          {/* Social Media Connections */}
+          {/* Personal Information */}
           <Card>
-            <CardHeader className="pb-3">
+            <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Globe className="w-5 h-5" />
-                Social Media & Professional Networks
+                <User className="w-5 h-5" />
+                Personal Information
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-4">
-                <div className="flex items-center gap-2">
-                  <Linkedin className="w-5 h-5 text-blue-600" />
-                  <div className="flex-1">
-                    <p className="text-xs text-slate-500">LinkedIn</p>
-                    <div className="flex items-center gap-1">
-                      {inquiry.linkedin_connected ? (
-                        <>
-                          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                          <span className="text-xs font-medium text-slate-900">
-                            {inquiry.linkedin_verification_status === 'confirmed' ? 'Verified' :
-                             inquiry.linkedin_verification_status === 'rejected' ? 'Rejected' : 'Pending'}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-xs text-slate-400">Not connected</span>
-                      )}
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Email</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">{inquiry.tenant_email}</p>
+                      {inquiry.email_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 bg-teal-600 rounded flex items-center justify-center text-white text-xs font-bold">X</div>
-                  <div className="flex-1">
-                    <p className="text-xs text-slate-500">XING</p>
-                    {inquiry.xing_connected ? (
-                      <div className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        <span className="text-xs font-medium text-slate-900">Connected</span>
-                      </div>
-                    ) : (
-                      <span className="text-xs text-slate-400">Not connected</span>
-                    )}
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Phone</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">{inquiry.tenant_phone || '—'}</p>
+                      {inquiry.mobile_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Facebook className="w-5 h-5 text-blue-700" />
-                  <div className="flex-1">
-                    <p className="text-xs text-slate-500">Facebook</p>
-                    {inquiry.facebook_connected ? (
-                      <div className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        <span className="text-xs font-medium text-slate-900">Connected</span>
-                      </div>
-                    ) : (
-                      <span className="text-xs text-slate-400">Not connected</span>
-                    )}
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Address</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.address || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Postal Code</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.postal_code || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">City</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.city || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Globe className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Country</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.country || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Place of Birth</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.place_of_birth || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">DNI/NIE Number</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.dni_nie_number || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">GDPR Verified</p>
+                    <Badge className={inquiry.gdpr_verified ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}>
+                      {inquiry.gdpr_verified ? 'Verified' : 'Pending'}
+                    </Badge>
                   </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Separator />
+          {/* ID Verification - Identomat */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                ID Verification
+                <img src="https://via.placeholder.com/80x20/6366f1/ffffff?text=Identomat" alt="Identomat" className="ml-auto h-5" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  {inquiry.id_verification_status === 'completed' ? (
+                    <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+                  ) : inquiry.id_verification_status === 'in_progress' ? (
+                    <Clock className="w-8 h-8 text-amber-600 animate-pulse" />
+                  ) : inquiry.id_verification_status === 'failed' ? (
+                    <XCircle className="w-8 h-8 text-red-600" />
+                  ) : (
+                    <AlertCircle className="w-8 h-8 text-slate-400" />
+                  )}
+                  <div>
+                    <p className="font-semibold text-slate-900">Identity Verification Status</p>
+                    <p className="text-sm text-slate-600">
+                      {inquiry.id_verification_status === 'completed' && 'Verified by Identomat'}
+                      {inquiry.id_verification_status === 'in_progress' && 'Verification in progress...'}
+                      {inquiry.id_verification_status === 'failed' && 'Verification failed'}
+                      {inquiry.id_verification_status === 'pending' && 'Awaiting verification'}
+                    </p>
+                  </div>
+                </div>
+                <Badge className={
+                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-800' :
+                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-800' :
+                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-800' :
+                  'bg-slate-100 text-slate-800'
+                }>
+                  {inquiry.id_verification_status || 'Pending'}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Employment Info */}
-          <div>
-            <h4 className="text-sm font-semibold text-slate-900 mb-3">Employment Information</h4>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3">
-                <Briefcase className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Employment Status</p>
-                  <p className="text-sm font-medium text-slate-900 capitalize">
-                    {inquiry.employment_status?.replace('_', ' ') || 'Employed'}
-                  </p>
+          {/* Social Profiles */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Connected Profiles</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-3">
+                <div className={`p-4 rounded-lg border-2 ${inquiry.linkedin_connected ? 'border-blue-500 bg-blue-50' : 'border-slate-200'}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Linkedin className="w-5 h-5 text-blue-600" />
+                    <span className="font-medium">LinkedIn</span>
+                  </div>
+                  {inquiry.linkedin_connected ? (
+                    <div>
+                      <Badge className={
+                        inquiry.linkedin_verification_status === 'confirmed' ? 'bg-emerald-100 text-emerald-800' :
+                        inquiry.linkedin_verification_status === 'rejected' ? 'bg-red-100 text-red-800' :
+                        'bg-amber-100 text-amber-800'
+                      }>
+                        {inquiry.linkedin_verification_status}
+                      </Badge>
+                      <p className="text-xs text-slate-600 mt-1">Employment verification</p>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-500">Not connected</p>
+                  )}
+                </div>
+                <div className={`p-4 rounded-lg border-2 ${inquiry.xing_connected ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200'}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Building className="w-5 h-5 text-emerald-600" />
+                    <span className="font-medium">XING</span>
+                  </div>
+                  <p className="text-xs text-slate-500">{inquiry.xing_connected ? 'Connected' : 'Not connected'}</p>
+                </div>
+                <div className={`p-4 rounded-lg border-2 ${inquiry.facebook_connected ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200'}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Facebook className="w-5 h-5 text-indigo-600" />
+                    <span className="font-medium">Facebook</span>
+                  </div>
+                  <p className="text-xs text-slate-500">{inquiry.facebook_connected ? 'Connected' : 'Not connected'}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Building className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Company</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {inquiry.company_name || 'Telefónica España'}
-                  </p>
+            </CardContent>
+          </Card>
+
+          {/* Employment Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Briefcase className="w-5 h-5" />
+                Employment Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="flex items-center gap-3">
+                  <Briefcase className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Employment Status</p>
+                    <p className="text-sm font-medium text-slate-900 capitalize">{inquiry.employment_status || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Building className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Company</p>
+                    <p className="text-sm font-medium text-slate-900">{inquiry.company_name || '—'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Business Email</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">
+                        {inquiry.business_email_verified ? 'Verified' : 'Not verified'}
+                      </p>
+                      {inquiry.business_email_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <DollarSign className="w-5 h-5 text-slate-400" />
-                <div>
-                  <p className="text-xs text-slate-500">Monthly Income (After Tax)</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '€3,200'}
-                  </p>
+            </CardContent>
+          </Card>
+
+          {/* Financial Information */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <DollarSign className="w-5 h-5" />
+                Financial Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-4 gap-4">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Monthly Income</p>
+                    <p className="text-sm font-medium text-slate-900">
+                      {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '—'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Income Ratio</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-slate-900">{incomeRatio}%</p>
+                      <Badge className={incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}>
+                        {incomeRatioHealthy ? 'Healthy' : 'High'}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-slate-500">Target: &lt;40%</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Credit Score</p>
+                    <p className="text-sm font-medium text-slate-900">
+                      {inquiry.credit_score ? `${inquiry.credit_score}/100` : '—'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Occupants</p>
+                    <p className="text-sm font-medium text-slate-900">
+                      {inquiry.number_of_occupants || '—'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <PawPrint className="w-5 h-5 text-slate-400" />
+                  <div>
+                    <p className="text-xs text-slate-500">Pets</p>
+                    <p className="text-sm font-medium text-slate-900">
+                      {inquiry.has_pets ? (inquiry.pet_details || 'Yes') : 'No'}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <DollarSign className={`w-5 h-5 ${isIncomeRatioGood ? 'text-emerald-500' : 'text-rose-500'}`} />
-                <div>
-                  <p className="text-xs text-slate-500">Income to Rent Ratio</p>
-                  <p className={`text-sm font-medium ${isIncomeRatioGood ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {incomeRatio || 28}% {isIncomeRatioGood ? '✓ Under 40%' : '✗ Over 40%'}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           <Separator />
 
@@ -613,7 +653,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                     {inquiry.documents?.cv_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.cv_url ? (
-                    <div>
+                    <div className="space-y-1">
                       <a 
                         href={inquiry.documents.cv_url} 
                         target="_blank" 
@@ -621,9 +661,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View CV_Resume.pdf
+                        View Document
                       </a>
-                      <p className="text-xs text-slate-500 mt-1">Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
@@ -649,7 +689,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                     {inquiry.documents?.payslip_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.payslip_url ? (
-                    <div>
+                    <div className="space-y-1">
                       <a 
                         href={inquiry.documents.payslip_url} 
                         target="_blank" 
@@ -657,9 +697,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Payslips.pdf
+                        View Document
                       </a>
-                      <p className="text-xs text-slate-500 mt-1">Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
@@ -685,7 +725,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                     {inquiry.documents?.work_contract_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.work_contract_url ? (
-                    <div>
+                    <div className="space-y-1">
                       <a 
                         href={inquiry.documents.work_contract_url} 
                         target="_blank" 
@@ -693,9 +733,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Contract.pdf
+                        View Document
                       </a>
-                      <p className="text-xs text-slate-500 mt-1">Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
@@ -721,7 +761,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                     {inquiry.documents?.id_document_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.id_document_url ? (
-                    <div>
+                    <div className="space-y-1">
                       <a 
                         href={inquiry.documents.id_document_url} 
                         target="_blank" 
@@ -729,9 +769,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View ID_Document.pdf
+                        View Document
                       </a>
-                      <p className="text-xs text-slate-500 mt-1">Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
@@ -757,142 +797,81 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
 
           {/* Credit Check - Dun & Bradstreet */}
           <Card>
-            <CardHeader className="pb-3">
+            <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
-                Credit Check Status
+                Credit Check
+                <img src="https://via.placeholder.com/100x25/1e40af/ffffff?text=Dun+%26+Bradstreet" alt="Dun & Bradstreet" className="ml-auto h-6" />
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
+            <CardContent>
+              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <img 
-                    src="https://logos-world.net/wp-content/uploads/2022/04/Dun-Bradstreet-Symbol.png" 
-                    alt="Dun & Bradstreet"
-                    className="h-10 object-contain"
-                  />
+                  <creditStatus.icon className={`w-8 h-8 ${
+                    inquiry.credit_check_status === 'approved' ? 'text-emerald-600' :
+                    inquiry.credit_check_status === 'rejected' ? 'text-red-600' :
+                    'text-amber-600'
+                  }`} />
                   <div>
-                    <p className="text-sm font-medium text-slate-900">Dun & Bradstreet</p>
-                    <p className="text-xs text-slate-500">Credit Assessment Provider</p>
+                    <p className="font-semibold text-slate-900">Credit Verification</p>
+                    <p className="text-sm text-slate-600">Dun & Bradstreet assessment</p>
                   </div>
                 </div>
-                <Badge 
-                  variant="secondary" 
-                  className={`${creditCheckConfig[inquiry.credit_check_status || 'pending']?.color} flex items-center gap-1`}
-                >
-                  <CreditIcon className="w-3 h-3" />
-                  {creditCheckConfig[inquiry.credit_check_status || 'pending']?.label}
+                <Badge className={creditStatus.color}>
+                  {creditStatus.label}
                 </Badge>
               </div>
-              {inquiry.credit_score && (
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-slate-600">Credit Score</span>
-                    <span className="text-xl font-bold text-slate-900">{inquiry.credit_score}/100</span>
-                  </div>
-                  <div className="w-full bg-slate-200 rounded-full h-3">
-                    <div 
-                      className={`h-3 rounded-full transition-all ${
-                        inquiry.credit_score >= 75 ? 'bg-emerald-500' :
-                        inquiry.credit_score >= 50 ? 'bg-amber-500' : 'bg-rose-500'
-                      }`}
-                      style={{ width: `${inquiry.credit_score}%` }}
-                    />
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
 
           {/* Financing Options */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Financing Options
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="border rounded-lg p-4 hover:border-pink-300 transition-colors">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="h-7 flex items-center">
-                      <span className="text-pink-600 font-bold text-2xl">klarna</span>
+          {inquiry.financing_options && inquiry.financing_options.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  Financing Options
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4">
+                  {inquiry.financing_options.includes('klarna') && (
+                    <div className="flex items-center gap-3 p-4 bg-pink-50 border border-pink-200 rounded-lg">
+                      <img src="https://cdn.worldvectorlogo.com/logos/klarna-1.svg" alt="Klarna" className="h-8" />
+                      <div>
+                        <p className="font-medium text-slate-900">Klarna</p>
+                        <p className="text-xs text-slate-600">Pay in instalments</p>
+                      </div>
                     </div>
-                    {inquiry.financing_options?.includes('klarna') && (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                    )}
-                  </div>
-                  <p className="text-xs text-slate-600">Pay in installments</p>
-                  <p className="text-sm font-medium text-slate-900 mt-1">0% interest available</p>
-                </div>
-                
-                <div className="border rounded-lg p-4 hover:border-red-300 transition-colors">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="h-7 flex items-center">
-                      <span className="text-red-600 font-bold text-lg">Santander</span>
+                  )}
+                  {inquiry.financing_options.includes('santander') && (
+                    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Banco_Santander_Logotipo.svg/320px-Banco_Santander_Logotipo.svg.png" alt="Santander" className="h-8" />
+                      <div>
+                        <p className="font-medium text-slate-900">Santander</p>
+                        <p className="text-xs text-slate-600">Financing available</p>
+                      </div>
                     </div>
-                    {inquiry.financing_options?.includes('santander') && (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                    )}
-                  </div>
-                  <p className="text-xs text-slate-600">Bank financing</p>
-                  <p className="text-sm font-medium text-slate-900 mt-1">Flexible payment plans</p>
+                  )}
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Landlord Decision */}
-          <Card className="border-2 border-indigo-200 bg-gradient-to-r from-indigo-50 to-purple-50">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Target className="w-5 h-5" />
-                Landlord Decision
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-slate-600 mb-4">Review and make your decision on this application</p>
-              <div className="flex gap-3">
-                <Button 
-                  onClick={() => handleLandlordDecision('approved')}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700"
-                  disabled={inquiry.landlord_decision === 'approved'}
-                >
-                  <ThumbsUp className="w-4 h-4 mr-2" />
-                  {inquiry.landlord_decision === 'approved' ? 'Approved' : 'Approve'}
-                </Button>
-                <Button 
-                  onClick={() => handleLandlordDecision('pending')}
-                  className="flex-1 bg-amber-600 hover:bg-amber-700"
-                  disabled={inquiry.landlord_decision === 'pending'}
-                >
-                  <Minus className="w-4 h-4 mr-2" />
-                  {inquiry.landlord_decision === 'pending' ? 'Pending' : 'Set Pending'}
-                </Button>
-                <Button 
-                  onClick={() => handleLandlordDecision('rejected')}
-                  className="flex-1 bg-rose-600 hover:bg-rose-700"
-                  disabled={inquiry.landlord_decision === 'rejected'}
-                >
-                  <ThumbsDown className="w-4 h-4 mr-2" />
-                  {inquiry.landlord_decision === 'rejected' ? 'Rejected' : 'Reject'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Additional Info */}
-          {inquiry.notes && (
-            <div className="bg-slate-50 rounded-lg p-4">
-              <h4 className="text-sm font-semibold text-slate-900 mb-2">Internal Notes</h4>
-              <p className="text-sm text-slate-600">{inquiry.notes}</p>
-            </div>
+              </CardContent>
+            </Card>
           )}
 
-          <div className="text-xs text-slate-500">
-            Applied on {format(new Date(inquiry.created_date), "MMMM d, yyyy 'at' h:mm a")}
-          </div>
+          {/* Notes */}
+          {inquiry.notes && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  Internal Notes
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-700 whitespace-pre-wrap">{inquiry.notes}</p>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </DialogContent>
     </Dialog>
