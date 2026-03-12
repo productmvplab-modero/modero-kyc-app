@@ -415,7 +415,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
               <CardTitle className="text-lg flex items-center gap-2">
                 <Shield className="w-5 h-5" />
                 ID Verification
-                <img src="https://via.placeholder.com/80x20/6366f1/ffffff?text=Identomat" alt="Identomat" className="ml-auto h-5" />
+                <span className="ml-auto px-3 py-1 bg-indigo-600 text-white text-xs font-bold rounded-full">Identomat</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -801,7 +801,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
                 Credit Check
-                <img src="https://via.placeholder.com/100x25/1e40af/ffffff?text=Dun+%26+Bradstreet" alt="Dun & Bradstreet" className="ml-auto h-6" />
+                <span className="ml-auto px-3 py-1 bg-blue-800 text-white text-xs font-bold rounded">D&B</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -837,7 +837,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                 <div className="grid grid-cols-2 gap-4">
                   {inquiry.financing_options.includes('klarna') && (
                     <div className="flex items-center gap-3 p-4 bg-pink-50 border border-pink-200 rounded-lg">
-                      <img src="https://cdn.worldvectorlogo.com/logos/klarna-1.svg" alt="Klarna" className="h-8" />
+                      <div className="h-8 w-16 bg-pink-500 rounded flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">Klarna</span>
+                      </div>
                       <div>
                         <p className="font-medium text-slate-900">Klarna</p>
                         <p className="text-xs text-slate-600">Pay in instalments</p>
@@ -846,7 +848,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
                   )}
                   {inquiry.financing_options.includes('santander') && (
                     <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Banco_Santander_Logotipo.svg/320px-Banco_Santander_Logotipo.svg.png" alt="Santander" className="h-8" />
+                      <div className="h-8 w-20 bg-red-600 rounded flex items-center justify-center">
+                        <span className="text-white font-bold text-xs">Santander</span>
+                      </div>
                       <div>
                         <p className="font-medium text-slate-900">Santander</p>
                         <p className="text-xs text-slate-600">Financing available</p>

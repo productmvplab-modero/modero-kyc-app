@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { MapPin, TrendingUp } from "lucide-react";
 
-export default function PropertyPerformance({ properties }) {
+export default function PropertyPerformance({ properties, inquiries = [], onPropertyClick }) {
   const topProperties = [...properties]
     .sort((a, b) => b.total_inquiries - a.total_inquiries)
     .slice(0, 5);
@@ -23,8 +23,8 @@ export default function PropertyPerformance({ properties }) {
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-slate-900">Top Performing Properties</CardTitle>
-          <p className="text-sm text-slate-500 mt-1">By inquiry volume</p>
+          <CardTitle className="text-xl font-bold text-slate-900">My Properties</CardTitle>
+          <p className="text-sm text-slate-500 mt-1">Click a property to view details</p>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -46,7 +46,11 @@ export default function PropertyPerformance({ properties }) {
                 </TableRow>
               ) : (
                 topProperties.map((property) => (
-                  <TableRow key={property.id} className="hover:bg-slate-50 transition-colors">
+                  <TableRow 
+                    key={property.id} 
+                    className="hover:bg-slate-50 transition-colors cursor-pointer"
+                    onClick={() => onPropertyClick?.(property)}
+                  >
                     <TableCell>
                       <div>
                         <p className="font-medium text-slate-900">{property.title}</p>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
-import { Building2, MessageSquare, UserCheck, Euro, Filter } from "lucide-react";
+import { Building2, MessageSquare, UserCheck, ShieldCheck, Filter } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -10,9 +10,12 @@ import InquiryFunnel from "../components/modero/InquiryFunnel";
 import PropertyPerformance from "../components/modero/PropertyPerformance";
 import RecentInquiries from "../components/modero/RecentInquiries";
 import RevenueChart from "../components/modero/RevenueChart";
+import PropertyDetailsDialog from "../components/modero/PropertyDetailsDialog";
 
 export default function Dashboard() {
   const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [propertyDialogOpen, setPropertyDialogOpen] = useState(false);
 
   const { data: properties = [] } = useQuery({
     queryKey: ['properties'],
@@ -39,12 +42,14 @@ export default function Dashboard() {
   const qualifiedTenants = inquiries.filter(i => i.status === 'qualified' || i.status === 'rented').length;
   const conversionRate = totalInquiries > 0 ? Math.round((qualifiedTenants / totalInquiries) * 100) : 0;
   
-  const monthlyRevenue = propertyOwners
-    .filter(po => po.status === 'active')
-    .reduce((sum, po) => sum + (po.monthly_fee || 0), 0);
-
   const avgInquiriesPerProperty = totalProperties > 0 
     ? Math.round(totalInquiries / totalProperties) 
+    : 0;
+
+  const verificationCompleted = inquiries.filter(i => i.id_verification_status === 'completed').length;
+  const verificationRate = totalInquiries > 0 ? Math.round((verificationCompleted / totalInquiries) * 100) : 0;
+  const avgScore = inquiries.filter(i => i.modero_score).length > 0
+    ? Math.round(inquiries.filter(i => i.modero_score).reduce((sum, i) => sum + i.modero_score, 0) / inquiries.filter(i => i.modero_score).length)
     : 0;
 
   return (
@@ -118,10 +123,10 @@ export default function Dashboard() {
             index={2}
           />
           <MetricCard
-            title="Monthly Revenue"
-            value={`€${monthlyRevenue.toLocaleString()}`}
-            subtitle={`${propertyOwners.filter(po => po.status === 'active').length} active clients`}
-            icon={Euro}
+            title="Verification Rate"
+            value={`${verificationRate}%`}
+            subtitle={`${verificationCompleted} verified tenants`}
+            icon={ShieldCheck}
             trend="up"
             trendValue={18}
             color="amber"
@@ -134,12 +139,23 @@ export default function Dashboard() {
           <RevenueChart propertyOwners={propertyOwners} />
         </div>
 
-        <PropertyPerformance properties={properties} />
+        <PropertyPerformance 
+          properties={properties} 
+          inquiries={inquiries}
+          onPropertyClick={(p) => { setSelectedProperty(p); setPropertyDialogOpen(true); }} 
+        />
 
         <div id="recent-inquiries">
           <RecentInquiries inquiries={filteredInquiries} />
         </div>
       </div>
+
+      <PropertyDetailsDialog
+        property={selectedProperty}
+        inquiries={inquiries}
+        open={propertyDialogOpen}
+        onOpenChange={setPropertyDialogOpen}
+      />
     </div>
   );
 }

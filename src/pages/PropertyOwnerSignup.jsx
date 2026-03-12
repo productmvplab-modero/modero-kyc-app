@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Building2, Mail, User, Phone, Briefcase } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { createPageUrl } from "@/utils";
 
 export default function PropertyOwnerSignup() {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ export default function PropertyOwnerSignup() {
       });
 
       toast.success('Registration successful! Welcome to Modero.');
-      navigate(createPageUrl('Dashboard'));
+      navigate('/Dashboard');
     } catch (error) {
       toast.error('Registration failed. Please try again.');
     } finally {

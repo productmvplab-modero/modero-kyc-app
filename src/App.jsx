@@ -58,6 +58,7 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/PropertyOwnerSignup" element={<LayoutWrapper currentPageName="PropertyOwnerSignup"><PropertyOwnerSignup /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
