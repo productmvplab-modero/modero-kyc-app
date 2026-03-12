@@ -824,40 +824,91 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
             </CardContent>
           </Card>
 
-          {/* Financing Options */}
-          {inquiry.financing_options && inquiry.financing_options.length > 0 && (
-            <Card>
+          {/* Financing Options - only for qualified tenants */}
+          {(inquiry.status === 'qualified' || inquiry.status === 'rented') && (
+            <Card className="border-emerald-200 bg-emerald-50/30">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <DollarSign className="w-5 h-5" />
+                  <DollarSign className="w-5 h-5 text-emerald-600" />
                   Financing Options
+                  <span className="ml-auto text-xs font-normal text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">Tenant Qualified</span>
                 </CardTitle>
+                <p className="text-sm text-slate-500">Recommend a financing solution to this tenant</p>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  {inquiry.financing_options.includes('klarna') && (
-                    <div className="flex items-center gap-3 p-4 bg-pink-50 border border-pink-200 rounded-lg">
-                      <div className="h-8 w-16 bg-pink-500 rounded flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">Klarna</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Klarna */}
+                  {(['klarna', 'both'].includes(inquiry.recommended_financing) ? true : true) && (
+                    <button
+                      onClick={() => updateInquiryMutation.mutate({
+                        id: inquiry.id,
+                        data: { recommended_financing: inquiry.recommended_financing === 'klarna' ? null : 'klarna' }
+                      })}
+                      className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
+                        inquiry.recommended_financing === 'klarna'
+                          ? 'border-pink-500 bg-pink-50 shadow-md'
+                          : 'border-slate-200 bg-white hover:border-pink-300 hover:bg-pink-50/50'
+                      }`}
+                    >
+                      <div className="h-12 w-20 bg-gradient-to-r from-pink-500 to-rose-400 rounded-lg flex items-center justify-center shrink-0">
+                        <span className="text-white font-bold text-lg tracking-tight">K</span>
+                        <span className="text-white font-semibold text-sm ml-0.5">larna</span>
                       </div>
-                      <div>
-                        <p className="font-medium text-slate-900">Klarna</p>
-                        <p className="text-xs text-slate-600">Pay in instalments</p>
+                      <div className="flex-1">
+                        <p className="font-semibold text-slate-900">Klarna</p>
+                        <p className="text-xs text-slate-500">Buy now, pay later</p>
+                        <p className="text-xs text-slate-500">Flexible instalments</p>
                       </div>
-                    </div>
+                      {inquiry.recommended_financing === 'klarna' && (
+                        <div className="absolute top-2 right-2">
+                          <CheckCircle2 className="w-5 h-5 text-pink-500" />
+                        </div>
+                      )}
+                    </button>
                   )}
-                  {inquiry.financing_options.includes('santander') && (
-                    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <div className="h-8 w-20 bg-red-600 rounded flex items-center justify-center">
-                        <span className="text-white font-bold text-xs">Santander</span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-slate-900">Santander</p>
-                        <p className="text-xs text-slate-600">Financing available</p>
-                      </div>
+
+                  {/* Santander */}
+                  <button
+                    onClick={() => updateInquiryMutation.mutate({
+                      id: inquiry.id,
+                      data: { recommended_financing: inquiry.recommended_financing === 'santander' ? null : 'santander' }
+                    })}
+                    className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
+                      inquiry.recommended_financing === 'santander'
+                        ? 'border-red-500 bg-red-50 shadow-md'
+                        : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/50'
+                    }`}
+                  >
+                    <div className="h-12 w-20 bg-gradient-to-r from-red-600 to-red-500 rounded-lg flex items-center justify-center shrink-0">
+                      <span className="text-white font-bold text-xs text-center leading-tight px-1">Santander</span>
                     </div>
-                  )}
+                    <div className="flex-1">
+                      <p className="font-semibold text-slate-900">Santander</p>
+                      <p className="text-xs text-slate-500">Personal financing</p>
+                      <p className="text-xs text-slate-500">Competitive rates</p>
+                    </div>
+                    {inquiry.recommended_financing === 'santander' && (
+                      <div className="absolute top-2 right-2">
+                        <CheckCircle2 className="w-5 h-5 text-red-500" />
+                      </div>
+                    )}
+                  </button>
                 </div>
+
+                {inquiry.recommended_financing && (
+                  <div className="mt-4 flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <p className="text-sm text-emerald-800">
+                      <span className="font-medium capitalize">{inquiry.recommended_financing}</span> financing recommended to tenant
+                    </p>
+                    <button
+                      onClick={() => updateInquiryMutation.mutate({ id: inquiry.id, data: { recommended_financing: null } })}
+                      className="ml-auto text-xs text-slate-500 hover:text-slate-700 underline"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}
