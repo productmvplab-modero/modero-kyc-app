@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,11 +11,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogIn, LogOut, User, Building2, Settings, Bell, Globe } from "lucide-react";
+import { LogIn, LogOut, User, Settings, Bell, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from '@/components/LanguageContext';
 
 export default function Header() {
-  const [language, setLanguage] = useState('en');
+  const { language, setLanguage, t } = useLanguage();
   
   const { data: isAuthenticated } = useQuery({
     queryKey: ['isAuthenticated'],
@@ -86,20 +87,20 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="text-slate-600">
                     <User className="mr-2 h-4 w-4" />
-                    Edit Profile
+                    {t('edit_profile')}
                   </DropdownMenuItem>
                   <DropdownMenuItem className="text-slate-600">
                     <Settings className="mr-2 h-4 w-4" />
-                    Settings
+                    {t('settings')}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-rose-600">
                     <LogOut className="mr-2 h-4 w-4" />
-                    Logout
+                    {t('logout')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -109,7 +110,7 @@ export default function Header() {
           {!isAuthenticated && (
             <Button onClick={handleLogin} className="bg-indigo-600 hover:bg-indigo-700">
               <LogIn className="mr-2 h-4 w-4" />
-              Login
+              {t('login')}
             </Button>
           )}
         </div>
