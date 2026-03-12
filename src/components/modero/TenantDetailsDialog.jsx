@@ -72,7 +72,15 @@ const progressSteps = [
 export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
   const [uploading, setUploading] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState(null);
+  const [notesValue, setNotesValue] = React.useState('');
+  const [notesSaved, setNotesSaved] = React.useState(false);
   const queryClient = useQueryClient();
+
+  // Sync notesValue when inquiry changes
+  React.useEffect(() => {
+    setNotesValue(inquiry?.notes || '');
+    setNotesSaved(false);
+  }, [inquiry?.id]);
 
   const updateInquiryMutation = useMutation({
     mutationFn: ({ id, data }) => base44.entities.Inquiry.update(id, data),
@@ -913,20 +921,46 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
             </Card>
           )}
 
-          {/* Notes */}
-          {inquiry.notes && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <FileText className="w-5 h-5" />
-                  Internal Notes
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-700 whitespace-pre-wrap">{inquiry.notes}</p>
-              </CardContent>
-            </Card>
-          )}
+          {/* Notes - editable */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <FileText className="w-5 h-5" />
+                Internal Notes
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <textarea
+                className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y text-slate-700 bg-white"
+                placeholder="Add internal notes about this tenant..."
+                value={notesValue}
+                onChange={(e) => { setNotesValue(e.target.value); setNotesSaved(false); }}
+              />
+              <div className="flex items-center justify-between">
+                {notesSaved && (
+                  <span className="flex items-center gap-1 text-xs text-emerald-600">
+                    <CheckCircle2 className="w-3 h-3" /> Notes saved
+                  </span>
+                )}
+                <div className="ml-auto">
+                  <Button
+                    size="sm"
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                    onClick={() => {
+                      updateInquiryMutation.mutate(
+                        { id: inquiry.id, data: { notes: notesValue } },
+                        { onSuccess: () => setNotesSaved(true) }
+                      );
+                    }}
+                    disabled={updateInquiryMutation.isPending}
+                  >
+                    <FileText className="w-3 h-3 mr-1" />
+                    Save Notes
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </DialogContent>
     </Dialog>
