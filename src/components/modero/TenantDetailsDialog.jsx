@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -77,7 +77,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
   const queryClient = useQueryClient();
 
   // Sync notesValue when inquiry changes
-  React.useEffect(() => {
+  useEffect(() => {
     setNotesValue(inquiry?.notes || '');
     setNotesSaved(false);
   }, [inquiry?.id]);
