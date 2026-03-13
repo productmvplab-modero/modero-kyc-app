@@ -198,7 +198,7 @@ export default function KycRulesSettings({ userEmail }) {
       </Section>
 
       {/* Credit */}
-      <Section icon={TrendingUp} title="Creditworthiness" description="Set credit score and check requirements">
+      <Section icon={BarChart2} title="Creditworthiness" description="Set credit score and check requirements">
         <ToggleRow label="Credit Check Required" value={rules.credit_check_required} onChange={(v) => set('credit_check_required', v)} />
         <div className="flex flex-col sm:flex-row gap-6">
           <div className="flex-1">
