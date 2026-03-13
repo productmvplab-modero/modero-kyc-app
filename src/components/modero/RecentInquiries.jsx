@@ -20,6 +20,7 @@ const statusConfig = {
 };
 
 export default function RecentInquiries({ inquiries, properties = [] }) {
+  const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
@@ -42,27 +43,27 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4 border-b">
-          <CardTitle className="text-xl font-bold text-slate-900">Recent Inquiries</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-900">{t('recent_inquiries')}</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50">
-                  <TableHead className="font-semibold">Tenant</TableHead>
-                  <TableHead className="font-semibold">Idealista ID</TableHead>
-                  <TableHead className="font-semibold">Contact</TableHead>
-                  <TableHead className="font-semibold">Income</TableHead>
-                  <TableHead className="font-semibold">Score</TableHead>
-                  <TableHead className="font-semibold">Status</TableHead>
-                  <TableHead className="font-semibold">Date</TableHead>
+                  <TableHead className="font-semibold">{t('tenant_label')}</TableHead>
+                  <TableHead className="font-semibold">{t('idealista_id')}</TableHead>
+                  <TableHead className="font-semibold">{t('contact')}</TableHead>
+                  <TableHead className="font-semibold">{t('income')}</TableHead>
+                  <TableHead className="font-semibold">{t('score')}</TableHead>
+                  <TableHead className="font-semibold">{t('status_label')}</TableHead>
+                  <TableHead className="font-semibold">{t('date_label')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentInquiries.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8 text-slate-500">
-                      No inquiries yet
+                      {t('no_inquiries')}
                     </TableCell>
                   </TableRow>
                 ) : (
