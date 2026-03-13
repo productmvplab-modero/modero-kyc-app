@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Dialog,
   DialogContent,
@@ -11,11 +11,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
   MapPin, Home, Euro, Users, TrendingUp, Clock,
   CheckCircle2, XCircle, FileText, Shield, AlertCircle,
-  Phone, Mail, Building2, Upload, Pencil, Save, X
+  Phone, Mail, Building2, Upload, User
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
@@ -38,42 +37,27 @@ const statusInfo = {
 };
 
 export default function PropertyDetailsDialog({ property, inquiries, open, onOpenChange }) {
-  const [editingAgent, setEditingAgent] = useState(false);
-  const [agentForm, setAgentForm] = useState({});
-  const [uploadingPic, setUploadingPic] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: agents = [] } = useQuery({
-    queryKey: ['agents'],
-    queryFn: () => base44.entities.Agent.list(),
-    enabled: !!property,
+  const updatePropertyMutation = useMutation({
+    mutationFn: ({ id, data }) => base44.entities.Property.update(id, data),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['properties'] }),
   });
 
-  const agent = agents.find(a => a.property_id === property?.id);
-
-  useEffect(() => {
-    if (agent) setAgentForm({ ...agent });
-    else setAgentForm({ first_name: '', last_name: '', agency_name: '', city: '', mobile_phone: '', email: '', profile_picture_url: '' });
-  }, [agent?.id, property?.id]);
-
-  const saveMutation = useMutation({
-    mutationFn: (data) => agent
-      ? base44.entities.Agent.update(agent.id, data)
-      : base44.entities.Agent.create({ ...data, property_id: property.id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['agents'] });
-      setEditingAgent(false);
-      toast.success('Agent information saved');
-    },
-  });
-
-  const handlePicUpload = async (e) => {
+  const handleAgentPhotoUpload = async (e) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    setUploadingPic(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    setAgentForm(f => ({ ...f, profile_picture_url: file_url }));
-    setUploadingPic(false);
+    if (!file || !property) return;
+    setUploadingPhoto(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      updatePropertyMutation.mutate({ id: property.id, data: { agent_photo_url: file_url } });
+      toast.success('Agent photo updated');
+    } catch {
+      toast.error('Failed to upload photo');
+    } finally {
+      setUploadingPhoto(false);
+    }
   };
 
   if (!property) return null;
@@ -262,130 +246,6 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 <div className="text-center py-10 text-slate-500">
                   <Clock className="w-12 h-12 mx-auto mb-3 text-slate-300" />
                   <p>No inquiries yet</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-          {/* Responsible Real Estate Agent */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Users className="w-5 h-5 text-indigo-600" />
-                  Responsible Real Estate Agent
-                </CardTitle>
-                {!editingAgent ? (
-                  <Button size="sm" variant="outline" onClick={() => setEditingAgent(true)}>
-                    <Pencil className="w-3.5 h-3.5 mr-1" />
-                    Edit
-                  </Button>
-                ) : (
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => setEditingAgent(false)}>
-                      <X className="w-3.5 h-3.5 mr-1" />
-                      Cancel
-                    </Button>
-                    <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700" onClick={() => saveMutation.mutate(agentForm)} disabled={saveMutation.isPending}>
-                      <Save className="w-3.5 h-3.5 mr-1" />
-                      Save
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              {editingAgent ? (
-                <div className="space-y-4">
-                  {/* Profile picture upload */}
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <Avatar className="h-20 w-20">
-                        <AvatarImage src={agentForm.profile_picture_url} />
-                        <AvatarFallback className="text-xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
-                          {agentForm.first_name?.charAt(0)}{agentForm.last_name?.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <label className="absolute bottom-0 right-0 cursor-pointer">
-                        <div className="h-7 w-7 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700">
-                          <Upload className="h-3.5 w-3.5 text-white" />
-                        </div>
-                        <input type="file" accept="image/*" className="hidden" onChange={handlePicUpload} disabled={uploadingPic} />
-                      </label>
-                    </div>
-                    <p className="text-xs text-slate-500">{uploadingPic ? 'Uploading…' : 'Click the icon to change photo'}</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { key: 'first_name', label: 'First Name' },
-                      { key: 'last_name', label: 'Last Name' },
-                      { key: 'agency_name', label: 'Agency Name' },
-                      { key: 'city', label: 'City' },
-                      { key: 'mobile_phone', label: 'Mobile Phone' },
-                      { key: 'email', label: 'Email' },
-                    ].map(({ key, label }) => (
-                      <div key={key}>
-                        <label className="text-xs text-slate-500 block mb-1">{label}</label>
-                        <input
-                          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                          value={agentForm[key] || ''}
-                          onChange={e => setAgentForm(f => ({ ...f, [key]: e.target.value }))}
-                          placeholder={label}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : agent ? (
-                <div className="flex items-start gap-5">
-                  <Avatar className="h-20 w-20 shrink-0">
-                    <AvatarImage src={agent.profile_picture_url} />
-                    <AvatarFallback className="text-xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
-                      {agent.first_name?.charAt(0)}{agent.last_name?.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 grid grid-cols-2 gap-3">
-                    <div>
-                      <p className="text-xs text-slate-500">Name</p>
-                      <p className="text-sm font-semibold text-slate-900">{agent.first_name} {agent.last_name}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-slate-400" />
-                      <div>
-                        <p className="text-xs text-slate-500">Agency</p>
-                        <p className="text-sm font-medium text-slate-900">{agent.agency_name || '—'}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-slate-400" />
-                      <div>
-                        <p className="text-xs text-slate-500">City</p>
-                        <p className="text-sm font-medium text-slate-900">{agent.city || '—'}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-slate-400" />
-                      <div>
-                        <p className="text-xs text-slate-500">Mobile</p>
-                        <p className="text-sm font-medium text-slate-900">{agent.mobile_phone || '—'}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 col-span-2">
-                      <Mail className="w-4 h-4 text-slate-400" />
-                      <div>
-                        <p className="text-xs text-slate-500">Email</p>
-                        <p className="text-sm font-medium text-slate-900">{agent.email || '—'}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <Users className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-                  <p className="text-slate-500 text-sm mb-3">No agent assigned yet</p>
-                  <Button size="sm" variant="outline" onClick={() => setEditingAgent(true)}>
-                    <Pencil className="w-3.5 h-3.5 mr-1" />
-                    Add Agent
-                  </Button>
                 </div>
               )}
             </CardContent>
