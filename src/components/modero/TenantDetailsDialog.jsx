@@ -534,7 +534,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   },
                   {
                     logo: '🏦', name: 'PSD2 Banking', provider: 'Bank Account Verification',
-                    bg: 'bg-indigo-600',
+                    bg: 'bg-orange-500',
                     status: inquiry.bank_account_connected
                       ? (inquiry.bank_verification_status === 'verified' ? 'verified'
                         : inquiry.bank_verification_status === 'failed' ? 'rejected'
