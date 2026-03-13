@@ -205,11 +205,11 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
         <div className="space-y-6">
           {/* Modero Score Highlight */}
-          <Card className="bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+          <Card className="bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-200">
                     <span className="text-3xl font-bold text-white">{moderoScore}</span>
                   </div>
                   <div>
@@ -222,7 +222,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     </div>
                   </div>
                 </div>
-                <TrendingUp className="w-12 h-12 text-indigo-400" />
+                <TrendingUp className="w-12 h-12 text-orange-400" />
               </div>
             </CardContent>
           </Card>
