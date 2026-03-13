@@ -303,7 +303,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         setTimeout(() => onOpenProperty(linkedProperty), 150);
                       }
                     }}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-orange-600 hover:text-orange-800 hover:underline transition-colors"
                     title={t('property_information')}
                   >
                     <Link className="w-3.5 h-3.5" />
