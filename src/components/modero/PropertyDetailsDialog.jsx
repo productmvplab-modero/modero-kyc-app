@@ -202,6 +202,93 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
             </CardContent>
           </Card>
 
+          {/* Responsible Real Estate Agent */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <User className="w-5 h-5 text-indigo-600" />
+                Responsible Real Estate Agent
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col sm:flex-row items-start gap-5">
+                {/* Agent photo with upload */}
+                <div className="relative shrink-0">
+                  <Avatar className="h-20 w-20">
+                    <AvatarImage src={property.agent_photo_url} />
+                    <AvatarFallback className="text-2xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
+                      {property.agent_first_name ? property.agent_first_name.charAt(0) : <User className="w-8 h-8" />}
+                    </AvatarFallback>
+                  </Avatar>
+                  <label className="absolute bottom-0 right-0 cursor-pointer">
+                    <div className="h-7 w-7 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                      {uploadingPhoto ? (
+                        <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Upload className="h-3 w-3 text-white" />
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleAgentPhotoUpload}
+                      disabled={uploadingPhoto}
+                    />
+                  </label>
+                </div>
+
+                {/* Agent details */}
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <p className="text-xs text-slate-500">Name</p>
+                    <p className="text-sm font-semibold text-slate-900">
+                      {property.agent_first_name || property.agent_last_name
+                        ? `${property.agent_first_name || ''} ${property.agent_last_name || ''}`.trim()
+                        : '—'}
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Building2 className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-slate-500">Agency</p>
+                      <p className="text-sm font-medium text-slate-900">{property.agent_agency || '—'}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-slate-500">City</p>
+                      <p className="text-sm font-medium text-slate-900">{property.agent_city || '—'}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <Phone className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-slate-500">Mobile</p>
+                      {property.agent_phone ? (
+                        <a href={`tel:${property.agent_phone}`} className="text-sm font-medium text-indigo-600 hover:underline">
+                          {property.agent_phone}
+                        </a>
+                      ) : <p className="text-sm font-medium text-slate-900">—</p>}
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2 sm:col-span-2">
+                    <Mail className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-slate-500">Email</p>
+                      {property.agent_email ? (
+                        <a href={`mailto:${property.agent_email}`} className="text-sm font-medium text-indigo-600 hover:underline">
+                          {property.agent_email}
+                        </a>
+                      ) : <p className="text-sm font-medium text-slate-900">—</p>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Recent Inquiries */}
           <Card>
             <CardHeader>
