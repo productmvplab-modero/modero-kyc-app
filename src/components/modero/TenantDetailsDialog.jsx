@@ -188,7 +188,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto [&>button]:p-3 [&>button]:rounded-xl [&>button]:right-3 [&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-5 [&>button>svg]:w-5">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-bold">Tenant Profile</DialogTitle>
@@ -433,60 +433,6 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     </Badge>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* ID Verification - Identomat */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                ID Verification
-                {/* Identomat logo */}
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/51bf11cab_e7JZ5vmfCJXN9sOE8BQr4HvBjLe1734715365642_200x200.png" alt="Identomat" className="ml-auto h-7 object-contain" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  {inquiry.id_verification_status === 'completed' ? (
-                    <CheckCircle2 className="w-8 h-8 text-emerald-600" />
-                  ) : inquiry.id_verification_status === 'in_progress' ? (
-                    <Clock className="w-8 h-8 text-amber-600 animate-pulse" />
-                  ) : inquiry.id_verification_status === 'failed' ? (
-                    <XCircle className="w-8 h-8 text-red-600" />
-                  ) : (
-                    <AlertCircle className="w-8 h-8 text-slate-400" />
-                  )}
-                  <div>
-                    <p className="font-semibold text-slate-900">Identity Verification Status</p>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      {inquiry.id_verification_status === 'completed' ? (
-                        <span className="flex items-center gap-1.5 text-sm text-emerald-700 font-medium">
-                          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/51bf11cab_e7JZ5vmfCJXN9sOE8BQr4HvBjLe1734715365642_200x200.png" alt="Identomat" className="h-5 object-contain" />
-                          Verified
-                        </span>
-                      ) : (
-                        <p className="text-sm text-slate-600">
-                          {inquiry.id_verification_status === 'in_progress' && 'Verification in progress...'}
-                          {inquiry.id_verification_status === 'failed' && 'Verification failed'}
-                          {(!inquiry.id_verification_status || inquiry.id_verification_status === 'pending') && 'Awaiting verification'}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <Badge className={
-                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-800' :
-                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-800' :
-                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-800' :
-                  'bg-slate-100 text-slate-800'
-                }>
-                  {inquiry.id_verification_status === 'completed' ? 'Completed' :
-                   inquiry.id_verification_status === 'in_progress' ? 'In Progress' :
-                   inquiry.id_verification_status === 'failed' ? 'Failed' : 'Pending'}
-                </Badge>
               </div>
             </CardContent>
           </Card>
@@ -834,14 +780,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
           <Separator />
 
-          {/* Credit Check - Dun & Bradstreet */}
+          {/* Credit Check */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
                 Credit Check
-                {/* D&B logo */}
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/47af9e5b8_lg-67e798a81827a-Dun-Bradstreet.jpg" alt="Dun & Bradstreet" className="ml-auto h-7 object-contain" />
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -854,10 +798,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   }`} />
                   <div>
                     <p className="font-semibold text-slate-900">Credit Verification</p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/47af9e5b8_lg-67e798a81827a-Dun-Bradstreet.jpg" alt="Dun & Bradstreet" className="h-5 object-contain" />
-                      <span className="text-sm text-slate-600">assessment</span>
-                    </div>
+                    <p className="text-sm text-slate-600 mt-0.5">Dun &amp; Bradstreet assessment</p>
                   </div>
                 </div>
                 <Badge className={creditStatus.color}>
