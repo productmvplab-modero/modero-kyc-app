@@ -52,11 +52,11 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                 <TableRow className="bg-slate-50">
                   <TableHead className="font-semibold">{t('tenant_label')}</TableHead>
                   <TableHead className="font-semibold">{t('idealista_id')}</TableHead>
-                  <TableHead className="font-semibold">{t('contact')}</TableHead>
                   <TableHead className="font-semibold">{t('income')}</TableHead>
                   <TableHead className="font-semibold">{t('score')}</TableHead>
                   <TableHead className="font-semibold">{t('status_label')}</TableHead>
                   <TableHead className="font-semibold">{t('date_label')}</TableHead>
+                  <TableHead className="font-semibold text-right">{t('contact')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -88,9 +88,6 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                           {inquiry.idealista_id ? (
                             <Badge variant="outline">{inquiry.idealista_id}</Badge>
                           ) : '—'}
-                        </TableCell>
-                        <TableCell className="text-sm text-slate-600">
-                          {inquiry.tenant_email}
                         </TableCell>
                         <TableCell className="text-sm text-slate-900">
                           {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '—'}
@@ -124,6 +121,9 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                         </TableCell>
                         <TableCell className="text-sm text-slate-600">
                           {format(new Date(inquiry.created_date), "MMM d, yyyy")}
+                        </TableCell>
+                        <TableCell className="text-sm text-slate-600 text-right">
+                          {inquiry.tenant_email}
                         </TableCell>
                       </TableRow>
                     );
