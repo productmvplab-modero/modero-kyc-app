@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import { useLanguage } from '@/components/LanguageContext';
 
 const funnelStages = [
   { key: 'new',        label: 'Inquiry Received',        color: 'bg-blue-500',    light: 'bg-blue-50 text-blue-800',    icon: FileText },

@@ -44,6 +44,7 @@ import {
   Facebook
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from '@/components/LanguageContext';
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },

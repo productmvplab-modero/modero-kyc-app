@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageContext";
 
 const COLORS = ['#6366f1', '#8b5cf6', '#a855f7', '#10b981', '#f43f5e'];
 

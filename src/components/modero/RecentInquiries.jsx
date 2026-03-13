@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
 import TenantDetailsDialog from "./TenantDetailsDialog";
 import PropertyDetailsDialog from "./PropertyDetailsDialog";
+import { useLanguage } from "@/components/LanguageContext";
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-700 border-blue-200', icon: Clock },

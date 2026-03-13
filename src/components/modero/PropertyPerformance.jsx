@@ -4,6 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { MapPin, TrendingUp } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function PropertyPerformance({ properties, inquiries = [], onPropertyClick }) {
   const topProperties = [...properties]

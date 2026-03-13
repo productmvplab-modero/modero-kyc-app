@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion } from "framer-motion";
 import { TrendingUp } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function RevenueChart({ propertyOwners }) {
   const getMonthlyRevenue = () => {

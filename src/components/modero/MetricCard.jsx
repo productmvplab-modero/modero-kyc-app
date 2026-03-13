@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { useLanguage } from "@/components/LanguageContext";
 import { motion } from "framer-motion";
 
 export default function MetricCard({ title, value, subtitle, icon: Icon, trend, trendValue, color = "indigo", index = 0 }) {
