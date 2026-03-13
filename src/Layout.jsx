@@ -37,18 +37,6 @@ export default function Layout({ children, currentPageName }) {
               </div>
             </div>
 
-            {/* Product */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">Product</h4>
-              <ul className="space-y-3 text-sm text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">Dashboard</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tenant Management</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Property Listings</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">KYC Verification</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Analytics</a></li>
-              </ul>
-            </div>
-
             {/* Support */}
             <div>
               <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">Contact</h4>
