@@ -100,6 +100,12 @@ const DEFAULT_SETTINGS = {
   flag_incomplete_docs: true,
   flag_unverified_contact: true,
   auto_approve_logic: 'manual_review',
+  integration_linkedin_enabled: false,
+  integration_identomat_enabled: false,
+  integration_twilio_enabled: false,
+  integration_business_email_enabled: false,
+  integration_dnb_enabled: false,
+  integration_psd2_enabled: false,
 };
 
 const ID_TYPES = [
