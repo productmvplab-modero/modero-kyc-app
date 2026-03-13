@@ -903,7 +903,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <CreditCard className="w-5 h-5" />
+                <BarChart3 className="w-5 h-5 text-amber-600" />
                 {t('credit_check')}
               </CardTitle>
             </CardHeader>
