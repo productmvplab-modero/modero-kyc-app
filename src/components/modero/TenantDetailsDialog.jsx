@@ -189,6 +189,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
         <DialogHeader>
@@ -1018,5 +1019,6 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
       open={propertyDialogOpen}
       onOpenChange={setPropertyDialogOpen}
     />
+    </>
   );
 }
