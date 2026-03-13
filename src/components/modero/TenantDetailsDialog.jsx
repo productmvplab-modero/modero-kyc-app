@@ -38,6 +38,7 @@ import {
   User,
   Shield,
   TrendingUp,
+  BarChart3,
   ThumbsUp,
   ThumbsDown,
   Linkedin,
