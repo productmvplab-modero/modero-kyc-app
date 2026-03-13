@@ -844,9 +844,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <CreditCard className="w-5 h-5" />
                 Credit Check
                 {/* D&B logo */}
-                <div className="ml-auto flex items-center gap-1.5 bg-[#cc0000] text-white px-3 py-1 rounded text-xs font-extrabold tracking-widest">
-                  D&amp;B
-                </div>
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/47af9e5b8_lg-67e798a81827a-Dun-Bradstreet.jpg" alt="Dun & Bradstreet" className="ml-auto h-7 object-contain" />
               </CardTitle>
             </CardHeader>
             <CardContent>
