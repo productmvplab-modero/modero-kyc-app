@@ -342,7 +342,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     >
                       <div className="flex items-center gap-2 mb-1">
                         {inquiry.progress_step >= step.step ? (
-                          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                          <CheckCircle2 className="w-4 h-4 text-orange-500" />
                         ) : (
                           <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
                         )}
