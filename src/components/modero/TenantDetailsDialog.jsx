@@ -69,7 +69,7 @@ const progressSteps = [
   { step: 5, label: 'Final Review', description: 'Ready for decision' },
 ];
 
-export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
+export default function TenantDetailsDialog({ inquiry, open, onOpenChange, properties = [], onOpenProperty }) {
   const [uploading, setUploading] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState(null);
   const [notesValue, setNotesValue] = React.useState('');
@@ -287,7 +287,26 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange }) {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
-              <p className="text-slate-600">Idealista ID: #{inquiry.idealista_id || '110642442'}</p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-slate-600 text-sm">Idealista ID:</span>
+                {inquiry.idealista_id ? (
+                  <button
+                    onClick={() => {
+                      const linkedProperty = properties.find(p => p.idealista_id === inquiry.idealista_id || p.id === inquiry.property_id);
+                      if (linkedProperty && onOpenProperty) {
+                        onOpenProperty(linkedProperty);
+                      }
+                    }}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
+                    title="View property listing"
+                  >
+                    <Link className="w-3.5 h-3.5" />
+                    #{inquiry.idealista_id}
+                  </button>
+                ) : (
+                  <span className="text-slate-500 text-sm">—</span>
+                )}
+              </div>
               <div className="flex gap-2 mt-2">
                 {inquiry.age && <Badge variant="outline">{inquiry.age} years old</Badge>}
                 {inquiry.gender && <Badge variant="outline">{inquiry.gender}</Badge>}
