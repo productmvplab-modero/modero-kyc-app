@@ -444,10 +444,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <Shield className="w-5 h-5" />
                 ID Verification
                 {/* Identomat logo */}
-                <div className="ml-auto flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-9 2.5-9 4v1h18v-1c0-1.5-3-4-9-4z"/></svg>
-                  Identomat
-                </div>
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/51bf11cab_e7JZ5vmfCJXN9sOE8BQr4HvBjLe1734715365642_200x200.png" alt="Identomat" className="ml-auto h-7 object-contain" />
               </CardTitle>
             </CardHeader>
             <CardContent>
