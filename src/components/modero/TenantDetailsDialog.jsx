@@ -62,16 +62,11 @@ const creditCheckConfig = {
   rejected: { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
 };
 
-const progressSteps = [
-  { step: 1, label: 'Initial Contact', description: 'First inquiry received' },
-  { step: 2, label: 'Document Upload', description: 'Documents submitted' },
-  { step: 3, label: 'ID Verification', description: 'Identity confirmed' },
-  { step: 4, label: 'Financial Check', description: 'Income & credit verified' },
-  { step: 5, label: 'Final Review', description: 'Ready for decision' },
-];
+const progressSteps = [1, 2, 3, 4, 5];
 
 // TenantDetailsDialog - v2
 export default function TenantDetailsDialog({ inquiry, open, onOpenChange, properties = [], onOpenProperty }) {
+  const { t } = useLanguage();
   const [uploading, setUploading] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState(null);
   const [notesValue, setNotesValue] = React.useState('');
@@ -191,8 +186,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto [&>button]:p-3 [&>button]:rounded-xl [&>button]:right-3 [&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-5 [&>button>svg]:w-5">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-2xl font-bold">Tenant Profile</DialogTitle>
+          <div className="flex items-center gap-3 pr-10">
+            <DialogTitle className="text-2xl font-bold flex-1">{t('tenant_profile')}</DialogTitle>
             <Badge className={currentStatus.color}>
               <currentStatus.icon className="w-4 h-4 mr-1" />
               {currentStatus.label}
@@ -210,12 +205,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     <span className="text-3xl font-bold text-white">{moderoScore}</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900">Modero Qualification Score</h3>
-                    <p className="text-sm text-slate-600">Overall tenant qualification rating</p>
+                    <h3 className="text-xl font-bold text-slate-900">{t('modero_score')}</h3>
+                    <p className="text-sm text-slate-600">{t('overall_rating')}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">Excellent</Badge>}
-                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">Good</Badge>}
-                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">Needs Review</Badge>}
+                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">{t('excellent')}</Badge>}
+                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">{t('good')}</Badge>}
+                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">{t('needs_review')}</Badge>}
                     </div>
                   </div>
                 </div>
@@ -229,8 +224,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg">Landlord Decision</h3>
-                  <p className="text-sm text-slate-600">Review and approve/reject this application</p>
+                  <h3 className="font-semibold text-lg">{t('landlord_decision')}</h3>
+                  <p className="text-sm text-slate-600">{t('review_approve_desc')}</p>
                 </div>
                 <div className="flex gap-2">
                   <Button
@@ -240,7 +235,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}
                   >
                     <Clock className="w-4 h-4 mr-1" />
-                    Pending
+                    {t('pending')}
                   </Button>
                   <Button
                     variant="outline"
@@ -249,7 +244,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}
                   >
                     <ThumbsUp className="w-4 h-4 mr-1" />
-                    Approve
+                    {t('approve')}
                   </Button>
                   <Button
                     variant="outline"
@@ -258,7 +253,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}
                   >
                     <ThumbsDown className="w-4 h-4 mr-1" />
-                    Reject
+                    {t('reject')}
                   </Button>
                 </div>
               </div>
@@ -290,17 +285,21 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-slate-600 text-sm">Idealista ID:</span>
+                <span className="text-slate-600 text-sm">{t('idealista_id')}:</span>
                 {inquiry.idealista_id ? (
                   <button
                     onClick={() => {
                       const linkedProperty = properties.find(p => p.idealista_id === inquiry.idealista_id || p.id === inquiry.property_id);
                       if (linkedProperty && onOpenProperty) {
                         onOpenProperty(linkedProperty);
+                      } else if (onOpenProperty) {
+                        // fallback: find by property_id
+                        const byId = properties.find(p => p.id === inquiry.property_id);
+                        if (byId) onOpenProperty(byId);
                       }
                     }}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
-                    title="View property listing"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors cursor-pointer"
+                    title={t('my_properties')}
                   >
                     <Link className="w-3.5 h-3.5" />
                     #{inquiry.idealista_id}
@@ -320,34 +319,38 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Application Progress */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Application Progress</CardTitle>
+              <CardTitle className="text-lg">{t('application_progress')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <Progress value={(inquiry.progress_step / 5) * 100} className="h-3" />
                 <div className="grid grid-cols-5 gap-2">
-                  {progressSteps.map((step) => (
-                    <button
-                      key={step.step}
-                      onClick={() => handleProgressChange(step.step)}
-                      className={`p-3 rounded-lg border-2 transition-all text-left ${
-                        inquiry.progress_step >= step.step
-                          ? 'border-indigo-600 bg-indigo-50'
-                          : 'border-slate-200 hover:border-slate-300'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        {inquiry.progress_step >= step.step ? (
-                          <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                        ) : (
-                          <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
-                        )}
-                        <span className="text-xs font-semibold">Step {step.step}</span>
-                      </div>
-                      <p className="text-xs font-medium text-slate-900">{step.label}</p>
-                      <p className="text-xs text-slate-500">{step.description}</p>
-                    </button>
-                  ))}
+                  {progressSteps.map((step) => {
+                    const labels = [t('step1_label'), t('step2_label'), t('step3_label'), t('step4_label'), t('step5_label')];
+                    const descs = [t('step1_desc'), t('step2_desc'), t('step3_desc'), t('step4_desc'), t('step5_desc')];
+                    return (
+                      <button
+                        key={step}
+                        onClick={() => handleProgressChange(step)}
+                        className={`p-3 rounded-lg border-2 transition-all text-left ${
+                          inquiry.progress_step >= step
+                            ? 'border-indigo-600 bg-indigo-50'
+                            : 'border-slate-200 hover:border-slate-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 mb-1">
+                          {inquiry.progress_step >= step ? (
+                            <CheckCircle2 className="w-4 h-4 text-indigo-600" />
+                          ) : (
+                            <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
+                          )}
+                          <span className="text-xs font-semibold">{t('step')} {step}</span>
+                        </div>
+                        <p className="text-xs font-medium text-slate-900">{labels[step - 1]}</p>
+                        <p className="text-xs text-slate-500">{descs[step - 1]}</p>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </CardContent>
@@ -358,7 +361,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <User className="w-5 h-5" />
-                Personal Information
+                {t('personal_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -366,7 +369,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Email</p>
+                    <p className="text-xs text-slate-500">{t('email_label')}</p>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-slate-900">{inquiry.tenant_email}</p>
                       {inquiry.email_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
@@ -376,7 +379,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Phone</p>
+                    <p className="text-xs text-slate-500">{t('phone_label')}</p>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-slate-900">{inquiry.tenant_phone || '—'}</p>
                       {inquiry.mobile_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
@@ -386,51 +389,51 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Address</p>
+                    <p className="text-xs text-slate-500">{t('address')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.address || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Postal Code</p>
+                    <p className="text-xs text-slate-500">{t('postal_code')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.postal_code || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">City</p>
+                    <p className="text-xs text-slate-500">{t('city')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.city || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Country</p>
+                    <p className="text-xs text-slate-500">{t('country')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.country || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Place of Birth</p>
+                    <p className="text-xs text-slate-500">{t('place_of_birth')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.place_of_birth || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <CreditCard className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">DNI/NIE Number</p>
+                    <p className="text-xs text-slate-500">{t('dni_nie')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.dni_nie_number || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Shield className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">GDPR Verified</p>
+                    <p className="text-xs text-slate-500">{t('gdpr_verified')}</p>
                     <Badge className={inquiry.gdpr_verified ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}>
-                      {inquiry.gdpr_verified ? 'Verified' : 'Pending'}
+                      {inquiry.gdpr_verified ? t('verified') : t('pending')}
                     </Badge>
                   </div>
                 </div>
@@ -441,7 +444,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Social Profiles */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Connected Profiles</CardTitle>
+              <CardTitle className="text-lg">{t('connected_profiles')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-3">
@@ -459,7 +462,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       }>
                         {inquiry.linkedin_verification_status}
                       </Badge>
-                      <p className="text-xs text-slate-600 mt-1">Employment verification</p>
+                      <p className="text-xs text-slate-600 mt-1">{t('employment_verification')}</p>
                     </div>
                   ) : (
                     <p className="text-xs text-slate-500">Not connected</p>
@@ -470,14 +473,14 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     <Building className="w-5 h-5 text-emerald-600" />
                     <span className="font-medium">XING</span>
                   </div>
-                  <p className="text-xs text-slate-500">{inquiry.xing_connected ? 'Connected' : 'Not connected'}</p>
+                  <p className="text-xs text-slate-500">{inquiry.xing_connected ? t('verified') : t('not_connected')}</p>
                 </div>
                 <div className={`p-4 rounded-lg border-2 ${inquiry.facebook_connected ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200'}`}>
                   <div className="flex items-center gap-2 mb-2">
                     <Facebook className="w-5 h-5 text-indigo-600" />
                     <span className="font-medium">Facebook</span>
                   </div>
-                  <p className="text-xs text-slate-500">{inquiry.facebook_connected ? 'Connected' : 'Not connected'}</p>
+                  <p className="text-xs text-slate-500">{inquiry.facebook_connected ? t('verified') : t('not_connected')}</p>
                 </div>
               </div>
             </CardContent>
@@ -488,7 +491,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Briefcase className="w-5 h-5" />
-                Employment Information
+                {t('employment_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -496,24 +499,24 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <Briefcase className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Employment Status</p>
+                    <p className="text-xs text-slate-500">{t('employment_status')}</p>
                     <p className="text-sm font-medium text-slate-900 capitalize">{inquiry.employment_status || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Building className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Company</p>
+                    <p className="text-xs text-slate-500">{t('company')}</p>
                     <p className="text-sm font-medium text-slate-900">{inquiry.company_name || '—'}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Business Email</p>
+                    <p className="text-xs text-slate-500">{t('business_email')}</p>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-slate-900">
-                        {inquiry.business_email_verified ? 'Verified' : 'Not verified'}
+                        {inquiry.business_email_verified ? t('verified') : t('not_verified')}
                       </p>
                       {inquiry.business_email_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                     </div>
@@ -528,7 +531,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <DollarSign className="w-5 h-5" />
-                Financial Information
+                {t('financial_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -536,7 +539,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <DollarSign className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Monthly Income</p>
+                    <p className="text-xs text-slate-500">{t('monthly_income')}</p>
                     <p className="text-sm font-medium text-slate-900">
                       {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '—'}
                     </p>
@@ -545,7 +548,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <TrendingUp className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Income Ratio</p>
+                    <p className="text-xs text-slate-500">{t('income_ratio')}</p>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-slate-900">{incomeRatio}%</p>
                       <Badge className={incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}>
@@ -558,7 +561,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <CreditCard className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Credit Score</p>
+                    <p className="text-xs text-slate-500">{t('credit_score_label')}</p>
                     <p className="text-sm font-medium text-slate-900">
                       {inquiry.credit_score ? `${inquiry.credit_score}/100` : '—'}
                     </p>
@@ -567,7 +570,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <Users className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Occupants</p>
+                    <p className="text-xs text-slate-500">{t('occupants')}</p>
                     <p className="text-sm font-medium text-slate-900">
                       {inquiry.number_of_occupants || '—'}
                     </p>
@@ -576,7 +579,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="flex items-center gap-3">
                   <PawPrint className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Pets</p>
+                    <p className="text-xs text-slate-500">{t('pets')}</p>
                     <p className="text-sm font-medium text-slate-900">
                       {inquiry.has_pets ? (inquiry.pet_details || 'Yes') : 'No'}
                     </p>
@@ -593,18 +596,16 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Link className="w-5 h-5" />
-                Income Verification
+                {t('income_verification')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-sm text-slate-600">
-                Connect bank account to automatically verify monthly income
-              </p>
+              <p className="text-sm text-slate-600">{t('connect_bank_desc')}</p>
               {inquiry.bank_account_connected ? (
                 <div className="flex items-center gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-emerald-900">Bank Account Connected</p>
+                    <p className="text-sm font-medium text-emerald-900">{t('bank_connected')}</p>
                     <p className="text-xs text-emerald-700">
                       Status: {inquiry.bank_verification_status === 'verified' ? 'Verified ✓' : 'Pending verification'}
                     </p>
@@ -616,7 +617,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                 >
                   <Link className="w-4 h-4 mr-2" />
-                  Connect Bank Account
+                  {t('connect_bank')}
                 </Button>
               )}
             </CardContent>
@@ -627,7 +628,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Paperclip className="w-5 h-5" />
-                Required Documents
+                {t('required_documents')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -635,7 +636,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 {/* CV Upload */}
                 <div className="border rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-700">CV / Resume</span>
+                    <span className="text-sm font-medium text-slate-700">{t('cv_resume')}</span>
                     {inquiry.documents?.cv_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.cv_url ? (
@@ -647,15 +648,15 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Document
+                        {t('view_document')}
                       </a>
-                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ {t('uploaded')}</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
                       <div className="text-xs text-slate-500 hover:text-indigo-600 flex items-center gap-1">
                         <Upload className="w-3 h-3" />
-                        {uploadingDoc === 'cv_url' ? 'Uploading...' : 'Upload'}
+                        {uploadingDoc === 'cv_url' ? t('uploading') : t('upload')}
                       </div>
                       <input
                         type="file"
@@ -671,7 +672,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 {/* Payslip Upload */}
                 <div className="border rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-700">Payslips</span>
+                    <span className="text-sm font-medium text-slate-700">{t('payslips')}</span>
                     {inquiry.documents?.payslip_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.payslip_url ? (
@@ -683,15 +684,15 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Document
+                        {t('view_document')}
                       </a>
-                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ {t('uploaded')}</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
                       <div className="text-xs text-slate-500 hover:text-indigo-600 flex items-center gap-1">
                         <Upload className="w-3 h-3" />
-                        {uploadingDoc === 'payslip_url' ? 'Uploading...' : 'Upload'}
+                        {uploadingDoc === 'payslip_url' ? t('uploading') : t('upload')}
                       </div>
                       <input
                         type="file"
@@ -707,7 +708,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 {/* Work Contract Upload */}
                 <div className="border rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-700">Work Contract</span>
+                    <span className="text-sm font-medium text-slate-700">{t('work_contract')}</span>
                     {inquiry.documents?.work_contract_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.work_contract_url ? (
@@ -719,15 +720,15 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Document
+                        {t('view_document')}
                       </a>
-                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ {t('uploaded')}</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
                       <div className="text-xs text-slate-500 hover:text-indigo-600 flex items-center gap-1">
                         <Upload className="w-3 h-3" />
-                        {uploadingDoc === 'work_contract_url' ? 'Uploading...' : 'Upload'}
+                        {uploadingDoc === 'work_contract_url' ? t('uploading') : t('upload')}
                       </div>
                       <input
                         type="file"
@@ -743,7 +744,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 {/* ID Document Upload */}
                 <div className="border rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-700">ID Document</span>
+                    <span className="text-sm font-medium text-slate-700">{t('id_document')}</span>
                     {inquiry.documents?.id_document_url && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                   </div>
                   {inquiry.documents?.id_document_url ? (
@@ -755,15 +756,15 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
-                        View Document
+                        {t('view_document')}
                       </a>
-                      <p className="text-xs text-emerald-600">✓ Uploaded</p>
+                      <p className="text-xs text-emerald-600">✓ {t('uploaded')}</p>
                     </div>
                   ) : (
                     <label className="cursor-pointer">
                       <div className="text-xs text-slate-500 hover:text-indigo-600 flex items-center gap-1">
                         <Upload className="w-3 h-3" />
-                        {uploadingDoc === 'id_document_url' ? 'Uploading...' : 'Upload'}
+                        {uploadingDoc === 'id_document_url' ? t('uploading') : t('upload')}
                       </div>
                       <input
                         type="file"
@@ -786,7 +787,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
-                Credit Check
+                {t('credit_check')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -798,8 +799,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     'text-amber-600'
                   }`} />
                   <div>
-                    <p className="font-semibold text-slate-900">Credit Verification</p>
-                    <p className="text-sm text-slate-600 mt-0.5">Dun &amp; Bradstreet assessment</p>
+                    <p className="font-semibold text-slate-900">{t('credit_verification')}</p>
+                    <p className="text-sm text-slate-600 mt-0.5">{t('dnb_assessment')}</p>
                   </div>
                 </div>
                 <Badge className={creditStatus.color}>
@@ -815,10 +816,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <DollarSign className="w-5 h-5 text-emerald-600" />
-                  Financing Options
-                  <span className="ml-auto text-xs font-normal text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">Tenant Qualified</span>
+                  {t('financing_options')}
+                  <span className="ml-auto text-xs font-normal text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">{t('tenant_qualified')}</span>
                 </CardTitle>
-                <p className="text-sm text-slate-500">Recommend a financing solution to this tenant</p>
+                <p className="text-sm text-slate-500">{t('recommend_financing')}</p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -884,13 +885,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div className="mt-4 flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <p className="text-sm text-emerald-800">
-                      <span className="font-medium capitalize">{inquiry.recommended_financing}</span> financing recommended to tenant
+                      <span className="font-medium capitalize">{inquiry.recommended_financing}</span> {t('financing_recommended')}
                     </p>
                     <button
                       onClick={() => updateInquiryMutation.mutate({ id: inquiry.id, data: { recommended_financing: null } })}
                       className="ml-auto text-xs text-slate-500 hover:text-slate-700 underline"
                     >
-                      Clear
+                      {t('clear')}
                     </button>
                   </div>
                 )}
@@ -903,20 +904,20 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                Internal Notes
+                {t('internal_notes')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <textarea
                 className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y text-slate-700 bg-white"
-                placeholder="Add internal notes about this tenant..."
+                placeholder={t('add_notes_placeholder')}
                 value={notesValue}
                 onChange={(e) => { setNotesValue(e.target.value); setNotesSaved(false); }}
               />
               <div className="flex items-center justify-between">
                 {notesSaved && (
                   <span className="flex items-center gap-1 text-xs text-emerald-600">
-                    <CheckCircle2 className="w-3 h-3" /> Notes saved
+                    <CheckCircle2 className="w-3 h-3" /> {t('notes_saved')}
                   </span>
                 )}
                 <div className="ml-auto">
@@ -932,7 +933,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     disabled={updateInquiryMutation.isPending}
                   >
                     <FileText className="w-3 h-3 mr-1" />
-                    Save Notes
+                    {t('save_notes')}
                   </Button>
                 </div>
               </div>
