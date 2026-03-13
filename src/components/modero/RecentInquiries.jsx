@@ -17,7 +17,7 @@ const statusConfig = {
   rented: { label: 'Rented', color: 'bg-slate-100 text-slate-700 border-slate-200', icon: CheckCircle2 },
 };
 
-export default function RecentInquiries({ inquiries }) {
+export default function RecentInquiries({ inquiries, properties = [] }) {
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -132,10 +132,10 @@ export default function RecentInquiries({ inquiries }) {
 
       <TenantDetailsDialog
         inquiry={selectedInquiry}
+        properties={properties}
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onUpdate={() => {
-          // Refresh the inquiries list if needed
           window.location.reload();
         }}
       />
