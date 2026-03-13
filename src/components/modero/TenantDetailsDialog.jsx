@@ -54,7 +54,7 @@ const statusConfig = {
   kyc_pending: { label: 'KYC Pending', color: 'bg-purple-100 text-purple-800', icon: Shield },
   qualified: { label: 'Qualified', color: 'bg-emerald-100 text-emerald-800', icon: CheckCircle2 },
   rejected: { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
-  rented: { label: 'Rented', color: 'bg-indigo-100 text-indigo-800', icon: Building },
+  rented: { label: 'Rented', color: 'bg-orange-100 text-orange-800', icon: Building },
 };
 
 const creditCheckConfig = {
