@@ -19,7 +19,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-500/30">
                   <span className="text-white text-lg font-black">M</span>
                 </div>
                 <span className="text-xl font-bold tracking-tight text-white">Modero</span>
