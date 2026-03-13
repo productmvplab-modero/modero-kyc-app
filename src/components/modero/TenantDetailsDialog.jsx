@@ -732,7 +732,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               ) : (
                 <Button 
                   onClick={handleBankConnect}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700"
+                  className="w-full bg-orange-500 hover:bg-orange-600"
                 >
                   <Link className="w-4 h-4 mr-2" />
                   Connect Bank Account
