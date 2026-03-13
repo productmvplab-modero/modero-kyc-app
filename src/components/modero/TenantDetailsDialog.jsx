@@ -871,7 +871,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         href={inquiry.documents.id_document_url} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
+                        className="text-xs text-orange-600 hover:underline flex items-center gap-1"
                       >
                         <FileText className="w-3 h-3" />
                         View Document
@@ -880,7 +880,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     </div>
                   ) : (
                     <label className="cursor-pointer">
-                      <div className="text-xs text-slate-500 hover:text-indigo-600 flex items-center gap-1">
+                      <div className="text-xs text-slate-500 hover:text-orange-600 flex items-center gap-1">
                         <Upload className="w-3 h-3" />
                         {uploadingDoc === 'id_document_url' ? 'Uploading...' : 'Upload'}
                       </div>
