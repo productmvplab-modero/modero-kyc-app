@@ -146,7 +146,7 @@ export default function Dashboard() {
         />
 
         <div id="recent-inquiries">
-          <RecentInquiries inquiries={filteredInquiries} />
+          <RecentInquiries inquiries={filteredInquiries} properties={properties} />
         </div>
       </div>
 
