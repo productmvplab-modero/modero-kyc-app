@@ -1027,7 +1027,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </CardHeader>
             <CardContent className="space-y-3">
               <textarea
-                className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y text-slate-700 bg-white"
+                className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 resize-y text-slate-700 bg-white"
                 placeholder={t('add_notes_placeholder')}
                 value={notesValue}
                 onChange={(e) => { setNotesValue(e.target.value); setNotesSaved(false); }}
