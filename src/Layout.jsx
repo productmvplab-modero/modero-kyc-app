@@ -12,7 +12,7 @@ export default function Layout({ children, currentPageName }) {
       
       <footer className="bg-slate-950 text-white mt-auto">
         {/* Top accent bar */}
-        <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+        <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
 
         <div className="max-w-7xl mx-auto px-6 py-14">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
