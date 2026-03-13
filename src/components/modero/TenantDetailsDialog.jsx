@@ -291,17 +291,18 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-slate-600 text-sm">Idealista ID:</span>
+                <span className="text-slate-600 text-sm">{t('idealista_id')}:</span>
                 {inquiry.idealista_id ? (
                   <button
                     onClick={() => {
                       const linkedProperty = properties.find(p => p.idealista_id === inquiry.idealista_id || p.id === inquiry.property_id);
                       if (linkedProperty && onOpenProperty) {
-                        onOpenProperty(linkedProperty);
+                        onOpenChange(false);
+                        setTimeout(() => onOpenProperty(linkedProperty), 150);
                       }
                     }}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
-                    title="View property listing"
+                    title={t('property_information')}
                   >
                     <Link className="w-3.5 h-3.5" />
                     #{inquiry.idealista_id}
