@@ -90,13 +90,17 @@ export default function Header() {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-slate-600">
-                    <User className="mr-2 h-4 w-4" />
-                    {t('edit_profile')}
+                  <DropdownMenuItem asChild className="text-slate-600 cursor-pointer">
+                    <Link to="/MyAccount" className="flex items-center w-full">
+                      <User className="mr-2 h-4 w-4" />
+                      {t('edit_profile')}
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="text-slate-600">
-                    <Settings className="mr-2 h-4 w-4" />
-                    {t('settings')}
+                  <DropdownMenuItem asChild className="text-slate-600 cursor-pointer">
+                    <Link to="/MyAccount?tab=kyc" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      {t('settings')}
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-rose-600">
