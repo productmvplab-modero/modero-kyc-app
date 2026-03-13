@@ -38,6 +38,7 @@ const statusInfo = {
 };
 
 export default function PropertyDetailsDialog({ property, inquiries, open, onOpenChange }) {
+  const { t } = useLanguage();
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const queryClient = useQueryClient();
 
@@ -89,14 +90,14 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
           {/* Property Details */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Property Information</CardTitle>
+              <CardTitle className="text-lg">{t('property_information')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Address</p>
+                    <p className="text-xs text-slate-500">{t('address')}</p>
                     <p className="text-sm font-medium">{property.address}</p>
                   </div>
                 </div>
@@ -110,21 +111,21 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 <div className="flex items-center gap-3">
                   <Euro className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Monthly Rent</p>
+                    <p className="text-xs text-slate-500">{t('monthly_rent')}</p>
                     <p className="text-sm font-medium">€{property.monthly_rent?.toLocaleString()}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Home className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Bedrooms</p>
+                    <p className="text-xs text-slate-500">{t('bedrooms')}</p>
                     <p className="text-sm font-medium">{property.bedrooms}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Idealista ID</p>
+                    <p className="text-xs text-slate-500">{t('idealista_id')}</p>
                     <p className="text-sm font-medium">{property.idealista_id || 'N/A'}</p>
                   </div>
                 </div>
@@ -146,40 +147,40 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-indigo-600" />
-                Performance Metrics
+                {t('performance_metrics')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                 <div className="text-center p-4 bg-indigo-50 rounded-xl border border-indigo-100">
                   <p className="text-3xl font-bold text-indigo-700">{total}</p>
-                  <p className="text-xs text-slate-600 mt-1">Total Inquiries</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('total_inquiries')}</p>
                 </div>
                 <div className="text-center p-4 bg-amber-50 rounded-xl border border-amber-100">
                   <p className="text-3xl font-bold text-amber-700">{screeningCount}</p>
-                  <p className="text-xs text-slate-600 mt-1">In Screening</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('in_screening')}</p>
                 </div>
                 <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-100">
                   <p className="text-3xl font-bold text-emerald-700">{qualifiedCount}</p>
-                  <p className="text-xs text-slate-600 mt-1">Qualified</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('qualified')}</p>
                 </div>
                 <div className="text-center p-4 bg-red-50 rounded-xl border border-red-100">
                   <p className="text-3xl font-bold text-red-700">{rejectedCount}</p>
-                  <p className="text-xs text-slate-600 mt-1">Rejected</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('status_rejected')}</p>
                 </div>
                 <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-100">
                   <p className="text-3xl font-bold text-purple-700">{approvedCount}</p>
-                  <p className="text-xs text-slate-600 mt-1">Approved / Rented</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('approved_rented')}</p>
                 </div>
                 <div className="text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
                   <p className="text-3xl font-bold text-slate-700">{conversionRate}%</p>
-                  <p className="text-xs text-slate-600 mt-1">Conversion Rate</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('conversion_rate')}</p>
                 </div>
               </div>
 
               {/* Rental Funnel */}
               <div>
-                <p className="text-sm font-semibold text-slate-700 mb-3">Rental Funnel</p>
+                <p className="text-sm font-semibold text-slate-700 mb-3">{t('rental_funnel')}</p>
                 <div className="space-y-2">
                   {funnelStages.map((stage) => {
                     const count = propertyInquiries.filter(i => i.status === stage.key).length;
@@ -208,7 +209,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <User className="w-5 h-5 text-indigo-600" />
-                Responsible Real Estate Agent
+                {t('responsible_agent')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -242,7 +243,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 {/* Agent details */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-slate-500">Name</p>
+                    <p className="text-xs text-slate-500">{t('name')}</p>
                     <p className="text-sm font-semibold text-slate-900">
                       {property.agent_first_name || property.agent_last_name
                         ? `${property.agent_first_name || ''} ${property.agent_last_name || ''}`.trim()
@@ -252,7 +253,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                   <div className="flex items-start gap-2">
                     <Building2 className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">Agency</p>
+                      <p className="text-xs text-slate-500">{t('agency')}</p>
                       <p className="text-sm font-medium text-slate-900">{property.agent_agency || '—'}</p>
                     </div>
                   </div>
@@ -266,7 +267,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                   <div className="flex items-start gap-2">
                     <Phone className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">Mobile</p>
+                      <p className="text-xs text-slate-500">{t('mobile')}</p>
                       {property.agent_phone ? (
                         <a href={`tel:${property.agent_phone}`} className="text-sm font-medium text-indigo-600 hover:underline">
                           {property.agent_phone}
@@ -295,7 +296,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Users className="w-5 h-5 text-indigo-600" />
-                Recent Inquiries
+                {t('recent_inquiries')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -333,7 +334,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
               ) : (
                 <div className="text-center py-10 text-slate-500">
                   <Clock className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-                  <p>No inquiries yet</p>
+                  <p>{t('no_inquiries')}</p>
                 </div>
               )}
             </CardContent>
