@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Save, Loader2, ShieldCheck, BarChart2, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone, Link2, CheckCircle2, Clock, XCircle, RefreshCw } from 'lucide-react';
+import { Save, Loader2, ShieldCheck, Gauge, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone, Link2, CheckCircle2, Clock, XCircle, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Section = ({ icon: Icon, title, description, children }) => (
@@ -299,7 +299,7 @@ export default function KycRulesSettings({ userEmail }) {
             weight={10}
           />
           <IntegrationCard
-            logo="📈"
+            logo="📊"
             name="Credit Check"
             provider="Dun & Bradstreet"
             description="Assess financial reliability and creditworthiness through Dun & Bradstreet's comprehensive credit database."
