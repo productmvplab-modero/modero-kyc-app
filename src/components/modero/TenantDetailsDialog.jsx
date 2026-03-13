@@ -211,12 +211,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     <span className="text-3xl font-bold text-white">{moderoScore}</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900">Modero Qualification Score</h3>
-                    <p className="text-sm text-slate-600">Overall tenant qualification rating</p>
+                    <h3 className="text-xl font-bold text-slate-900">{t('modero_score')}</h3>
+                    <p className="text-sm text-slate-600">{t('overall_rating')}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">Excellent</Badge>}
-                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">Good</Badge>}
-                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">Needs Review</Badge>}
+                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">{t('excellent')}</Badge>}
+                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">{t('good')}</Badge>}
+                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">{t('needs_review')}</Badge>}
                     </div>
                   </div>
                 </div>
@@ -230,8 +230,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg">Landlord Decision</h3>
-                  <p className="text-sm text-slate-600">Review and approve/reject this application</p>
+                  <h3 className="font-semibold text-lg">{t('landlord_decision')}</h3>
+                  <p className="text-sm text-slate-600">{t('review_approve_desc')}</p>
                 </div>
                 <div className="flex gap-2">
                   <Button
@@ -241,7 +241,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}
                   >
                     <Clock className="w-4 h-4 mr-1" />
-                    Pending
+                    {t('pending')}
                   </Button>
                   <Button
                     variant="outline"
@@ -250,7 +250,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}
                   >
                     <ThumbsUp className="w-4 h-4 mr-1" />
-                    Approve
+                    {t('approve')}
                   </Button>
                   <Button
                     variant="outline"
@@ -259,7 +259,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     className={inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}
                   >
                     <ThumbsDown className="w-4 h-4 mr-1" />
-                    Reject
+                    {t('reject')}
                   </Button>
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Application Progress */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Application Progress</CardTitle>
+              <CardTitle className="text-lg">{t('application_progress')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -360,7 +360,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <User className="w-5 h-5" />
-                Personal Information
+                {t('personal_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -443,7 +443,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Social Profiles */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Connected Profiles</CardTitle>
+              <CardTitle className="text-lg">{t('connected_profiles')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-3">
@@ -490,7 +490,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Briefcase className="w-5 h-5" />
-                Employment Information
+                {t('employment_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -530,7 +530,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <DollarSign className="w-5 h-5" />
-                Financial Information
+                {t('financial_information')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -595,7 +595,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Link className="w-5 h-5" />
-                Income Verification
+                {t('income_verification')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -629,7 +629,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Paperclip className="w-5 h-5" />
-                Required Documents
+                {t('required_documents')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -788,7 +788,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
-                Credit Check
+                {t('credit_check')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -800,8 +800,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     'text-amber-600'
                   }`} />
                   <div>
-                    <p className="font-semibold text-slate-900">Credit Verification</p>
-                    <p className="text-sm text-slate-600 mt-0.5">Dun &amp; Bradstreet assessment</p>
+                    <p className="font-semibold text-slate-900">{t('credit_verification')}</p>
+                    <p className="text-sm text-slate-600 mt-0.5">{t('db_assessment')}</p>
                   </div>
                 </div>
                 <Badge className={creditStatus.color}>
@@ -905,13 +905,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                Internal Notes
+                {t('internal_notes')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <textarea
                 className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y text-slate-700 bg-white"
-                placeholder="Add internal notes about this tenant..."
+                placeholder={t('add_notes_placeholder')}
                 value={notesValue}
                 onChange={(e) => { setNotesValue(e.target.value); setNotesSaved(false); }}
               />
@@ -934,7 +934,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     disabled={updateInquiryMutation.isPending}
                   >
                     <FileText className="w-3 h-3 mr-1" />
-                    Save Notes
+                    {t('save_notes')}
                   </Button>
                 </div>
               </div>
