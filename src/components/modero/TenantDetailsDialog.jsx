@@ -440,6 +440,47 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </CardContent>
           </Card>
 
+          {/* ID Verification - Identomat */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                {t('id_verification')}
+                <span className="ml-1 text-xs font-normal text-slate-500">· Identomat</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  {inquiry.id_verification_status === 'completed' ? (
+                    <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+                  ) : inquiry.id_verification_status === 'failed' ? (
+                    <XCircle className="w-8 h-8 text-red-600" />
+                  ) : inquiry.id_verification_status === 'in_progress' ? (
+                    <Clock className="w-8 h-8 text-amber-600" />
+                  ) : (
+                    <AlertCircle className="w-8 h-8 text-slate-400" />
+                  )}
+                  <div>
+                    <p className="font-semibold text-slate-900">Identity Verification Status</p>
+                    <p className="text-sm text-slate-600 mt-0.5">Biometric ID check via Identomat</p>
+                  </div>
+                </div>
+                <Badge className={
+                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-800' :
+                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-800' :
+                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-800' :
+                  'bg-slate-100 text-slate-800'
+                }>
+                  {inquiry.id_verification_status === 'completed' ? 'Completed' :
+                   inquiry.id_verification_status === 'failed' ? 'Failed' :
+                   inquiry.id_verification_status === 'in_progress' ? 'In Progress' :
+                   'Pending'}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Social Profiles */}
           <Card>
             <CardHeader>
