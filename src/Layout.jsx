@@ -38,7 +38,7 @@ export default function Layout({ children, currentPageName }) {
             </div>
 
             {/* Support */}
-            <div>
+            <div className="md:col-start-3 md:text-right">
               <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">Contact</h4>
               <ul className="space-y-4 text-sm text-slate-400">
                 <li>
