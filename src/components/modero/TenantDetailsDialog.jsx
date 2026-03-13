@@ -482,6 +482,77 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </CardContent>
           </Card>
 
+          {/* Verification Integrations */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Shield className="w-5 h-5" />
+                Verification Integrations
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {[
+                  {
+                    logo: 'in', name: 'LinkedIn', provider: 'Employment Verification',
+                    bg: 'bg-blue-600',
+                    status: inquiry.linkedin_connected
+                      ? (inquiry.linkedin_verification_status === 'confirmed' ? 'verified'
+                        : inquiry.linkedin_verification_status === 'rejected' ? 'rejected'
+                        : 'in_progress')
+                      : 'pending',
+                  },
+                  {
+                    logo: '🪪', name: 'Identomat', provider: 'Biometric ID Verification',
+                    bg: 'bg-violet-600',
+                    status: inquiry.id_verification_status === 'completed' ? 'verified'
+                      : inquiry.id_verification_status === 'failed' ? 'rejected'
+                      : inquiry.id_verification_status === 'in_progress' ? 'in_progress'
+                      : 'pending',
+                  },
+                  {
+                    logo: '💬', name: 'Twilio SMS', provider: 'Mobile Verification',
+                    bg: 'bg-red-600',
+                    status: inquiry.mobile_verified ? 'verified' : 'pending',
+                  },
+                  {
+                    logo: '@', name: 'Business Email', provider: 'Email Verification',
+                    bg: 'bg-emerald-600',
+                    status: inquiry.business_email_verified ? 'verified' : 'pending',
+                  },
+                  {
+                    logo: 'D&B', name: 'Dun & Bradstreet', provider: 'Credit Check',
+                    bg: 'bg-amber-600',
+                    status: inquiry.credit_check_status === 'approved' ? 'verified'
+                      : inquiry.credit_check_status === 'rejected' ? 'rejected'
+                      : inquiry.credit_check_status === 'in_review' ? 'in_progress'
+                      : 'pending',
+                  },
+                  {
+                    logo: '🏦', name: 'PSD2 Banking', provider: 'Bank Account Verification',
+                    bg: 'bg-indigo-600',
+                    status: inquiry.bank_account_connected
+                      ? (inquiry.bank_verification_status === 'verified' ? 'verified'
+                        : inquiry.bank_verification_status === 'failed' ? 'rejected'
+                        : 'in_progress')
+                      : 'pending',
+                  },
+                ].map(({ logo, name, provider, bg, status }) => (
+                  <div key={name} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                    <div className={`h-9 w-9 rounded-lg ${bg} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
+                      {logo}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-900">{name}</p>
+                      <p className="text-xs text-slate-500">{provider}</p>
+                    </div>
+                    <VerificationStatusBadge status={status} />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Social Profiles */}
           <Card>
             <CardHeader>
