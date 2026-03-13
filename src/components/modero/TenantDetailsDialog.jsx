@@ -465,6 +465,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div>
                     <p className="font-semibold text-slate-900">Identity Verification Status</p>
                     <p className="text-sm text-slate-600 mt-0.5">Biometric ID check via Identomat</p>
+                    {inquiry.dni_nie_number && (
+                      <p className="text-xs text-slate-500 mt-1">NIE/DNI: <span className="font-medium text-slate-700">{inquiry.dni_nie_number}</span></p>
+                    )}
                   </div>
                 </div>
                 <Badge className={
