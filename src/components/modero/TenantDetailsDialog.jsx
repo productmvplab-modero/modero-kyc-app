@@ -51,7 +51,7 @@ import VerificationStatusBadge from '@/components/modero/VerificationStatusBadge
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },
   screening: { label: 'Screening', color: 'bg-amber-100 text-amber-800', icon: FileText },
-  kyc_pending: { label: 'KYC Pending', color: 'bg-purple-100 text-purple-800', icon: Shield },
+  kyc_pending: { label: 'KYC Pending', color: 'bg-orange-100 text-orange-800', icon: Shield },
   qualified: { label: 'Qualified', color: 'bg-emerald-100 text-emerald-800', icon: CheckCircle2 },
   rejected: { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
   rented: { label: 'Rented', color: 'bg-orange-100 text-orange-800', icon: Building },
