@@ -11,7 +11,8 @@ const tabs = [
 ];
 
 export default function MyAccount() {
-  const [activeTab, setActiveTab] = useState('profile');
+  const params = new URLSearchParams(window.location.search);
+  const [activeTab, setActiveTab] = useState(params.get('tab') || 'profile');
 
   const { data: user, isLoading } = useQuery({
     queryKey: ['currentUser'],
