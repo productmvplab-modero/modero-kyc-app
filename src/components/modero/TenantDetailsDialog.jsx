@@ -45,6 +45,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLanguage } from '@/components/LanguageContext';
+import VerificationStatusBadge from '@/components/modero/VerificationStatusBadge';
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },
