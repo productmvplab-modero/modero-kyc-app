@@ -299,7 +299,7 @@ export default function KycRulesSettings({ userEmail }) {
             weight={10}
           />
           <IntegrationCard
-            logo="D&B"
+            logo="📊"
             name="Credit Check"
             provider="Dun & Bradstreet"
             description="Assess financial reliability and creditworthiness through Dun & Bradstreet's comprehensive credit database."
