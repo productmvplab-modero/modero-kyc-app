@@ -464,10 +464,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     <div className="flex items-center gap-2 mt-0.5">
                       {inquiry.id_verification_status === 'completed' ? (
                         <span className="flex items-center gap-1.5 text-sm text-emerald-700 font-medium">
-                          <span className="inline-flex items-center gap-1 bg-violet-50 border border-violet-200 rounded px-1.5 py-0.5 text-xs text-violet-700 font-bold">
-                            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-9 2.5-9 4v1h18v-1c0-1.5-3-4-9-4z"/></svg>
-                            Identomat
-                          </span>
+                          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/51bf11cab_e7JZ5vmfCJXN9sOE8BQr4HvBjLe1734715365642_200x200.png" alt="Identomat" className="h-5 object-contain" />
                           Verified
                         </span>
                       ) : (
