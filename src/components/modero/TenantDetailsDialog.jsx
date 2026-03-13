@@ -1041,7 +1041,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <div className="ml-auto">
                   <Button
                     size="sm"
-                    className="bg-indigo-600 hover:bg-indigo-700"
+                    className="bg-orange-500 hover:bg-orange-600"
                     onClick={() => {
                       updateInquiryMutation.mutate(
                         { id: inquiry.id, data: { notes: notesValue } },
