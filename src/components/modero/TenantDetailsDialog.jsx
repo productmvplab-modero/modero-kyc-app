@@ -858,10 +858,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div>
                     <p className="font-semibold text-slate-900">Credit Verification</p>
                     <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="inline-flex items-center gap-1 bg-red-50 border border-red-200 rounded px-1.5 py-0.5 text-xs text-[#cc0000] font-extrabold tracking-widest">
-                        D&amp;B
-                      </span>
-                      <span className="text-sm text-slate-600">Dun &amp; Bradstreet assessment</span>
+                      <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698d779f62bd671d4e3469f7/47af9e5b8_lg-67e798a81827a-Dun-Bradstreet.jpg" alt="Dun & Bradstreet" className="h-5 object-contain" />
+                      <span className="text-sm text-slate-600">assessment</span>
                     </div>
                   </div>
                 </div>
