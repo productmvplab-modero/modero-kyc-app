@@ -21,6 +21,8 @@ const statusConfig = {
 export default function RecentInquiries({ inquiries, properties = [] }) {
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [propertyDialogOpen, setPropertyDialogOpen] = useState(false);
 
   const recentInquiries = [...inquiries]
     .sort((a, b) => new Date(b.created_date) - new Date(a.created_date))
@@ -133,12 +135,19 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
 
       <TenantDetailsDialog
         inquiry={selectedInquiry}
-        properties={properties}
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        onUpdate={() => {
-          window.location.reload();
+        properties={properties}
+        onOpenProperty={(p) => {
+          setPropertyDialogOpen(true);
+          setSelectedProperty(p);
         }}
+      />
+      <PropertyDetailsDialog
+        property={selectedProperty}
+        inquiries={inquiries}
+        open={propertyDialogOpen}
+        onOpenChange={setPropertyDialogOpen}
       />
     </motion.div>
   );
