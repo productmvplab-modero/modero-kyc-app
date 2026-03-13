@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Save, Loader2, ShieldCheck, TrendingUp, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone, Link2, CheckCircle2, Clock, XCircle, RefreshCw } from 'lucide-react';
+import { Save, Loader2, ShieldCheck, BarChart2, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone, Link2, CheckCircle2, Clock, XCircle, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Section = ({ icon: Icon, title, description, children }) => (
