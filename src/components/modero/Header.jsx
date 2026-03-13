@@ -117,7 +117,7 @@ export default function Header() {
           )}
           
           {!isAuthenticated && (
-            <Button onClick={handleLogin} className="bg-indigo-600 hover:bg-indigo-700">
+            <Button onClick={handleLogin} className="bg-orange-500 hover:bg-orange-600">
               <LogIn className="mr-2 h-4 w-4" />
               {t('login')}
             </Button>
