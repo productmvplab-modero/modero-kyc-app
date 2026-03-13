@@ -7,13 +7,14 @@ import { useLanguage } from '@/components/LanguageContext';
 const COLORS = ['#6366f1', '#8b5cf6', '#a855f7', '#10b981', '#f43f5e'];
 
 export default function InquiryFunnel({ inquiries }) {
+  const { t } = useLanguage();
   const getFunnelData = () => {
     const stages = {
-      'New': inquiries.filter(i => i.status === 'new').length,
-      'Screening': inquiries.filter(i => i.status === 'screening').length,
-      'KYC Pending': inquiries.filter(i => i.status === 'kyc_pending').length,
-      'Qualified': inquiries.filter(i => i.status === 'qualified').length,
-      'Rented': inquiries.filter(i => i.status === 'rented').length,
+      [t('status_new')]: inquiries.filter(i => i.status === 'new').length,
+      [t('status_screening')]: inquiries.filter(i => i.status === 'screening').length,
+      [t('status_kyc_pending')]: inquiries.filter(i => i.status === 'kyc_pending').length,
+      [t('status_qualified')]: inquiries.filter(i => i.status === 'qualified').length,
+      [t('status_rented')]: inquiries.filter(i => i.status === 'rented').length,
     };
 
     return Object.entries(stages).map(([stage, count]) => ({
@@ -32,8 +33,8 @@ export default function InquiryFunnel({ inquiries }) {
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-slate-900">Inquiry Pipeline</CardTitle>
-          <p className="text-sm text-slate-500 mt-1">Tenant qualification funnel</p>
+          <CardTitle className="text-xl font-bold text-slate-900">{t('inquiry_pipeline')}</CardTitle>
+          <p className="text-sm text-slate-500 mt-1">{t('tenant_qualification_funnel')}</p>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>
