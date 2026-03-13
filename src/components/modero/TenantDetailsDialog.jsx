@@ -72,6 +72,7 @@ const progressSteps = [
 
 // TenantDetailsDialog - v2
 export default function TenantDetailsDialog({ inquiry, open, onOpenChange, properties = [], onOpenProperty }) {
+  const { t } = useLanguage();
   const [uploading, setUploading] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState(null);
   const [notesValue, setNotesValue] = React.useState('');
