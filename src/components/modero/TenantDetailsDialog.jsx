@@ -273,7 +273,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <div className="relative">
               <Avatar className="h-24 w-24">
                 <AvatarImage src={inquiry.profile_picture_url} />
-                <AvatarFallback className="text-2xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
+                <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
                   {inquiry.tenant_name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
