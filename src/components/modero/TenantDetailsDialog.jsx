@@ -336,7 +336,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       onClick={() => handleProgressChange(step.step)}
                       className={`p-3 rounded-lg border-2 transition-all text-left ${
                         inquiry.progress_step >= step.step
-                          ? 'border-indigo-600 bg-indigo-50'
+                          ? 'border-orange-500 bg-orange-50'
                           : 'border-slate-200 hover:border-slate-300'
                       }`}
                     >
