@@ -82,7 +82,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
             <Home className="w-6 h-6 text-indigo-600" />
-            {property.title}
+            {property.title} — {t('property_information')}
           </DialogTitle>
         </DialogHeader>
 
@@ -104,7 +104,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">{t('city')}</p>
+                    <p className="text-xs text-slate-500">City</p>
                     <p className="text-sm font-medium">{property.city}</p>
                   </div>
                 </div>
@@ -132,7 +132,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 <div className="flex items-center gap-3">
                   <AlertCircle className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-xs text-slate-500">Status</p>
+                    <p className="text-xs text-slate-500">{t('property_status_label')}</p>
                     <Badge className={property.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}>
                       {property.status}
                     </Badge>
@@ -162,7 +162,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 </div>
                 <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-100">
                   <p className="text-3xl font-bold text-emerald-700">{qualifiedCount}</p>
-                  <p className="text-xs text-slate-600 mt-1">{t('qualified')}</p>
+                  <p className="text-xs text-slate-600 mt-1">{t('status_qualified')}</p>
                 </div>
                 <div className="text-center p-4 bg-red-50 rounded-xl border border-red-100">
                   <p className="text-3xl font-bold text-red-700">{rejectedCount}</p>
@@ -243,7 +243,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 {/* Agent details */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-slate-500">{t('name')}</p>
+                    <p className="text-xs text-slate-500">{t('name_label')}</p>
                     <p className="text-sm font-semibold text-slate-900">
                       {property.agent_first_name || property.agent_last_name
                         ? `${property.agent_first_name || ''} ${property.agent_last_name || ''}`.trim()
@@ -253,21 +253,21 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                   <div className="flex items-start gap-2">
                     <Building2 className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">{t('agency')}</p>
+                      <p className="text-xs text-slate-500">{t('agency_label')}</p>
                       <p className="text-sm font-medium text-slate-900">{property.agent_agency || '—'}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">City</p>
+                      <p className="text-xs text-slate-500">{t('city')}</p>
                       <p className="text-sm font-medium text-slate-900">{property.agent_city || '—'}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <Phone className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">{t('mobile')}</p>
+                      <p className="text-xs text-slate-500">{t('mobile_label')}</p>
                       {property.agent_phone ? (
                         <a href={`tel:${property.agent_phone}`} className="text-sm font-medium text-indigo-600 hover:underline">
                           {property.agent_phone}
@@ -278,7 +278,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                   <div className="flex items-start gap-2 sm:col-span-2">
                     <Mail className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-xs text-slate-500">Email</p>
+                      <p className="text-xs text-slate-500">{t('email_label')}</p>
                       {property.agent_email ? (
                         <a href={`mailto:${property.agent_email}`} className="text-sm font-medium text-indigo-600 hover:underline">
                           {property.agent_email}
