@@ -79,12 +79,16 @@ export default function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-3 hover:bg-slate-50">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`} />
+                      <AvatarImage src={user.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`} />
                       <AvatarFallback>
                         {user.full_name ? user.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="font-medium text-slate-700">{user.full_name || user.email}</span>
+                    <span className="font-medium text-slate-700">
+                      {(user.first_name || user.last_name)
+                        ? `${user.first_name || ''} ${user.last_name || ''}`.trim()
+                        : (user.full_name || user.email)}
+                    </span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
