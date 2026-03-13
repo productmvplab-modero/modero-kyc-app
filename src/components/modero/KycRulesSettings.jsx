@@ -249,6 +249,107 @@ export default function KycRulesSettings({ userEmail }) {
         <ToggleRow label="Tax Declaration" value={rules.require_tax_declaration} onChange={(v) => set('require_tax_declaration', v)} />
       </Section>
 
+      {/* Verification Integrations */}
+      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-4">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center">
+            <Link2 className="w-5 h-5 text-indigo-600" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-slate-900">Verification Integrations</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Enable third-party verification providers for your KYC workflow</p>
+          </div>
+        </div>
+        <p className="text-xs text-slate-400 mb-5 pl-12">Each enabled integration contributes to the overall tenant verification score. Statuses are shown per tenant in their profile.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <IntegrationCard
+            logo="in"
+            name="LinkedIn Verification"
+            provider="LinkedIn"
+            description="Confirm employment history and professional identity by connecting the tenant's LinkedIn profile."
+            enabled={rules.integration_linkedin_enabled}
+            onToggle={(v) => set('integration_linkedin_enabled', v)}
+            weight={15}
+          />
+          <IntegrationCard
+            logo="🪪"
+            name="Biometric ID Verification"
+            provider="Identomat"
+            description="Verify ID documents and perform facial biometric checks to confirm the tenant's real identity."
+            enabled={rules.integration_identomat_enabled}
+            onToggle={(v) => set('integration_identomat_enabled', v)}
+            weight={25}
+          />
+          <IntegrationCard
+            logo="💬"
+            name="SMS Mobile Verification"
+            provider="Twilio"
+            description="Send a one-time code to the tenant's mobile number to confirm ownership of the phone number."
+            enabled={rules.integration_twilio_enabled}
+            onToggle={(v) => set('integration_twilio_enabled', v)}
+            weight={10}
+          />
+          <IntegrationCard
+            logo="@"
+            name="Business Email Verification"
+            provider="Email Validation"
+            description="Confirm the validity and ownership of the tenant's business email address domain."
+            enabled={rules.integration_business_email_enabled}
+            onToggle={(v) => set('integration_business_email_enabled', v)}
+            weight={10}
+          />
+          <IntegrationCard
+            logo="D&B"
+            name="Credit Check"
+            provider="Dun & Bradstreet"
+            description="Assess financial reliability and creditworthiness through Dun & Bradstreet's comprehensive credit database."
+            enabled={rules.integration_dnb_enabled}
+            onToggle={(v) => set('integration_dnb_enabled', v)}
+            weight={30}
+          />
+          <IntegrationCard
+            logo="🏦"
+            name="Bank Account Verification"
+            provider="PSD2 Open Banking"
+            description="Verify the tenant's bank account and financial information through secure PSD2 open banking authentication."
+            enabled={rules.integration_psd2_enabled}
+            onToggle={(v) => set('integration_psd2_enabled', v)}
+            weight={20}
+          />
+        </div>
+
+        {/* Score preview */}
+        <div className="mt-5 p-4 bg-slate-50 rounded-lg border border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-slate-700">Max Achievable Verification Score</span>
+            <span className="text-lg font-bold text-indigo-600">
+              {[
+                rules.integration_linkedin_enabled && 15,
+                rules.integration_identomat_enabled && 25,
+                rules.integration_twilio_enabled && 10,
+                rules.integration_business_email_enabled && 10,
+                rules.integration_dnb_enabled && 30,
+                rules.integration_psd2_enabled && 20,
+              ].filter(Boolean).reduce((a, b) => a + b, 0)} / 110 pts
+            </span>
+          </div>
+          <div className="w-full bg-slate-200 rounded-full h-2">
+            <div
+              className="bg-indigo-600 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${Math.min(100, ([
+                rules.integration_linkedin_enabled && 15,
+                rules.integration_identomat_enabled && 25,
+                rules.integration_twilio_enabled && 10,
+                rules.integration_business_email_enabled && 10,
+                rules.integration_dnb_enabled && 30,
+                rules.integration_psd2_enabled && 20,
+              ].filter(Boolean).reduce((a, b) => a + b, 0) / 110) * 100)}%` }}
+            />
+          </div>
+          <p className="text-xs text-slate-400 mt-2">Enable more integrations to increase the maximum qualification score available to tenants.</p>
+        </div>
+      </div>
+
       {/* Risk Flags */}
       <Section icon={AlertTriangle} title="Tenant Risk Flags" description="Rules that trigger warnings or manual review">
         <ToggleRow label="Flag: Credit Score Below Threshold" value={rules.flag_low_credit_score} onChange={(v) => set('flag_low_credit_score', v)} />
