@@ -56,7 +56,7 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                   <TableHead className="font-semibold">{t('score')}</TableHead>
                   <TableHead className="font-semibold">{t('status_label')}</TableHead>
                   <TableHead className="font-semibold">{t('date_label')}</TableHead>
-                  <TableHead className="font-semibold text-right">{t('contact')}</TableHead>
+                  <TableHead className="font-semibold text-right whitespace-nowrap pl-8">{t('contact')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -122,7 +122,7 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                         <TableCell className="text-sm text-slate-600">
                           {format(new Date(inquiry.created_date), "MMM d, yyyy")}
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600 text-right">
+                        <TableCell className="text-sm text-slate-600 text-right whitespace-nowrap pl-8">
                           {inquiry.tenant_email}
                         </TableCell>
                       </TableRow>
