@@ -14,7 +14,6 @@ import PropertyDetailsDialog from "../components/modero/PropertyDetailsDialog";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function Dashboard() {
-  const { t } = useLanguage();
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [propertyDialogOpen, setPropertyDialogOpen] = useState(false);
@@ -77,16 +76,16 @@ export default function Dashboard() {
                 }}
               >
                 <SelectTrigger className="w-[180px] border-slate-200">
-                  <SelectValue placeholder={t('filter_by_status')} />
+                  <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t('all_inquiries')}</SelectItem>
-                  <SelectItem value="new">{t('status_new')}</SelectItem>
-                  <SelectItem value="screening">{t('status_screening')}</SelectItem>
-                  <SelectItem value="kyc_pending">{t('status_kyc_pending')}</SelectItem>
-                  <SelectItem value="qualified">{t('status_qualified')}</SelectItem>
-                  <SelectItem value="rejected">{t('status_rejected')}</SelectItem>
-                  <SelectItem value="rented">{t('status_rented')}</SelectItem>
+                  <SelectItem value="all">All Inquiries</SelectItem>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="screening">Screening</SelectItem>
+                  <SelectItem value="kyc_pending">KYC Pending</SelectItem>
+                  <SelectItem value="qualified">Qualified</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                  <SelectItem value="rented">Rented</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -95,9 +94,9 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
-            title={t('active_properties')}
+            title="Active Properties"
             value={activeProperties}
-            subtitle={`${totalProperties} ${t('total_listings')}`}
+            subtitle={`${totalProperties} total listings`}
             icon={Building2}
             trend="up"
             trendValue={12}
@@ -105,9 +104,9 @@ export default function Dashboard() {
             index={0}
           />
           <MetricCard
-            title={t('total_inquiries')}
+            title="Total Inquiries"
             value={totalInquiries}
-            subtitle={`${avgInquiriesPerProperty} ${t('avg_per_property')}`}
+            subtitle={`${avgInquiriesPerProperty} avg per property`}
             icon={MessageSquare}
             trend="up"
             trendValue={24}
@@ -115,9 +114,9 @@ export default function Dashboard() {
             index={1}
           />
           <MetricCard
-            title={t('qualified_tenants')}
+            title="Qualified Tenants"
             value={qualifiedTenants}
-            subtitle={`${conversionRate}% ${t('conversion_rate')}`}
+            subtitle={`${conversionRate}% conversion rate`}
             icon={UserCheck}
             trend="up"
             trendValue={8}
@@ -125,9 +124,9 @@ export default function Dashboard() {
             index={2}
           />
           <MetricCard
-            title={t('verification_rate')}
+            title="Verification Rate"
             value={`${verificationRate}%`}
-            subtitle={`${verificationCompleted} ${t('verified_tenants')}`}
+            subtitle={`${verificationCompleted} verified tenants`}
             icon={ShieldCheck}
             trend="up"
             trendValue={18}

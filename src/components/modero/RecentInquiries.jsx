@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
 import TenantDetailsDialog from "./TenantDetailsDialog";
 import PropertyDetailsDialog from "./PropertyDetailsDialog";
-import { useLanguage } from "@/components/LanguageContext";
+import { useLanguage } from '@/components/LanguageContext';
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-700 border-blue-200', icon: Clock },
@@ -20,7 +20,6 @@ const statusConfig = {
 };
 
 export default function RecentInquiries({ inquiries, properties = [] }) {
-  const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
@@ -43,27 +42,27 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4 border-b">
-          <CardTitle className="text-xl font-bold text-slate-900">{t('recent_inquiries')}</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-900">Recent Inquiries</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50">
-                  <TableHead className="font-semibold">{t('tenant')}</TableHead>
-                  <TableHead className="font-semibold">{t('idealista_id')}</TableHead>
-                  <TableHead className="font-semibold">{t('contact')}</TableHead>
-                  <TableHead className="font-semibold">{t('income')}</TableHead>
-                  <TableHead className="font-semibold">{t('score')}</TableHead>
-                  <TableHead className="font-semibold">{t('status_label')}</TableHead>
-                  <TableHead className="font-semibold">{t('date')}</TableHead>
+                  <TableHead className="font-semibold">Tenant</TableHead>
+                  <TableHead className="font-semibold">Idealista ID</TableHead>
+                  <TableHead className="font-semibold">Contact</TableHead>
+                  <TableHead className="font-semibold">Income</TableHead>
+                  <TableHead className="font-semibold">Score</TableHead>
+                  <TableHead className="font-semibold">Status</TableHead>
+                  <TableHead className="font-semibold">Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentInquiries.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8 text-slate-500">
-                      {t('no_inquiries')}
+                      No inquiries yet
                     </TableCell>
                   </TableRow>
                 ) : (
