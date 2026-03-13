@@ -44,6 +44,7 @@ import {
   Facebook
 } from 'lucide-react';
 import { toast } from 'sonner';
+import PropertyDetailsDialog from './PropertyDetailsDialog';
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },
@@ -1009,5 +1010,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* Nested property details dialog opened from Idealista ID click */}
+    <PropertyDetailsDialog
+      property={selectedProperty}
+      inquiries={[inquiry]}
+      open={propertyDialogOpen}
+      onOpenChange={setPropertyDialogOpen}
+    />
   );
 }
