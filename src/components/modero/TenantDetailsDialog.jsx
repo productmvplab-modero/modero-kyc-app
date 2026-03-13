@@ -278,7 +278,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 </AvatarFallback>
               </Avatar>
               <label className="absolute bottom-0 right-0 cursor-pointer">
-                <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700">
+                <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
                   <Upload className="h-4 w-4 text-white" />
                 </div>
                 <input
