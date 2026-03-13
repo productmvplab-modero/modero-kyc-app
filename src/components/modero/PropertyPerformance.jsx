@@ -7,6 +7,7 @@ import { MapPin, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function PropertyPerformance({ properties, inquiries = [], onPropertyClick }) {
+  const { t } = useLanguage();
   const topProperties = [...properties]
     .sort((a, b) => b.total_inquiries - a.total_inquiries)
     .slice(0, 5);
@@ -24,25 +25,25 @@ export default function PropertyPerformance({ properties, inquiries = [], onProp
     >
       <Card className="border-0 shadow-lg">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-bold text-slate-900">My Properties</CardTitle>
-          <p className="text-sm text-slate-500 mt-1">Click a property to view details</p>
+          <CardTitle className="text-xl font-bold text-slate-900">{t('my_properties')}</CardTitle>
+          <p className="text-sm text-slate-500 mt-1">{t('click_property_details')}</p>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow className="bg-slate-50">
-                <TableHead className="font-semibold">Property</TableHead>
-                <TableHead className="font-semibold">Rent</TableHead>
-                <TableHead className="font-semibold">Inquiries</TableHead>
-                <TableHead className="font-semibold">Qualified</TableHead>
-                <TableHead className="font-semibold">Conversion</TableHead>
+                <TableHead className="font-semibold">{t('property')}</TableHead>
+                <TableHead className="font-semibold">{t('rent')}</TableHead>
+                <TableHead className="font-semibold">{t('inquiries')}</TableHead>
+                <TableHead className="font-semibold">{t('qualified')}</TableHead>
+                <TableHead className="font-semibold">{t('conversion')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {topProperties.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                    No properties yet
+                    {t('no_properties')}
                   </TableCell>
                 </TableRow>
               ) : (

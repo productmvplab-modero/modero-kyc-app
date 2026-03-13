@@ -5,6 +5,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { motion } from "framer-motion";
 
 export default function MetricCard({ title, value, subtitle, icon: Icon, trend, trendValue, color = "indigo", index = 0 }) {
+  const { t } = useLanguage();
   const isPositive = trend === "up";
   
   const colorStyles = {
@@ -41,7 +42,7 @@ export default function MetricCard({ title, value, subtitle, icon: Icon, trend, 
                   <span className={`text-sm font-semibold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                     {trendValue}%
                   </span>
-                  <span className="text-xs text-slate-500">vs last month</span>
+                  <span className="text-xs text-slate-500">{t('vs_last_month')}</span>
                 </div>
               )}
             </div>
