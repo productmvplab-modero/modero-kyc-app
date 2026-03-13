@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Save, Loader2, ShieldCheck, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone } from 'lucide-react';
+import { Save, Loader2, ShieldCheck, Banknote, Briefcase, FileText, AlertTriangle, Zap, Phone, Link2, CheckCircle2, Clock, XCircle, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Section = ({ icon: Icon, title, description, children }) => (
@@ -35,6 +35,45 @@ const ToggleRow = ({ label, description, value, onChange, required }) => (
       {description && <p className="text-xs text-slate-500 mt-0.5">{description}</p>}
     </div>
     <Switch checked={value} onCheckedChange={onChange} />
+  </div>
+);
+
+const STATUS_CONFIG = {
+  pending:     { label: 'Pending',     color: 'bg-slate-100 text-slate-600',  icon: Clock },
+  in_progress: { label: 'In Progress', color: 'bg-blue-100 text-blue-700',    icon: RefreshCw },
+  verified:    { label: 'Verified',    color: 'bg-green-100 text-green-700',  icon: CheckCircle2 },
+  rejected:    { label: 'Rejected',    color: 'bg-red-100 text-red-700',      icon: XCircle },
+};
+
+const StatusBadge = ({ status = 'pending' }) => {
+  const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.pending;
+  const Icon = cfg.icon;
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${cfg.color}`}>
+      <Icon className="w-3 h-3" />
+      {cfg.label}
+    </span>
+  );
+};
+
+const IntegrationCard = ({ logo, name, description, provider, enabled, onToggle, weight }) => (
+  <div className={`rounded-xl border-2 p-5 transition-all ${enabled ? 'border-indigo-200 bg-indigo-50/40' : 'border-slate-200 bg-white'}`}>
+    <div className="flex items-start justify-between gap-3">
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 text-lg font-bold ${enabled ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+          {logo}
+        </div>
+        <div className="min-w-0">
+          <p className="font-semibold text-slate-900 text-sm">{name}</p>
+          <p className="text-xs text-slate-500 mt-0.5">{provider}</p>
+        </div>
+      </div>
+      <Switch checked={enabled} onCheckedChange={onToggle} />
+    </div>
+    <p className="text-xs text-slate-500 mt-3 leading-relaxed">{description}</p>
+    {weight && (
+      <p className="text-xs text-indigo-600 font-medium mt-2">+{weight} pts to verification score</p>
+    )}
   </div>
 );
 
