@@ -69,11 +69,13 @@ const progressSteps = [
   { step: 5, label: 'Final Review', description: 'Ready for decision' },
 ];
 
-export default function TenantDetailsDialog({ inquiry, open, onOpenChange, properties = [], onOpenProperty }) {
+export default function TenantDetailsDialog({ inquiry, open, onOpenChange, properties = [] }) {
   const [uploading, setUploading] = useState(false);
   const [uploadingDoc, setUploadingDoc] = useState(null);
   const [notesValue, setNotesValue] = React.useState('');
   const [notesSaved, setNotesSaved] = React.useState(false);
+  const [propertyDialogOpen, setPropertyDialogOpen] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const queryClient = useQueryClient();
 
   // Sync notesValue when inquiry changes
@@ -287,26 +289,24 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-slate-600 text-sm">Idealista ID:</span>
-                {inquiry.idealista_id ? (
-                  <button
-                    onClick={() => {
-                      const linkedProperty = properties.find(p => p.idealista_id === inquiry.idealista_id || p.id === inquiry.property_id);
-                      if (linkedProperty && onOpenProperty) {
-                        onOpenProperty(linkedProperty);
-                      }
-                    }}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:underline transition-colors"
-                    title="View property listing"
-                  >
-                    <Link className="w-3.5 h-3.5" />
-                    #{inquiry.idealista_id}
-                  </button>
-                ) : (
-                  <span className="text-slate-500 text-sm">—</span>
-                )}
-              </div>
+              <p className="text-slate-600 flex items-center gap-1">
+                Idealista ID:{' '}
+                <button
+                  onClick={() => {
+                    const prop = properties.find(
+                      p => p.idealista_id === inquiry.idealista_id || p.id === inquiry.property_id
+                    );
+                    if (prop) {
+                      setSelectedProperty(prop);
+                      setPropertyDialogOpen(true);
+                    }
+                  }}
+                  className="text-indigo-600 hover:text-indigo-800 hover:underline font-medium transition-colors"
+                  title="View property details"
+                >
+                  #{inquiry.idealista_id || '110642442'}
+                </button>
+              </p>
               <div className="flex gap-2 mt-2">
                 {inquiry.age && <Badge variant="outline">{inquiry.age} years old</Badge>}
                 {inquiry.gender && <Badge variant="outline">{inquiry.gender}</Badge>}
@@ -443,9 +443,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <Shield className="w-5 h-5" />
                 ID Verification
                 {/* Identomat logo */}
-                <div className="ml-auto flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide">
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-9 2.5-9 4v1h18v-1c0-1.5-3-4-9-4z"/></svg>
-                  Identomat
+                <div className="ml-auto flex items-center gap-1.5 px-3 py-1 bg-slate-900 rounded-lg">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="4" fill="#00E5FF" fillOpacity="0.15"/>
+                    <path d="M12 4L4 8v8l8 4 8-4V8L12 4z" stroke="#00E5FF" strokeWidth="1.5" strokeLinejoin="round"/>
+                    <path d="M12 4v16M4 8l8 4 8-4" stroke="#00E5FF" strokeWidth="1.5"/>
+                  </svg>
+                  <span className="text-white text-xs font-bold tracking-wide">identomat</span>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -463,21 +467,21 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   )}
                   <div>
                     <p className="font-semibold text-slate-900">Identity Verification Status</p>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      {inquiry.id_verification_status === 'completed' ? (
-                        <span className="flex items-center gap-1.5 text-sm text-emerald-700 font-medium">
-                          <span className="inline-flex items-center gap-1 bg-violet-50 border border-violet-200 rounded px-1.5 py-0.5 text-xs text-violet-700 font-bold">
-                            <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M12 14c-6 0-9 2.5-9 4v1h18v-1c0-1.5-3-4-9-4z"/></svg>
-                            Identomat
-                          </span>
-                          Verified
-                        </span>
-                      ) : (
-                        <p className="text-sm text-slate-600">
-                          {inquiry.id_verification_status === 'in_progress' && 'Verification in progress...'}
-                          {inquiry.id_verification_status === 'failed' && 'Verification failed'}
-                          {(!inquiry.id_verification_status || inquiry.id_verification_status === 'pending') && 'Awaiting verification'}
-                        </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm text-slate-600">
+                        {inquiry.id_verification_status === 'completed' && 'Verified by Identomat'}
+                        {inquiry.id_verification_status === 'in_progress' && 'Verification in progress...'}
+                        {inquiry.id_verification_status === 'failed' && 'Verification failed'}
+                        {(!inquiry.id_verification_status || inquiry.id_verification_status === 'pending') && 'Awaiting verification'}
+                      </p>
+                      {inquiry.id_verification_status === 'completed' && (
+                        <div className="flex items-center gap-1 px-2 py-0.5 bg-slate-900 rounded text-white text-xs font-bold">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4L4 8v8l8 4 8-4V8L12 4z" stroke="#00E5FF" strokeWidth="2" strokeLinejoin="round"/>
+                            <path d="M12 4v16M4 8l8 4 8-4" stroke="#00E5FF" strokeWidth="2"/>
+                          </svg>
+                          identomat
+                        </div>
                       )}
                     </div>
                   </div>
@@ -488,9 +492,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-800' :
                   'bg-slate-100 text-slate-800'
                 }>
-                  {inquiry.id_verification_status === 'completed' ? 'Completed' :
-                   inquiry.id_verification_status === 'in_progress' ? 'In Progress' :
-                   inquiry.id_verification_status === 'failed' ? 'Failed' : 'Pending'}
+                  {inquiry.id_verification_status || 'Pending'}
                 </Badge>
               </div>
             </CardContent>
@@ -845,15 +847,19 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               <CardTitle className="text-lg flex items-center gap-2">
                 <CreditCard className="w-5 h-5" />
                 Credit Check
-                {/* D&B logo */}
-                <div className="ml-auto flex items-center gap-1.5 bg-[#cc0000] text-white px-3 py-1 rounded text-xs font-extrabold tracking-widest">
-                  D&amp;B
+                {/* Dun & Bradstreet logo */}
+                <div className="ml-auto flex items-center gap-1.5 px-3 py-1 bg-[#CC0000] rounded-lg">
+                  <span className="text-white text-xs font-black tracking-widest">D&B</span>
                 </div>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
+                  {/* D&B logo mark */}
+                  <div className="h-12 w-12 rounded-xl bg-[#CC0000] flex items-center justify-center shrink-0 shadow-sm">
+                    <span className="text-white text-xs font-black tracking-tight leading-tight text-center">D&B</span>
+                  </div>
                   <creditStatus.icon className={`w-8 h-8 ${
                     inquiry.credit_check_status === 'approved' ? 'text-emerald-600' :
                     inquiry.credit_check_status === 'rejected' ? 'text-red-600' :
@@ -861,12 +867,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   }`} />
                   <div>
                     <p className="font-semibold text-slate-900">Credit Verification</p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="inline-flex items-center gap-1 bg-red-50 border border-red-200 rounded px-1.5 py-0.5 text-xs text-[#cc0000] font-extrabold tracking-widest">
-                        D&amp;B
-                      </span>
-                      <span className="text-sm text-slate-600">Dun &amp; Bradstreet assessment</span>
-                    </div>
+                    <p className="text-sm text-slate-600">Dun & Bradstreet assessment</p>
                   </div>
                 </div>
                 <Badge className={creditStatus.color}>
