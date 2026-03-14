@@ -141,9 +141,9 @@ export default function PropertyOwnerSignup() {
               </div>
             </div>
 
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-              <h4 className="font-semibold text-orange-900 mb-2">Free Trial Included</h4>
-              <ul className="text-sm text-orange-700 space-y-1">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+              <h4 className="font-semibold text-indigo-900 mb-2">Free Trial Included</h4>
+              <ul className="text-sm text-indigo-700 space-y-1">
                 <li>✓ 14-day free trial</li>
                 <li>✓ AI-powered tenant screening</li>
                 <li>✓ Automated KYC verification</li>
@@ -153,7 +153,7 @@ export default function PropertyOwnerSignup() {
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-orange-500 to-amber-400 hover:from-orange-600 hover:to-amber-500 text-white py-6 text-lg font-semibold"
+              className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 text-lg font-semibold"
               disabled={isLoading}
             >
               {isLoading ? 'Creating Account...' : 'Create Account'}
@@ -164,7 +164,7 @@ export default function PropertyOwnerSignup() {
               <button
                 type="button"
                 onClick={() => base44.auth.redirectToLogin()}
-                className="text-indigo-600 hover:text-indigo-700 font-medium"
+                className="text-orange-500 hover:text-orange-600 font-medium"
               >
                 Sign In
               </button>
