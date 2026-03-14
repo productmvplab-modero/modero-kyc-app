@@ -49,16 +49,8 @@ export default function PropertyOwnerSignup() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 flex items-center justify-center p-6">
       <Card className="w-full max-w-2xl shadow-2xl">
-        <CardHeader className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-500/30">
-              <span className="text-white text-2xl font-black">M</span>
-            </div>
-            <CardTitle className="text-3xl font-bold text-slate-900">
-              Modero
-            </CardTitle>
-          </div>
-          <CardDescription className="text-base mt-2">
+        <CardHeader className="text-center space-y-2">
+          <CardDescription className="text-base">
             Join the automated tenant screening platform
           </CardDescription>
         </CardHeader>
