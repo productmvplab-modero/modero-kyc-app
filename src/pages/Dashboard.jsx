@@ -59,110 +59,72 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
       <Header />
       <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <Card className="border-0 shadow-lg bg-white">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-4">
-              <Filter className="w-4 h-4 text-slate-500" />
-              <Select 
-                value={statusFilter} 
-                onValueChange={(value) => {
-                  setStatusFilter(value);
-                  // Scroll to Recent Inquiries section when filter changes
-                  if (value !== 'all') {
-                    setTimeout(() => {
-                      const inquiriesSection = document.getElementById('recent-inquiries');
-                      if (inquiriesSection) {
-                        inquiriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }, 100);
-                  }
-                }}
-              >
-                <SelectTrigger className="w-[180px] border-slate-200">
-                  <SelectValue placeholder={t('filter_by_status')} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t('all_inquiries')}</SelectItem>
-                  <SelectItem value="new">{t('status_new')}</SelectItem>
-                  <SelectItem value="screening">{t('status_screening')}</SelectItem>
-                  <SelectItem value="kyc_pending">{t('status_kyc_pending')}</SelectItem>
-                  <SelectItem value="qualified">{t('status_qualified')}</SelectItem>
-                  <SelectItem value="rejected">{t('status_rejected')}</SelectItem>
-                  <SelectItem value="rented">{t('status_rented')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="max-w-7xl mx-auto space-y-6">
+          <Card className="border-0 shadow-lg bg-white">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-4">
+                <Filter className="w-4 h-4 text-slate-500" />
+                <Select
+                  value={statusFilter}
+                  onValueChange={(value) => {
+                    setStatusFilter(value);
+                    if (value !== 'all') {
+                      setTimeout(() => {
+                        const inquiriesSection = document.getElementById('recent-inquiries');
+                        if (inquiriesSection) {
+                          inquiriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 100);
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-[180px] border-slate-200">
+                    <SelectValue placeholder={t('filter_by_status')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">{t('all_inquiries')}</SelectItem>
+                    <SelectItem value="new">{t('status_new')}</SelectItem>
+                    <SelectItem value="screening">{t('status_screening')}</SelectItem>
+                    <SelectItem value="kyc_pending">{t('status_kyc_pending')}</SelectItem>
+                    <SelectItem value="qualified">{t('status_qualified')}</SelectItem>
+                    <SelectItem value="rejected">{t('status_rejected')}</SelectItem>
+                    <SelectItem value="rented">{t('status_rented')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <MetricCard
-            title={t('active_properties')}
-            value={activeProperties}
-            subtitle={`${totalProperties} ${t('total_listings')}`}
-            icon={Building2}
-            trend="up"
-            trendValue={12}
-            color="indigo"
-            index={0}
-          />
-          <MetricCard
-            title={t('total_inquiries')}
-            value={totalInquiries}
-            subtitle={`${avgInquiriesPerProperty} ${t('avg_per_property')}`}
-            icon={MessageSquare}
-            trend="up"
-            trendValue={24}
-            color="purple"
-            index={1}
-          />
-          <MetricCard
-            title={t('qualified_tenants_label')}
-            value={qualifiedTenants}
-            subtitle={`${conversionRate}% ${t('conversion_rate').toLowerCase()}`}
-            icon={UserCheck}
-            trend="up"
-            trendValue={8}
-            color="emerald"
-            index={2}
-          />
-          <MetricCard
-            title={t('verification_rate')}
-            value={`${verificationRate}%`}
-            subtitle={`${verificationCompleted} ${t('verified_tenants')}`}
-            icon={ShieldCheck}
-            trend="up"
-            trendValue={18}
-            color="amber"
-            index={3}
-          />
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <MetricCard title={t('active_properties')} value={activeProperties} subtitle={`${totalProperties} ${t('total_listings')}`} icon={Building2} trend="up" trendValue={12} color="indigo" index={0} />
+            <MetricCard title={t('total_inquiries')} value={totalInquiries} subtitle={`${avgInquiriesPerProperty} ${t('avg_per_property')}`} icon={MessageSquare} trend="up" trendValue={24} color="purple" index={1} />
+            <MetricCard title={t('qualified_tenants_label')} value={qualifiedTenants} subtitle={`${conversionRate}% ${t('conversion_rate').toLowerCase()}`} icon={UserCheck} trend="up" trendValue={8} color="emerald" index={2} />
+            <MetricCard title={t('verification_rate')} value={`${verificationRate}%`} subtitle={`${verificationCompleted} ${t('verified_tenants')}`} icon={ShieldCheck} trend="up" trendValue={18} color="amber" index={3} />
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <InquiryFunnel inquiries={filteredInquiries} />
-          <RevenueChart propertyOwners={propertyOwners} />
-        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <InquiryFunnel inquiries={filteredInquiries} />
+            <RevenueChart propertyOwners={propertyOwners} />
+          </div>
 
-        <PropertyPerformance 
-          properties={properties} 
-          inquiries={inquiries}
-          onPropertyClick={(p) => { setSelectedProperty(p); setPropertyDialogOpen(true); }} 
-        />
+          <PropertyPerformance
+            properties={properties}
+            inquiries={inquiries}
+            onPropertyClick={(p) => { setSelectedProperty(p); setPropertyDialogOpen(true); }}
+          />
 
-        <div id="recent-inquiries">
-          <RecentInquiries inquiries={filteredInquiries} properties={properties} />
+          <div id="recent-inquiries">
+            <RecentInquiries inquiries={filteredInquiries} properties={properties} />
+          </div>
         </div>
       </div>
 
-        <PropertyDetailsDialog
-          property={selectedProperty}
-          inquiries={inquiries}
-          open={propertyDialogOpen}
-          onOpenChange={setPropertyDialogOpen}
-        />
-      </div>
-      </div>
+      <PropertyDetailsDialog
+        property={selectedProperty}
+        inquiries={inquiries}
+        open={propertyDialogOpen}
+        onOpenChange={setPropertyDialogOpen}
+      />
     </div>
   );
 }
