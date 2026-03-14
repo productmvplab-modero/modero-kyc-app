@@ -126,15 +126,16 @@ export default function PropertyOwnerSignup() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="company">Company/Agency Name</Label>
+                <Label htmlFor="company">Company/Agency Name *</Label>
                 <div className="relative">
                   <Briefcase className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                   <Input
                     id="company"
-                    placeholder="Optional"
+                    placeholder="Your company or agency name"
                     value={formData.company}
                     onChange={(e) => handleChange('company', e.target.value)}
                     className="pl-10"
+                    required
                   />
                 </div>
               </div>
