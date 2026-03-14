@@ -167,7 +167,7 @@ export default function KycRulesSettings({ userEmail }) {
           <h2 className="text-xl font-semibold text-slate-900">KYC Rules & Screening</h2>
           <p className="text-sm text-slate-500 mt-1">Configure tenant qualification requirements for your properties</p>
         </div>
-        <Button onClick={() => saveMutation.mutate(rules)} disabled={saveMutation.isPending} className="gap-2 bg-indigo-600 hover:bg-indigo-700">
+        <Button onClick={() => saveMutation.mutate(rules)} disabled={saveMutation.isPending} className="gap-2 bg-orange-500 hover:bg-orange-600">
           {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save Rules
         </Button>
@@ -398,7 +398,7 @@ export default function KycRulesSettings({ userEmail }) {
       </Section>
 
       <div className="flex justify-end mt-6">
-        <Button onClick={() => saveMutation.mutate(rules)} disabled={saveMutation.isPending} className="gap-2 bg-indigo-600 hover:bg-indigo-700 px-8">
+        <Button onClick={() => saveMutation.mutate(rules)} disabled={saveMutation.isPending} className="gap-2 bg-orange-500 hover:bg-orange-600 px-8">
           {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Save All Rules
         </Button>
