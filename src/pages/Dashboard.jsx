@@ -161,6 +161,7 @@ export default function Dashboard() {
         open={propertyDialogOpen}
         onOpenChange={setPropertyDialogOpen}
       />
+      </div>
     </div>
   );
 }
