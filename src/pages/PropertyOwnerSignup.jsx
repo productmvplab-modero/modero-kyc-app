@@ -47,14 +47,14 @@ export default function PropertyOwnerSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 flex items-center justify-center p-6">
       <Card className="w-full max-w-2xl shadow-2xl">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-violet-600 to-purple-500 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
               <span className="text-white text-2xl font-bold">M</span>
             </div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-purple-500 bg-clip-text text-transparent">Modero</CardTitle>
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">Modero</CardTitle>
           </div>
           <CardDescription className="text-base">
             Join the Automated Tenant Segmentation and KYC Screening Platform
@@ -138,8 +138,8 @@ export default function PropertyOwnerSignup() {
               </div>
             </div>
 
-            <div className="bg-violet-50 border border-violet-200 rounded-lg p-4">
-              <h4 className="font-semibold text-violet-900 mb-2">Free Trial Included</h4>
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+              <h4 className="font-semibold text-orange-900 mb-2">Free Trial Included</h4>
               <ul className="text-sm text-violet-700 space-y-1">
                 <li>✓ 14-day free trial</li>
                 <li>✓ AI-powered tenant screening</li>
@@ -150,7 +150,7 @@ export default function PropertyOwnerSignup() {
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-violet-600 to-purple-500 hover:from-violet-700 hover:to-purple-600 text-white py-6 text-lg font-semibold"
+              className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-violet-700 hover:to-purple-600 text-white py-6 text-lg font-semibold"
               disabled={isLoading}
             >
               {isLoading ? 'Creating Account...' : 'Create Account'}
@@ -161,7 +161,7 @@ export default function PropertyOwnerSignup() {
               <button
                 type="button"
                 onClick={() => base44.auth.redirectToLogin()}
-                className="text-violet-600 hover:text-violet-700 font-medium"
+                className="text-orange-500 hover:text-orange-600 font-medium"
               >
                 Sign In
               </button>

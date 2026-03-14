@@ -43,10 +43,10 @@ export default function Header() {
     <header className="bg-white border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-violet-600 to-purple-500 flex items-center justify-center">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
             <span className="text-white text-2xl font-bold">M</span>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
             Modero
           </h1>
         </div>
@@ -117,7 +117,7 @@ export default function Header() {
           )}
           
           {!isAuthenticated && (
-            <Button onClick={handleLogin} className="bg-violet-600 hover:bg-violet-700">
+            <Button onClick={handleLogin} className="bg-orange-500 hover:bg-orange-600">
               <LogIn className="mr-2 h-4 w-4" />
               {t('login')}
             </Button>
