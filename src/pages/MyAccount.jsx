@@ -22,7 +22,7 @@ export default function MyAccount() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-orange-500 rounded-full animate-spin" />
       </div>
     );
   }
@@ -43,7 +43,7 @@ export default function MyAccount() {
                 onClick={() => setActiveTab(id)}
                 className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px ${
                   activeTab === id
-                    ? 'border-indigo-600 text-indigo-600'
+                    ? 'border-orange-500 text-orange-500'
                     : 'border-transparent text-slate-500 hover:text-slate-700'
                 }`}
               >

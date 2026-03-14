@@ -13,8 +13,8 @@ import { toast } from 'sonner';
 const Section = ({ icon: Icon, title, description, children }) => (
   <div className="bg-white rounded-xl border border-slate-200 p-6 mb-4">
     <div className="flex items-center gap-3 mb-5">
-      <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center">
-        <Icon className="w-5 h-5 text-indigo-600" />
+      <div className="h-9 w-9 rounded-lg bg-orange-50 flex items-center justify-center">
+        <Icon className="w-5 h-5 text-orange-500" />
       </div>
       <div>
         <h3 className="font-semibold text-slate-900">{title}</h3>
@@ -57,10 +57,10 @@ const StatusBadge = ({ status = 'pending' }) => {
 };
 
 const IntegrationCard = ({ logo, name, description, provider, enabled, onToggle, weight }) => (
-  <div className={`rounded-xl border-2 p-5 transition-all ${enabled ? 'border-indigo-200 bg-indigo-50/40' : 'border-slate-200 bg-white'}`}>
+  <div className={`rounded-xl border-2 p-5 transition-all ${enabled ? 'border-orange-200 bg-orange-50/40' : 'border-slate-200 bg-white'}`}>
     <div className="flex items-start justify-between gap-3">
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 text-lg font-bold ${enabled ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+        <div className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 text-lg font-bold ${enabled ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'}`}>
           {logo}
         </div>
         <div className="min-w-0">
@@ -72,7 +72,7 @@ const IntegrationCard = ({ logo, name, description, provider, enabled, onToggle,
     </div>
     <p className="text-xs text-slate-500 mt-3 leading-relaxed">{description}</p>
     {weight && (
-      <p className="text-xs text-indigo-600 font-medium mt-2">+{weight} pts to verification score</p>
+      <p className="text-xs text-orange-500 font-medium mt-2">+{weight} pts to verification score</p>
     )}
   </div>
 );
@@ -158,7 +158,7 @@ export default function KycRulesSettings({ userEmail }) {
     });
   };
 
-  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-indigo-500" /></div>;
+  if (isLoading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-orange-500" /></div>;
 
   return (
     <div>
@@ -252,8 +252,8 @@ export default function KycRulesSettings({ userEmail }) {
       {/* Verification Integrations */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 mb-4">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center">
-            <Link2 className="w-5 h-5 text-indigo-600" />
+          <div className="h-9 w-9 rounded-lg bg-orange-50 flex items-center justify-center">
+            <Link2 className="w-5 h-5 text-orange-500" />
           </div>
           <div>
             <h3 className="font-semibold text-slate-900">Verification Integrations</h3>
@@ -322,7 +322,7 @@ export default function KycRulesSettings({ userEmail }) {
         <div className="mt-5 p-4 bg-slate-50 rounded-lg border border-slate-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-slate-700">Max Achievable Verification Score</span>
-            <span className="text-lg font-bold text-indigo-600">
+            <span className="text-lg font-bold text-orange-500">
               {[
                 rules.integration_linkedin_enabled && 15,
                 rules.integration_identomat_enabled && 25,
@@ -335,7 +335,7 @@ export default function KycRulesSettings({ userEmail }) {
           </div>
           <div className="w-full bg-slate-200 rounded-full h-2">
             <div
-              className="bg-indigo-600 h-2 rounded-full transition-all duration-500"
+              className="bg-orange-500 h-2 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(100, ([
                 rules.integration_linkedin_enabled && 15,
                 rules.integration_identomat_enabled && 25,
