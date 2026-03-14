@@ -56,7 +56,9 @@ export default function Dashboard() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
+      <Header />
+      <div className="p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         <Card className="border-0 shadow-lg bg-white">
           <CardContent className="p-4">
