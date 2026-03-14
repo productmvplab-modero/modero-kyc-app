@@ -57,7 +57,7 @@ export default function PropertyOwnerSignup() {
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">Modero</CardTitle>
           </div>
           <CardDescription className="text-base">
-            Join the automated tenant screening platform
+            Join the Automated Tenant Segmentation and KYC Screening Platform
           </CardDescription>
         </CardHeader>
 
