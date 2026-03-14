@@ -11,6 +11,7 @@ import PropertyPerformance from "../components/modero/PropertyPerformance";
 import RecentInquiries from "../components/modero/RecentInquiries";
 import RevenueChart from "../components/modero/RevenueChart";
 import PropertyDetailsDialog from "../components/modero/PropertyDetailsDialog";
+import Header from "../components/modero/Header";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function Dashboard() {
