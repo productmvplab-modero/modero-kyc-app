@@ -155,12 +155,13 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <PropertyDetailsDialog
-        property={selectedProperty}
-        inquiries={inquiries}
-        open={propertyDialogOpen}
-        onOpenChange={setPropertyDialogOpen}
-      />
+        <PropertyDetailsDialog
+          property={selectedProperty}
+          inquiries={inquiries}
+          open={propertyDialogOpen}
+          onOpenChange={setPropertyDialogOpen}
+        />
+      </div>
       </div>
     </div>
   );
