@@ -328,7 +328,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <Progress value={(inquiry.progress_step / 5) * 100} className="h-3" />
+                <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 transition-all duration-500"
+                    style={{ width: `${(inquiry.progress_step / 5) * 100}%` }}
+                  />
+                </div>
                 <div className="grid grid-cols-5 gap-2">
                   {progressSteps.map((step) => (
                     <button
