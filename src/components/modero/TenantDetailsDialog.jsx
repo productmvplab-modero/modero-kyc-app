@@ -498,12 +498,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     )}
                   </div>
                 </div>
-                <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' :
-                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' :
-                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' :
-                  'bg-orange-100 text-orange-700 ring-1 ring-orange-300'
-                }>
+                <div className={['px-4 py-2 rounded-full text-sm font-semibold', inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' : inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' : inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' : 'bg-orange-100 text-orange-700 ring-1 ring-orange-300'].join(' ')}>
                   {inquiry.id_verification_status === 'completed' ? '✓ Completed' :
                    inquiry.id_verification_status === 'failed' ? '✗ Failed' :
                    inquiry.id_verification_status === 'in_progress' ? '⏳ In Progress' :
