@@ -1000,12 +1000,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </div>
             </CardContent>
             )}
-          </Card>
+            </Card>
 
-          <Separator />
+            <Separator />
 
-          {/* Credit Check */}
-          <Card className="border-amber-100 overflow-hidden border-0 shadow-md">
+            {/* Credit Check */}
+            <Card className="border-amber-100 overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
             <CardHeader className="pb-3 bg-gradient-to-br from-amber-50 to-orange-50 rounded-t-xl border-b border-amber-100 px-4 sm:pb-4">
               <button
