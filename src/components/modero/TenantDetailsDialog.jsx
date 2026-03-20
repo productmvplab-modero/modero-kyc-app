@@ -622,14 +622,17 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </Card>
 
           {/* Employment Information */}
-          <Card>
-            <CardHeader>
+          <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Briefcase className="w-5 h-5" />
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                  <Briefcase className="w-4 h-4 text-white" />
+                </div>
                 {t('employment_information')}
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-5">
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex items-center gap-3">
                   <Briefcase className="w-5 h-5 text-slate-400" />
@@ -662,14 +665,17 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </Card>
 
           {/* Financial Information */}
-          <Card>
-            <CardHeader>
+          <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
-                <DollarSign className="w-5 h-5" />
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                  <DollarSign className="w-4 h-4 text-white" />
+                </div>
                 {t('financial_information')}
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-5">
               <div className="grid grid-cols-4 gap-4">
                 <div className="flex items-center gap-3">
                   <DollarSign className="w-5 h-5 text-slate-400" />
@@ -765,10 +771,13 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </Card>
 
           {/* Document Uploads */}
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Paperclip className="w-5 h-5" />
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                  <Paperclip className="w-4 h-4 text-white" />
+                </div>
                 {t('required_documents')}
               </CardTitle>
             </CardHeader>
@@ -960,6 +969,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div>
                     <p className="font-bold text-slate-900 text-base">{t('credit_verification')}</p>
                     <p className="text-sm text-slate-500 mt-0.5">{t('db_assessment')}</p>
+                    {inquiry.credit_score && (
+                      <div className="flex items-center gap-1.5 mt-1.5">
+                        <BarChart3 className="w-3.5 h-3.5 text-amber-400" />
+                        <p className="text-xs text-slate-500">Score: <span className="font-semibold text-slate-700">{inquiry.credit_score}/100</span></p>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className={['px-4 py-2 rounded-full text-sm font-semibold', inquiry.credit_check_status === 'approved' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' : inquiry.credit_check_status === 'rejected' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' : inquiry.credit_check_status === 'in_review' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' : 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'].join(' ')}>
