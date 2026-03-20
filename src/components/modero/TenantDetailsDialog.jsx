@@ -933,20 +933,38 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <span>{t('credit_check')}</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4">
-              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-100">
+            <CardContent className="pt-5">
+              <div className={`relative flex items-center justify-between p-5 rounded-xl border-2 ${
+                inquiry.credit_check_status === 'approved' ? 'border-emerald-200 bg-emerald-50' :
+                inquiry.credit_check_status === 'rejected' ? 'border-red-200 bg-red-50' :
+                inquiry.credit_check_status === 'in_review' ? 'border-amber-200 bg-amber-50' :
+                'border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50'
+              }`}>
                 <div className="flex items-center gap-4">
-                  <div className={['h-12 w-12 rounded-xl flex items-center justify-center shrink-0', inquiry.credit_check_status === 'approved' ? 'bg-emerald-100' : inquiry.credit_check_status === 'rejected' ? 'bg-red-100' : 'bg-amber-100'].join(' ')}>
-                    <creditStatus.icon className={['w-6 h-6', inquiry.credit_check_status === 'approved' ? 'text-emerald-600' : inquiry.credit_check_status === 'rejected' ? 'text-red-600' : 'text-amber-600'].join(' ')} />
-                  </div>
+                  {(inquiry.credit_check_status === 'approved' || inquiry.credit_check_status === 'rejected' || inquiry.credit_check_status === 'in_review') && (
+                    <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
+                      inquiry.credit_check_status === 'approved' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
+                      inquiry.credit_check_status === 'rejected' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                      inquiry.credit_check_status === 'in_review' ? 'bg-gradient-to-br from-amber-400 to-amber-500' :
+                      ''
+                    }`}>
+                      {inquiry.credit_check_status === 'approved' ? (
+                        <CheckCircle2 className="w-7 h-7 text-white" />
+                      ) : inquiry.credit_check_status === 'rejected' ? (
+                        <XCircle className="w-7 h-7 text-white" />
+                      ) : inquiry.credit_check_status === 'in_review' ? (
+                        <Clock className="w-7 h-7 text-white" />
+                      ) : null}
+                    </div>
+                  )}
                   <div>
-                    <p className="font-semibold text-slate-900">{t('credit_verification')}</p>
+                    <p className="font-bold text-slate-900 text-base">{t('credit_verification')}</p>
                     <p className="text-sm text-slate-500 mt-0.5">{t('db_assessment')}</p>
                   </div>
                 </div>
-                <Badge className={creditStatus.color}>
+                <div className={['px-4 py-2 rounded-full text-sm font-semibold', inquiry.credit_check_status === 'approved' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' : inquiry.credit_check_status === 'rejected' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' : inquiry.credit_check_status === 'in_review' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' : 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'].join(' ')}>
                   {creditStatus.label}
-                </Badge>
+                </div>
               </div>
             </CardContent>
           </Card>
