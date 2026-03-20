@@ -38,7 +38,7 @@ export default function RevenueChart({ propertyOwners }) {
           <p className="text-sm text-slate-500 mt-1">{t('monthly_qualification_metrics')}</p>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={280}>
+          <ResponsiveContainer width="100%" height={320}>
             <AreaChart data={data}>
               <defs>
                 <linearGradient id="qualifiedGradient" x1="0" y1="0" x2="0" y2="1">
