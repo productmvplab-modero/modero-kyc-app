@@ -207,7 +207,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto w-[95vw] sm:w-auto [&>button]:p-2 sm:[&>button]:p-3 [&>button]:rounded-lg sm:[&>button]:rounded-xl [&>button]:right-2 sm:[&>button]:right-3 [&>button]:top-2 sm:[&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-4 sm:[&>button>svg]:h-5 [&>button>svg]:w-4 sm:[&>button>svg]:w-5">
+      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto w-[95vw] sm:w-auto [&>button]:p-2 sm:[&>button]:p-3 [&>button]:rounded-lg sm:[&>button]:rounded-xl [&>button]:right-4 sm:[&>button]:right-6 [&>button]:top-2 sm:[&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-4 sm:[&>button>svg]:h-5 [&>button>svg]:w-4 sm:[&>button>svg]:w-5">
         <DialogHeader>
           <div className="flex items-center gap-2 sm:gap-3 pr-16 sm:pr-20 flex-wrap">
             <DialogTitle className="text-lg sm:text-2xl font-bold">{t('tenant_profile')}</DialogTitle>
