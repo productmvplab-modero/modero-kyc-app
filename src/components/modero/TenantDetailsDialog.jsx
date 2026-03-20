@@ -821,15 +821,22 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Document Uploads */}
           <Card className="overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
-                  <Paperclip className="w-4 h-4 text-white" />
-                </div>
-                {t('required_documents')}
-              </CardTitle>
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
+              <button
+                onClick={() => toggleSection('documents')}
+                className="w-full flex items-center justify-between hover:opacity-75 transition-opacity"
+              >
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                    <Paperclip className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+                  </div>
+                  {t('required_documents')}
+                </CardTitle>
+                <ChevronDown className={`w-5 h-5 transition-transform ${expandedSections.documents ? 'rotate-180' : ''}`} />
+              </button>
             </CardHeader>
-            <CardContent className="space-y-3">
+            {expandedSections.documents && (
+            <CardContent className="space-y-3 pt-4 sm:pt-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {/* CV Upload */}
                 <div className="border rounded-lg p-3">
