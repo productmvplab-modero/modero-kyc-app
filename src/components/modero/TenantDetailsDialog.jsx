@@ -1083,7 +1083,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Qualified</span>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-slate-600 text-center px-2">Help tenants manage upfront costs with flexible payment plans and financing options</p>
+                  <p className="text-xs sm:text-sm text-slate-600 px-2">Help tenants manage upfront costs with flexible payment plans and financing options</p>
                 </div>
               </CardHeader>
               <CardContent className="pt-5 sm:pt-6">
