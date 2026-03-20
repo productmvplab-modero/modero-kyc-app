@@ -255,50 +255,47 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('pending')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
                   >
                     <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('pending')}</span>
-                    <span className="sm:hidden">Pending</span>
+                    {t('pending')}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('approved')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
                   >
                     <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('approve')}</span>
-                    <span className="sm:hidden">Approve</span>
+                    {t('approve')}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('rejected')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
                   >
                     <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('reject')}</span>
-                    <span className="sm:hidden">Reject</span>
+                    {t('reject')}
                   </Button>
-                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Profile Header */}
-          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
-            <div className="relative">
-              <Avatar className="h-20 w-20 sm:h-24 sm:w-24">
-                <AvatarImage src={inquiry.profile_picture_url} />
-                <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
-                  {inquiry.tenant_name?.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <label className="absolute bottom-0 right-0 cursor-pointer">
-                <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
-                  <Upload className="h-4 w-4 text-white" />
-                </div>
+          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6 px-3 sm:px-0">
+          <div className="relative">
+            <Avatar className="h-16 w-16 sm:h-24 sm:w-24">
+              <AvatarImage src={inquiry.profile_picture_url} />
+              <AvatarFallback className="text-xl sm:text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
+                {inquiry.tenant_name?.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <label className="absolute bottom-0 right-0 cursor-pointer">
+              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
+                <Upload className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+              </div>
                 <input
                   type="file"
                   accept="image/*"
@@ -308,10 +305,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 />
               </label>
             </div>
-            <div className="flex-1 w-full">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
-              <div className="flex items-center gap-2 flex-wrap text-sm">
-                <span className="text-slate-600 text-sm">{t('idealista_id')}:</span>
+            <div className="flex-1 w-full min-w-0">
+              <h2 className="text-lg sm:text-2xl font-bold text-slate-900 line-clamp-2">{inquiry.tenant_name}</h2>
+              <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm mt-1">
+                <span className="text-slate-600">{t('idealista_id')}:</span>
                 {inquiry.idealista_id ? (
                   <button
                     onClick={() => {
@@ -341,38 +338,38 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
           {/* Application Progress */}
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">{t('application_progress')}</CardTitle>
+            <CardHeader className="px-3 sm:px-6 pt-4 sm:pt-6">
+              <CardTitle className="text-base sm:text-lg">{t('application_progress')}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-3 sm:px-6 pb-4 sm:pb-6">
               <div className="space-y-4">
-                <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div className="w-full h-2 sm:h-3 bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 transition-all duration-500"
                     style={{ width: `${(inquiry.progress_step / 5) * 100}%` }}
                   />
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 sm:gap-2">
                   {progressSteps.map((step) => (
                     <button
                       key={step.step}
                       onClick={() => handleProgressChange(step.step)}
-                      className={`p-3 rounded-lg border-2 transition-all text-left ${
+                      className={`p-2 sm:p-3 rounded-lg border-2 transition-all text-left ${
                         inquiry.progress_step >= step.step
                           ? 'border-orange-500 bg-orange-50'
                           : 'border-slate-200 hover:border-slate-300'
                       }`}
-                    >
-                      <div className="flex items-center gap-2 mb-1">
+                      >
+                      <div className="flex items-center gap-1.5 mb-1">
                         {inquiry.progress_step >= step.step ? (
-                          <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                          <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500 shrink-0" />
                         ) : (
-                          <div className="w-4 h-4 rounded-full border-2 border-slate-300" />
+                          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-slate-300 shrink-0" />
                         )}
                         <span className="text-xs font-semibold">Step {step.step}</span>
                       </div>
-                      <p className="text-xs font-medium text-slate-900">{step.label}</p>
-                      <p className="text-xs text-slate-500">{step.description}</p>
+                      <p className="text-xs font-medium text-slate-900 line-clamp-2">{step.label}</p>
+                      <p className="text-xs text-slate-500 line-clamp-2">{step.description}</p>
                     </button>
                   ))}
                 </div>
@@ -474,10 +471,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </Card>
 
             {/* ID Verification - Identomat */}
-              <Card className="overflow-hidden border-0 shadow-md">
-              <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-              <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
-                <CardTitle className="text-base sm:text-lg flex items-center gap-2 min-w-0">
+            <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
                   <Shield className="w-4 h-4 text-white" />
                 </div>
@@ -485,43 +482,43 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 <span className="ml-1 text-xs font-normal px-2 py-0.5 rounded-full bg-orange-100 text-orange-600">Identomat</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-4 sm:pt-5 px-3 sm:px-6">
-              <div className={`relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl border-2 ${
+            <CardContent className="pt-5">
+              <div className={`relative flex items-center justify-between p-5 rounded-xl border-2 ${
                 inquiry.id_verification_status === 'completed' ? 'border-emerald-200 bg-emerald-50' :
                 inquiry.id_verification_status === 'failed' ? 'border-red-200 bg-red-50' :
                 inquiry.id_verification_status === 'in_progress' ? 'border-amber-200 bg-amber-50' :
                 'border-orange-100 bg-gradient-to-r from-orange-50 to-amber-50'
               }`}>
 
-                <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                <div className="flex items-center gap-4">
                   {(inquiry.id_verification_status === 'completed' || inquiry.id_verification_status === 'failed' || inquiry.id_verification_status === 'in_progress') && (
-                    <div className={`h-12 w-12 sm:h-14 sm:w-14 rounded-2xl flex items-center justify-center shadow-md shrink-0 ${
+                    <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
                       inquiry.id_verification_status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
                       inquiry.id_verification_status === 'failed' ? 'bg-gradient-to-br from-red-500 to-red-600' :
                       inquiry.id_verification_status === 'in_progress' ? 'bg-gradient-to-br from-amber-400 to-amber-500' :
                       ''
                     }`}>
                       {inquiry.id_verification_status === 'completed' ? (
-                        <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                        <CheckCircle2 className="w-7 h-7 text-white" />
                       ) : inquiry.id_verification_status === 'failed' ? (
-                        <XCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                        <XCircle className="w-7 h-7 text-white" />
                       ) : inquiry.id_verification_status === 'in_progress' ? (
-                        <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+                        <Clock className="w-7 h-7 text-white" />
                       ) : null}
                     </div>
                   )}
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-slate-900 text-sm sm:text-base">Identity Verification</p>
-                    <p className="text-xs sm:text-sm text-slate-500 mt-0.5">Biometric ID check via Identomat</p>
+                  <div>
+                    <p className="font-bold text-slate-900 text-base">Identity Verification</p>
+                    <p className="text-sm text-slate-500 mt-0.5">Biometric ID check via Identomat</p>
                     {inquiry.dni_nie_number && (
-                      <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                        <CreditCard className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                        <p className="text-xs text-slate-500 break-all">NIE/DNI: <span className="font-semibold text-slate-700">{inquiry.dni_nie_number}</span></p>
+                      <div className="flex items-center gap-1.5 mt-1.5">
+                        <CreditCard className="w-3.5 h-3.5 text-orange-400" />
+                        <p className="text-xs text-slate-500">NIE/DNI: <span className="font-semibold text-slate-700">{inquiry.dni_nie_number}</span></p>
                       </div>
                     )}
                   </div>
                 </div>
-                <div className={`self-start sm:self-center px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shrink-0 ${inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' : inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' : inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' : 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'}`}>
+                <div className={['px-4 py-2 rounded-full text-sm font-semibold', inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' : inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' : inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' : 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'].join(' ')}>
                   {inquiry.id_verification_status === 'completed' ? '✓ Completed' :
                    inquiry.id_verification_status === 'failed' ? '✗ Failed' :
                    inquiry.id_verification_status === 'in_progress' ? '⏳ In Progress' :
@@ -741,35 +738,35 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </button>
             </CardHeader>
             {expandedSections.financial && (
-             <CardContent className="pt-4 sm:pt-5 px-3 sm:px-6">
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div className="flex items-center gap-3 min-w-0">
-                  <DollarSign className="w-5 h-5 text-slate-400 shrink-0" />
-                  <div className="flex-1 min-w-0">
+            <CardContent className="pt-4 sm:pt-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="w-5 h-5 text-slate-400" />
+                  <div>
                     <p className="text-xs text-slate-500">Monthly Income</p>
-                    <p className="text-sm font-medium text-slate-900 truncate">
+                    <p className="text-sm font-medium text-slate-900">
                       {inquiry.monthly_income ? ('€' + inquiry.monthly_income.toLocaleString()) : '—'}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 min-w-0">
-                  <TrendingUp className="w-5 h-5 text-slate-400 shrink-0" />
-                  <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="w-5 h-5 text-slate-400" />
+                  <div>
                     <p className="text-xs text-slate-500">Income Ratio</p>
-                    <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-2">
                       <p className="text-sm font-medium text-slate-900">{incomeRatio}%</p>
-                      <Badge className={`text-xs ${incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
+                      <Badge className={incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}>
                         {incomeRatioHealthy ? 'Healthy' : 'High'}
                       </Badge>
                     </div>
                     <p className="text-xs text-slate-500">Target: &lt;40%</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 min-w-0">
-                  <CreditCard className="w-5 h-5 text-slate-400 shrink-0" />
-                  <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3">
+                  <CreditCard className="w-5 h-5 text-slate-400" />
+                  <div>
                     <p className="text-xs text-slate-500">Credit Score</p>
-                    <p className="text-sm font-medium text-slate-900 truncate">
+                    <p className="text-sm font-medium text-slate-900">
                       {inquiry.credit_score ? (inquiry.credit_score + '/100') : '—'}
                     </p>
                   </div>
