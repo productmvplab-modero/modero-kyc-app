@@ -611,7 +611,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     <p className="text-xs text-slate-500">Not connected</p>
                   )}
                 </div>
-                <div className={`p-4 rounded-lg border-2 ${inquiry.xing_connected ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200'}`}>
+                <div className={['p-4 rounded-lg border-2', inquiry.xing_connected ? 'border-emerald-500 bg-emerald-50' : 'border-slate-200'].join(' ')}>
                   <div className="flex items-center gap-2 mb-2">
                     <Building className="w-5 h-5 text-emerald-600" />
                     <span className="font-medium">XING</span>
