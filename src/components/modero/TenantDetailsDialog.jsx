@@ -1089,30 +1089,28 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               <CardContent className="pt-5 sm:pt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {/* Klarna */}
-                    {(['klarna', 'both'].includes(inquiry.recommended_financing) ? true : true) && (
-                      <button
-                        onClick={() => updateInquiryMutation.mutate({
-                          id: inquiry.id,
-                          data: { recommended_financing: inquiry.recommended_financing === 'klarna' ? null : 'klarna' }
-                        })}
-                        className={['relative flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all text-left', inquiry.recommended_financing === 'klarna' ? 'border-pink-500 bg-pink-50 shadow-md' : 'border-slate-200 bg-white hover:border-pink-300 hover:bg-pink-50/50'].join(' ')}
+                    <button
+                      onClick={() => updateInquiryMutation.mutate({
+                        id: inquiry.id,
+                        data: { recommended_financing: inquiry.recommended_financing === 'klarna' ? null : 'klarna' }
+                      })}
+                      className={`relative flex items-center gap-4 p-4 rounded-lg border-2 transition-all ${
+                        inquiry.recommended_financing === 'klarna'
+                          ? 'border-pink-500 bg-pink-50 shadow-md'
+                          : 'border-slate-200 bg-white hover:border-pink-300 hover:bg-pink-50/30'
+                      }`}
                     >
-                      <div className="h-10 w-16 bg-gradient-to-r from-pink-500 to-rose-400 rounded-lg flex items-center justify-center shrink-0">
-                        <span className="text-white font-bold text-sm tracking-tight">K</span>
-                        <span className="text-white font-semibold text-xs ml-0.5">larna</span>
+                      <div className="h-12 w-12 sm:h-14 sm:w-14 bg-gradient-to-br from-pink-500 to-rose-400 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+                        <span className="text-white font-bold text-lg">K</span>
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 text-left min-w-0">
                         <p className="font-semibold text-sm sm:text-base text-slate-900">Klarna</p>
-                        <p className="text-xs text-slate-500">Buy now, pay later</p>
-                        <p className="text-xs text-slate-500">Flexible instalments</p>
+                        <p className="text-xs text-slate-500">Buy now, pay later with flexible instalments</p>
                       </div>
                       {inquiry.recommended_financing === 'klarna' && (
-                        <div className="absolute top-2 right-2">
-                          <CheckCircle2 className="w-5 h-5 text-pink-500" />
-                        </div>
+                        <CheckCircle2 className="w-5 h-5 text-pink-500 shrink-0" />
                       )}
                     </button>
-                  )}
 
                   {/* Santander */}
                   <button
