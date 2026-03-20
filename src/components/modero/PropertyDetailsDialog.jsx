@@ -23,7 +23,7 @@ import { useLanguage } from '@/components/LanguageContext';
 const funnelStages = [
   { key: 'new',        label: 'Inquiry Received',        color: 'bg-blue-500',    light: 'bg-blue-50 text-blue-800',    icon: FileText },
   { key: 'screening',  label: 'Verification in Progress', color: 'bg-amber-500',   light: 'bg-amber-50 text-amber-800',  icon: Shield },
-  { key: 'kyc_pending',label: 'KYC Pending',              color: 'bg-purple-500',  light: 'bg-purple-50 text-purple-800',icon: Clock },
+  { key: 'kyc_pending',label: 'KYC Pending',              color: 'bg-amber-500',   light: 'bg-amber-50 text-amber-800',  icon: Clock },
   { key: 'qualified',  label: 'Qualified',                color: 'bg-emerald-500', light: 'bg-emerald-50 text-emerald-800', icon: CheckCircle2 },
   { key: 'rejected',   label: 'Rejected',                 color: 'bg-red-500',     light: 'bg-red-50 text-red-800',      icon: XCircle },
 ];
@@ -31,10 +31,10 @@ const funnelStages = [
 const statusInfo = {
   new:         { label: 'Inquiry Received',        badge: 'bg-blue-100 text-blue-800',     icon: FileText },
   screening:   { label: 'Verification in Progress',badge: 'bg-amber-100 text-amber-800',   icon: Shield },
-  kyc_pending: { label: 'KYC Pending',             badge: 'bg-purple-100 text-purple-800', icon: Clock },
+  kyc_pending: { label: 'KYC Pending',             badge: 'bg-amber-100 text-amber-800',   icon: Clock },
   qualified:   { label: 'Qualified',               badge: 'bg-emerald-100 text-emerald-800', icon: CheckCircle2 },
   rejected:    { label: 'Rejected',                badge: 'bg-red-100 text-red-800',       icon: XCircle },
-  rented:      { label: 'Rented',                  badge: 'bg-indigo-100 text-indigo-800', icon: Home },
+  rented:      { label: 'Rented',                  badge: 'bg-orange-100 text-orange-800', icon: Home },
 };
 
 export default function PropertyDetailsDialog({ property, inquiries, open, onOpenChange }) {
@@ -81,7 +81,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-            <Home className="w-6 h-6 text-indigo-600" />
+            <Home className="w-6 h-6 text-orange-500" />
             {property.title} — {t('property_information')}
           </DialogTitle>
         </DialogHeader>
@@ -146,14 +146,14 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-indigo-600" />
+                <TrendingUp className="w-5 h-5 text-orange-500" />
                 {t('performance_metrics')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                <div className="text-center p-4 bg-indigo-50 rounded-xl border border-indigo-100">
-                  <p className="text-3xl font-bold text-indigo-700">{total}</p>
+                <div className="text-center p-4 bg-orange-50 rounded-xl border border-orange-100">
+                  <p className="text-3xl font-bold text-orange-700">{total}</p>
                   <p className="text-xs text-slate-600 mt-1">{t('total_inquiries')}</p>
                 </div>
                 <div className="text-center p-4 bg-amber-50 rounded-xl border border-amber-100">
@@ -168,8 +168,8 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                   <p className="text-3xl font-bold text-red-700">{rejectedCount}</p>
                   <p className="text-xs text-slate-600 mt-1">{t('status_rejected')}</p>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-100">
-                  <p className="text-3xl font-bold text-purple-700">{approvedCount}</p>
+                <div className="text-center p-4 bg-amber-50 rounded-xl border border-amber-100">
+                  <p className="text-3xl font-bold text-amber-700">{approvedCount}</p>
                   <p className="text-xs text-slate-600 mt-1">{t('approved_rented')}</p>
                 </div>
                 <div className="text-center p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -208,7 +208,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <User className="w-5 h-5 text-indigo-600" />
+                <User className="w-5 h-5 text-orange-500" />
                 {t('responsible_agent')}
               </CardTitle>
             </CardHeader>
@@ -218,12 +218,12 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                 <div className="relative shrink-0">
                   <Avatar className="h-20 w-20">
                     <AvatarImage src={property.agent_photo_url} />
-                    <AvatarFallback className="text-2xl bg-gradient-to-br from-indigo-400 to-purple-400 text-white">
+                    <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-400 to-amber-400 text-white">
                       {property.agent_first_name ? property.agent_first_name.charAt(0) : <User className="w-8 h-8" />}
                     </AvatarFallback>
                   </Avatar>
                   <label className="absolute bottom-0 right-0 cursor-pointer">
-                    <div className="h-7 w-7 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                    <div className="h-7 w-7 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600 transition-colors">
                       {uploadingPhoto ? (
                         <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       ) : (
@@ -269,7 +269,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                     <div>
                       <p className="text-xs text-slate-500">{t('mobile_label')}</p>
                       {property.agent_phone ? (
-                        <a href={`tel:${property.agent_phone}`} className="text-sm font-medium text-indigo-600 hover:underline">
+                        <a href={`tel:${property.agent_phone}`} className="text-sm font-medium text-orange-600 hover:underline">
                           {property.agent_phone}
                         </a>
                       ) : <p className="text-sm font-medium text-slate-900">—</p>}
@@ -280,7 +280,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                     <div>
                       <p className="text-xs text-slate-500">{t('email_label')}</p>
                       {property.agent_email ? (
-                        <a href={`mailto:${property.agent_email}`} className="text-sm font-medium text-indigo-600 hover:underline">
+                        <a href={`mailto:${property.agent_email}`} className="text-sm font-medium text-orange-600 hover:underline">
                           {property.agent_email}
                         </a>
                       ) : <p className="text-sm font-medium text-slate-900">—</p>}
@@ -295,7 +295,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <Users className="w-5 h-5 text-indigo-600" />
+                <Users className="w-5 h-5 text-orange-500" />
                 {t('recent_inquiries')}
               </CardTitle>
             </CardHeader>
@@ -307,7 +307,7 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
                     const Icon = s.icon;
                     return (
                       <div key={inq.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
-                        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white font-semibold text-sm shrink-0">
+                        <div className="h-9 w-9 rounded-full bg-gradient-to-br from-orange-400 to-amber-400 flex items-center justify-center text-white font-semibold text-sm shrink-0">
                           {inq.tenant_name?.charAt(0)}
                         </div>
                         <div className="flex-1 min-w-0">
