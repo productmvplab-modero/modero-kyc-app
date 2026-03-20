@@ -471,22 +471,22 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <Shield className="w-20 h-20" />
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
-                    inquiry.id_verification_status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
-                    inquiry.id_verification_status === 'failed' ? 'bg-gradient-to-br from-red-500 to-red-600' :
-                    inquiry.id_verification_status === 'in_progress' ? 'bg-gradient-to-br from-amber-400 to-amber-500' :
-                    'bg-gradient-to-br from-orange-400 to-amber-400'
-                  }`}>
-                    {inquiry.id_verification_status === 'completed' ? (
-                      <CheckCircle2 className="w-7 h-7 text-white" />
-                    ) : inquiry.id_verification_status === 'failed' ? (
-                      <XCircle className="w-7 h-7 text-white" />
-                    ) : inquiry.id_verification_status === 'in_progress' ? (
-                      <Clock className="w-7 h-7 text-white" />
-                    ) : (
-                      <AlertCircle className="w-7 h-7 text-white" />
-                    )}
-                  </div>
+                  {(inquiry.id_verification_status === 'completed' || inquiry.id_verification_status === 'failed' || inquiry.id_verification_status === 'in_progress') && (
+                    <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
+                      inquiry.id_verification_status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
+                      inquiry.id_verification_status === 'failed' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                      inquiry.id_verification_status === 'in_progress' ? 'bg-gradient-to-br from-amber-400 to-amber-500' :
+                      ''
+                    }`}>
+                      {inquiry.id_verification_status === 'completed' ? (
+                        <CheckCircle2 className="w-7 h-7 text-white" />
+                      ) : inquiry.id_verification_status === 'failed' ? (
+                        <XCircle className="w-7 h-7 text-white" />
+                      ) : inquiry.id_verification_status === 'in_progress' ? (
+                        <Clock className="w-7 h-7 text-white" />
+                      ) : null}
+                    </div>
+                  )}
                   <div>
                     <p className="font-bold text-slate-900 text-base">Identity Verification</p>
                     <p className="text-sm text-slate-500 mt-0.5">Biometric ID check via Identomat</p>
