@@ -66,7 +66,7 @@ export default function PropertyPerformance({ properties, inquiries = [], onProp
                       €{property.monthly_rent.toLocaleString()}/mo
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className="bg-indigo-100 text-indigo-700 border-indigo-200">
+                      <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200">
                         {property.total_inquiries}
                       </Badge>
                     </TableCell>
