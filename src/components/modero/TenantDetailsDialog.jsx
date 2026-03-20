@@ -1062,6 +1062,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 </div>
               </div>
             </CardContent>
+            )}
           </Card>
 
           {/* Financing Options - only for qualified tenants */}
