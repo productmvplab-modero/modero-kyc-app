@@ -1078,7 +1078,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       </div>
                       Financing Options
                     </CardTitle>
-                    <p className="text-xs sm:text-sm text-slate-600">Help tenants manage upfront costs with flexible payment plans and financing options</p>
+                    <p className="text-xs sm:text-sm text-slate-600 text-center">Help tenants manage upfront costs with flexible payment plans and financing options</p>
                   </div>
                   <div className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4" />
