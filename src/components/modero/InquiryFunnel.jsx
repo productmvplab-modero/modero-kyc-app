@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { motion } from "framer-motion";
 import { useLanguage } from '@/components/LanguageContext';
 
-const COLORS = ['#6366f1', '#8b5cf6', '#a855f7', '#10b981', '#f43f5e'];
+const COLORS = ['#f97316', '#fb923c', '#fbbf24', '#10b981', '#f43f5e'];
 
 export default function InquiryFunnel({ inquiries }) {
   const { t } = useLanguage();

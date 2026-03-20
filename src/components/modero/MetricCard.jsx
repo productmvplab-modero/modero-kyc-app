@@ -9,12 +9,12 @@ export default function MetricCard({ title, value, subtitle, icon: Icon, trend, 
   const isPositive = trend === "up";
   
   const colorStyles = {
-    indigo: "from-indigo-500 to-indigo-600",
+    indigo: "from-orange-500 to-orange-600",
     emerald: "from-emerald-500 to-emerald-600",
-    amber: "from-amber-500 to-amber-600",
+    amber: "from-amber-400 to-amber-500",
     rose: "from-rose-500 to-rose-600",
-    purple: "from-purple-500 to-purple-600",
-    blue: "from-blue-500 to-blue-600"
+    purple: "from-orange-400 to-amber-500",
+    blue: "from-amber-500 to-orange-500"
   };
 
   return (

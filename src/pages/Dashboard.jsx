@@ -56,7 +56,7 @@ export default function Dashboard() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50">
       <Header />
       <div className="p-6">
         <div className="max-w-7xl mx-auto space-y-6">
@@ -97,7 +97,7 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <MetricCard title={t('active_properties')} value={activeProperties} subtitle={`${totalProperties} ${t('total_listings')}`} icon={Building2} trend="up" trendValue={12} color="indigo" index={0} />
-            <MetricCard title={t('total_inquiries')} value={totalInquiries} subtitle={`${avgInquiriesPerProperty} ${t('avg_per_property')}`} icon={MessageSquare} trend="up" trendValue={24} color="purple" index={1} />
+            <MetricCard title={t('total_inquiries')} value={totalInquiries} subtitle={`${avgInquiriesPerProperty} ${t('avg_per_property')}`} icon={MessageSquare} trend="up" trendValue={24} color="blue" index={1} />
             <MetricCard title={t('qualified_tenants_label')} value={qualifiedTenants} subtitle={`${conversionRate}% ${t('conversion_rate').toLowerCase()}`} icon={UserCheck} trend="up" trendValue={8} color="emerald" index={2} />
             <MetricCard title={t('verification_rate')} value={`${verificationRate}%`} subtitle={`${verificationCompleted} ${t('verified_tenants')}`} icon={ShieldCheck} trend="up" trendValue={18} color="amber" index={3} />
           </div>

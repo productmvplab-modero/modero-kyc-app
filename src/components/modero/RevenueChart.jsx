@@ -32,7 +32,7 @@ export default function RevenueChart({ propertyOwners }) {
       <Card className="border-0 shadow-lg h-full">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-indigo-600" />
+            <TrendingUp className="w-5 h-5 text-orange-500" />
             {t('qualification_trends')}
           </CardTitle>
           <p className="text-sm text-slate-500 mt-1">{t('monthly_qualification_metrics')}</p>
@@ -46,8 +46,8 @@ export default function RevenueChart({ propertyOwners }) {
                   <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="screenedGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -71,7 +71,7 @@ export default function RevenueChart({ propertyOwners }) {
               <Area
                 type="monotone"
                 dataKey="screened"
-                stroke="#6366f1"
+                stroke="#f97316"
                 strokeWidth={2}
                 fill="url(#screenedGradient)"
                 name={t('screened_label')}
