@@ -1005,16 +1005,24 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           <Separator />
 
           {/* Credit Check */}
-          <Card className="border-amber-100">
-            <CardHeader className="pb-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-t-xl border-b border-amber-100">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center">
-                  <BarChart3 className="w-4 h-4 text-white" />
-                </div>
-                <span>{t('credit_check')}</span>
-              </CardTitle>
+          <Card className="border-amber-100 overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="pb-3 bg-gradient-to-br from-amber-50 to-orange-50 rounded-t-xl border-b border-amber-100 px-4 sm:pb-4">
+              <button
+                onClick={() => toggleSection('credit')}
+                className="w-full flex items-center justify-between hover:opacity-75 transition-opacity"
+              >
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center">
+                    <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+                  </div>
+                  <span>{t('credit_check')}</span>
+                </CardTitle>
+                <ChevronDown className={`w-5 h-5 transition-transform ${expandedSections.credit ? 'rotate-180' : ''}`} />
+              </button>
             </CardHeader>
-            <CardContent className="pt-5">
+            {expandedSections.credit && (
+            <CardContent className="pt-4 sm:pt-5">
               <div className={`relative flex items-center justify-between p-5 rounded-xl border-2 ${
                 inquiry.credit_check_status === 'approved' ? 'border-emerald-200 bg-emerald-50' :
                 inquiry.credit_check_status === 'rejected' ? 'border-red-200 bg-red-50' :
