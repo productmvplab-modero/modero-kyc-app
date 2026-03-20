@@ -971,11 +971,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         id: inquiry.id,
                         data: { recommended_financing: inquiry.recommended_financing === 'klarna' ? null : 'klarna' }
                       })}
-                      className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
-                        inquiry.recommended_financing === 'klarna'
-                          ? 'border-pink-500 bg-pink-50 shadow-md'
-                          : 'border-slate-200 bg-white hover:border-pink-300 hover:bg-pink-50/50'
-                      }`}
+                      className={['relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left', inquiry.recommended_financing === 'klarna' ? 'border-pink-500 bg-pink-50 shadow-md' : 'border-slate-200 bg-white hover:border-pink-300 hover:bg-pink-50/50'].join(' ')}
                     >
                       <div className="h-12 w-20 bg-gradient-to-r from-pink-500 to-rose-400 rounded-lg flex items-center justify-center shrink-0">
                         <span className="text-white font-bold text-lg tracking-tight">K</span>
