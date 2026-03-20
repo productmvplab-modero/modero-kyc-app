@@ -215,19 +215,27 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
             <CardContent>
               <div className="flex flex-col sm:flex-row items-start gap-5">
                 {/* Agent photo with upload */}
-                <div className="relative shrink-0">
-                  <Avatar className="h-20 w-20">
-                    <AvatarImage src={property.agent_photo_url} />
-                    <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-400 to-amber-400 text-white">
-                      {property.agent_first_name ? property.agent_first_name.charAt(0) : <User className="w-8 h-8" />}
-                    </AvatarFallback>
-                  </Avatar>
-                  <label className="absolute bottom-0 right-0 cursor-pointer">
-                    <div className="h-7 w-7 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600 transition-colors">
+                <div className="flex flex-col items-center gap-2 shrink-0">
+                  <div className="relative">
+                    <Avatar className="h-24 w-24">
+                      <AvatarImage src={property.agent_photo_url} />
+                      <AvatarFallback className="text-3xl bg-gradient-to-br from-orange-400 to-amber-400 text-white">
+                        {property.agent_first_name ? property.agent_first_name.charAt(0) : <User className="w-10 h-10" />}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <label className="cursor-pointer w-full">
+                    <div className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 transition-colors text-white text-xs font-medium">
                       {uploadingPhoto ? (
-                        <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <>
+                          <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Uploading...</span>
+                        </>
                       ) : (
-                        <Upload className="h-3 w-3 text-white" />
+                        <>
+                          <Upload className="h-3 w-3" />
+                          <span>Upload Photo</span>
+                        </>
                       )}
                     </div>
                     <input
