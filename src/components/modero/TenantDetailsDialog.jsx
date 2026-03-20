@@ -1070,20 +1070,20 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <Card className="border-0 shadow-md overflow-hidden">
               <div className="h-1 bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-300" />
               <CardHeader className="bg-gradient-to-br from-emerald-50 to-teal-50 border-b border-emerald-100 pb-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-base sm:text-lg flex items-center gap-2 mb-2">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <CardTitle className="text-base sm:text-lg flex items-center gap-2">
                       <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center shadow-sm">
                         <DollarSign className="w-4 h-4 text-white" />
                       </div>
                       Financing Options
                     </CardTitle>
-                    <p className="text-xs sm:text-sm text-slate-600 text-center">Help tenants manage upfront costs with flexible payment plans and financing options</p>
+                    <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-1.5 shrink-0">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Qualified</span>
+                    </div>
                   </div>
-                  <div className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Qualified</span>
-                  </div>
+                  <p className="text-xs sm:text-sm text-slate-600 text-center px-2">Help tenants manage upfront costs with flexible payment plans and financing options</p>
                 </div>
               </CardHeader>
               <CardContent className="pt-5 sm:pt-6">
