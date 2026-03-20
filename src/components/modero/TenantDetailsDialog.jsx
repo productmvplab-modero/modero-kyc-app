@@ -591,7 +591,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-3 gap-3">
-                <div className={`p-4 rounded-lg border-2 ${inquiry.linkedin_connected ? 'border-blue-500 bg-blue-50' : 'border-slate-200'}`}>
+                <div className={['p-4 rounded-lg border-2', inquiry.linkedin_connected ? 'border-blue-500 bg-blue-50' : 'border-slate-200'].join(' ')}>
                   <div className="flex items-center gap-2 mb-2">
                     <Linkedin className="w-5 h-5 text-blue-600" />
                     <span className="font-medium">LinkedIn</span>
