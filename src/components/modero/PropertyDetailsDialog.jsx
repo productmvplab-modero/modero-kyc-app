@@ -109,6 +109,35 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
               <CardTitle className="text-lg">{t('property_information')}</CardTitle>
             </CardHeader>
             <CardContent>
+              {/* Property Photo */}
+              <div className="mb-5">
+                {property.photo_url ? (
+                  <div className="relative group w-full h-40 rounded-xl overflow-hidden border border-slate-200">
+                    <img src={property.photo_url} alt="Property" className="w-full h-full object-cover" />
+                    <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium">
+                        {uploadingPropertyPhoto ? <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Upload className="h-3 w-3" />}
+                        <span>{uploadingPropertyPhoto ? 'Uploading...' : 'Change Photo'}</span>
+                      </div>
+                      <input type="file" accept="image/*" className="hidden" onChange={handlePropertyPhotoUpload} disabled={uploadingPropertyPhoto} />
+                    </label>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer block">
+                    <div className="w-full h-32 rounded-xl border-2 border-dashed border-orange-300 bg-orange-50 flex flex-col items-center justify-center gap-2 hover:bg-orange-100 transition-colors">
+                      {uploadingPropertyPhoto ? (
+                        <div className="h-5 w-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <Upload className="h-6 w-6 text-orange-400" />
+                          <span className="text-sm text-orange-600 font-medium">Upload Property Photo</span>
+                        </>
+                      )}
+                    </div>
+                    <input type="file" accept="image/*" className="hidden" onChange={handlePropertyPhotoUpload} disabled={uploadingPropertyPhoto} />
+                  </label>
+                )}
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
