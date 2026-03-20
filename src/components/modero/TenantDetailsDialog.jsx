@@ -1149,15 +1149,22 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Notes - editable */}
           <Card className="overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
-                  <FileText className="w-4 h-4 text-white" />
-                </div>
-                {t('internal_notes')}
-              </CardTitle>
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
+              <button
+                onClick={() => toggleSection('notes')}
+                className="w-full flex items-center justify-between hover:opacity-75 transition-opacity"
+              >
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                    <FileText className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+                  </div>
+                  {t('internal_notes')}
+                </CardTitle>
+                <ChevronDown className={`w-5 h-5 transition-transform ${expandedSections.notes ? 'rotate-180' : ''}`} />
+              </button>
             </CardHeader>
-            <CardContent className="space-y-3 pt-5">
+            {expandedSections.notes && (
+            <CardContent className="space-y-3 pt-4 sm:pt-5">
               <textarea
                 className="w-full min-h-[120px] p-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 resize-y text-slate-700 bg-white"
                 placeholder={t('add_notes_placeholder')}
