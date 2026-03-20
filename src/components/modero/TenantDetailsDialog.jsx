@@ -730,31 +730,35 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           <Separator />
 
           {/* Bank Account Verification */}
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="border-orange-100">
+            <CardHeader className="pb-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-t-xl border-b border-orange-100">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Link className="w-5 h-5" />
-                {t('income_verification')}
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center">
+                  <Link className="w-4 h-4 text-white" />
+                </div>
+                <span>{t('income_verification')}</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <p className="text-sm text-slate-600">
+            <CardContent className="space-y-3 pt-4">
+              <p className="text-sm text-slate-500">
                 Connect bank account to automatically verify monthly income
               </p>
               {inquiry.bank_account_connected ? (
-                <div className="flex items-center gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <div className="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                  <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  </div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-emerald-900">Bank Account Connected</p>
-                    <p className="text-xs text-emerald-700">
-                      Status: {inquiry.bank_verification_status === 'verified' ? 'Verified ✓' : 'Pending verification'}
+                    <p className="text-sm font-semibold text-emerald-900">Bank Account Connected</p>
+                    <p className="text-xs text-emerald-600 mt-0.5">
+                      {inquiry.bank_verification_status === 'verified' ? 'Verified ✓' : 'Pending verification'}
                     </p>
                   </div>
                 </div>
               ) : (
-                <Button 
+                <Button
                   onClick={handleBankConnect}
-                  className="w-full bg-orange-500 hover:bg-orange-600"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-sm"
                 >
                   <Link className="w-4 h-4 mr-2" />
                   Connect Bank Account
