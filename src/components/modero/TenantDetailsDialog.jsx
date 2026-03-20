@@ -255,30 +255,33 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('pending')}
-                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
                   >
                     <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    {t('pending')}
+                    <span className="hidden sm:inline">{t('pending')}</span>
+                    <span className="sm:hidden">Pending</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('approved')}
-                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
                   >
                     <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    {t('approve')}
+                    <span className="hidden sm:inline">{t('approve')}</span>
+                    <span className="sm:hidden">Approve</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('rejected')}
-                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
                   >
                     <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    {t('reject')}
+                    <span className="hidden sm:inline">{t('reject')}</span>
+                    <span className="sm:hidden">Reject</span>
                   </Button>
-                </div>
+                  </div>
               </div>
             </CardContent>
           </Card>
@@ -471,10 +474,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </Card>
 
             {/* ID Verification - Identomat */}
-            <Card className="overflow-hidden border-0 shadow-md">
-            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
-              <CardTitle className="text-lg flex items-center gap-2">
+              <Card className="overflow-hidden border-0 shadow-md">
+              <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+              <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2 min-w-0">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
                   <Shield className="w-4 h-4 text-white" />
                 </div>
