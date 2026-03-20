@@ -380,13 +380,20 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Personal Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <User className="w-5 h-5" />
-                {t('personal_information')}
-              </CardTitle>
+              <button
+                onClick={() => toggleSection('personal')}
+                className="w-full flex items-center justify-between hover:bg-slate-50 rounded-lg p-1 -m-1 transition-colors"
+              >
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  <User className="w-4 sm:w-5 h-4 sm:h-5" />
+                  {t('personal_information')}
+                </CardTitle>
+                <ChevronDown className={`w-5 h-5 transition-transform ${expandedSections.personal ? 'rotate-180' : ''}`} />
+              </button>
             </CardHeader>
+            {expandedSections.personal && (
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-slate-400" />
                   <div>
