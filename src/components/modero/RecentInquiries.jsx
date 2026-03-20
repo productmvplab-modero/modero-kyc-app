@@ -51,13 +51,13 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50">
-                  <TableHead className="font-semibold">{t('tenant_label')}</TableHead>
-                  <TableHead className="font-semibold">{t('idealista_id')}</TableHead>
-                  <TableHead className="font-semibold">{t('income')}</TableHead>
-                  <TableHead className="font-semibold">{t('score')}</TableHead>
-                  <TableHead className="font-semibold">{t('status_label')}</TableHead>
-                  <TableHead className="font-semibold">{t('date_label')}</TableHead>
-                  <TableHead className="font-semibold text-right whitespace-nowrap pl-8">{t('contact')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('tenant_label')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden sm:table-cell">{t('idealista_id')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden md:table-cell">{t('income')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('score')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('status_label')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden lg:table-cell">{t('date_label')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden xl:table-cell text-right">{t('contact')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -77,53 +77,51 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                         onClick={() => handleRowClick(inquiry)}
                       >
                         <TableCell>
-                          <div className="flex items-center gap-3">
-                            <Avatar className="h-9 w-9">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-8 w-8 flex-shrink-0">
                               <AvatarImage src={inquiry.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
-                              <AvatarFallback>{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                              <AvatarFallback className="text-xs">{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
                             </Avatar>
-                            <span className="font-medium text-slate-900">{inquiry.tenant_name}</span>
+                            <span className="font-medium text-slate-900 text-xs sm:text-sm line-clamp-1">{inquiry.tenant_name}</span>
                           </div>
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600">
+                        <TableCell className="text-xs sm:text-sm text-slate-600 hidden sm:table-cell">
                           {inquiry.idealista_id ? (
-                            <Badge variant="outline">{inquiry.idealista_id}</Badge>
+                            <Badge variant="outline" className="text-xs">{inquiry.idealista_id}</Badge>
                           ) : '—'}
                         </TableCell>
-                        <TableCell className="text-sm text-slate-900">
-                          {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '—'}
+                        <TableCell className="text-xs sm:text-sm text-slate-900 hidden md:table-cell whitespace-nowrap">
+                          {inquiry.monthly_income ? `€${(inquiry.monthly_income / 1000).toFixed(0)}k` : '—'}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-xs">
                           {inquiry.qualification_score ? (
-                            <div className="flex items-center gap-2">
-                              <div className="w-12 bg-slate-200 rounded-full h-2">
+                            <div className="flex items-center gap-1">
+                              <div className="w-8 bg-slate-200 rounded-full h-1.5">
                                 <div 
-                                  className={`h-2 rounded-full ${
+                                  className={`h-1.5 rounded-full ${
                                     inquiry.qualification_score >= 70 ? 'bg-emerald-500' :
                                     inquiry.qualification_score >= 40 ? 'bg-amber-500' : 'bg-rose-500'
                                   }`}
                                   style={{ width: `${inquiry.qualification_score}%` }}
                                 />
                               </div>
-                              <span className="text-sm font-medium text-slate-700">
-                                {inquiry.qualification_score}
-                              </span>
+                              <span className="text-xs font-medium text-slate-700">{inquiry.qualification_score}</span>
                             </div>
                           ) : '—'}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-xs">
                           <Badge 
                             variant="secondary" 
-                            className={`${statusConfig[inquiry.status]?.color || 'bg-slate-100 text-slate-700'} border flex items-center gap-1 w-fit`}
+                            className={`${statusConfig[inquiry.status]?.color || 'bg-slate-100 text-slate-700'} border flex items-center gap-0.5 w-fit text-xs`}
                           >
-                            <StatusIcon className="w-3 h-3" />
-                            {statusConfig[inquiry.status]?.label || inquiry.status}
+                            <StatusIcon className="w-2.5 h-2.5 flex-shrink-0" />
+                            <span className="hidden sm:inline">{statusConfig[inquiry.status]?.label || inquiry.status}</span>
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600">
-                          {format(new Date(inquiry.created_date), "MMM d, yyyy")}
+                        <TableCell className="text-xs text-slate-600 hidden lg:table-cell whitespace-nowrap">
+                          {format(new Date(inquiry.created_date), "MMM d")}
                         </TableCell>
-                        <TableCell className="text-sm text-slate-600 text-right whitespace-nowrap pl-8">
+                        <TableCell className="text-xs text-slate-600 hidden xl:table-cell text-right">
                           {inquiry.tenant_email}
                         </TableCell>
                       </TableRow>

@@ -41,22 +41,21 @@ export default function Header() {
 
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center flex-shrink-0">
             <span className="text-white text-2xl font-bold">M</span>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
+          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
             Modero
           </h1>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6 sm:gap-8">
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-[140px] border-slate-200">
-              <Globe className="w-4 h-4 mr-2" />
-              <SelectValue />
+            <SelectTrigger className="w-fit sm:w-[140px] border-slate-200">
+              <Globe className="w-4 h-4" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="en">English</SelectItem>
@@ -65,63 +64,6 @@ export default function Header() {
               <SelectItem value="it">Italiano</SelectItem>
             </SelectContent>
           </Select>
-
-          {isAuthenticated && user && (
-            <>
-              {/* Notifications */}
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5 text-slate-600" />
-                <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
-              </Button>
-
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-3 hover:bg-slate-50">
-                    <Avatar className="h-8 w-8 ring-2 ring-orange-200">
-                      <AvatarImage src={user.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`} />
-                      <AvatarFallback className="bg-gradient-to-br from-orange-500 to-amber-400 text-white font-semibold">
-                        {user.full_name ? user.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="font-medium text-slate-700">
-                      {(user.first_name || user.last_name)
-                        ? `${user.first_name || ''} ${user.last_name || ''}`.trim()
-                        : (user.full_name || user.email)}
-                    </span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild className="text-slate-600 cursor-pointer">
-                    <Link to="/MyAccount" className="flex items-center w-full">
-                      <User className="mr-2 h-4 w-4" />
-                      {t('edit_profile')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="text-slate-600 cursor-pointer">
-                    <Link to="/MyAccount?tab=kyc" className="flex items-center w-full">
-                      <Settings className="mr-2 h-4 w-4" />
-                      {t('settings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-rose-600">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    {t('logout')}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          )}
-          
-          {!isAuthenticated && (
-            <Button onClick={handleLogin} className="bg-orange-500 hover:bg-orange-600">
-              <LogIn className="mr-2 h-4 w-4" />
-              {t('login')}
-            </Button>
-          )}
         </div>
       </div>
     </header>

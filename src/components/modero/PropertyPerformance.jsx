@@ -30,67 +30,69 @@ export default function PropertyPerformance({ properties, inquiries = [], onProp
           <p className="text-sm text-slate-500 mt-1">{t('click_property_details')}</p>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-slate-50">
-                <TableHead className="font-semibold">{t('property_label')}</TableHead>
-                <TableHead className="font-semibold">{t('rent')}</TableHead>
-                <TableHead className="font-semibold">{t('inquiries_label')}</TableHead>
-                <TableHead className="font-semibold">{t('status_qualified')}</TableHead>
-                <TableHead className="font-semibold">{t('conversion')}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {topProperties.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                    {t('no_properties')}
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50">
+                  <TableHead className="font-semibold whitespace-nowrap">{t('property_label')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap hidden sm:table-cell">{t('rent')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap">{t('inquiries_label')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap hidden md:table-cell">{t('status_qualified')}</TableHead>
+                  <TableHead className="font-semibold whitespace-nowrap">{t('conversion')}</TableHead>
                 </TableRow>
-              ) : (
-                topProperties.map((property) => (
-                  <TableRow 
-                    key={property.id} 
-                    className="hover:bg-slate-50 transition-colors cursor-pointer"
-                    onClick={() => onPropertyClick?.(property)}
-                  >
-                    <TableCell>
-                      <div>
-                        <p className="font-medium text-slate-900">{property.title}</p>
-                        <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
-                          <MapPin className="w-3 h-3" />
-                          {property.city}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium text-slate-900">
-                      €{property.monthly_rent.toLocaleString()}/mo
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200">
-                        {property.total_inquiries}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200">
-                        {property.qualified_tenants}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-900">
-                          {getConversionRate(property)}%
-                        </span>
-                        {getConversionRate(property) > 10 && (
-                          <TrendingUp className="w-4 h-4 text-emerald-600" />
-                        )}
-                      </div>
+              </TableHeader>
+              <TableBody>
+                {topProperties.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-8 text-slate-500">
+                      {t('no_properties')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : (
+                  topProperties.map((property) => (
+                    <TableRow 
+                      key={property.id} 
+                      className="hover:bg-slate-50 transition-colors cursor-pointer"
+                      onClick={() => onPropertyClick?.(property)}
+                    >
+                      <TableCell className="text-sm">
+                        <div>
+                          <p className="font-medium text-slate-900 line-clamp-1">{property.title}</p>
+                          <div className="flex items-center gap-1 text-xs text-slate-500 mt-1">
+                            <MapPin className="w-3 h-3 flex-shrink-0" />
+                            <span className="line-clamp-1">{property.city}</span>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-medium text-slate-900 hidden sm:table-cell text-sm whitespace-nowrap">
+                        €{property.monthly_rent.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200 whitespace-nowrap">
+                          {property.total_inquiries}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm hidden md:table-cell">
+                        <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 border-emerald-200 whitespace-nowrap">
+                          {property.qualified_tenants}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-sm">
+                        <div className="flex items-center gap-1">
+                          <span className="font-semibold text-slate-900">
+                            {getConversionRate(property)}%
+                          </span>
+                          {getConversionRate(property) > 10 && (
+                            <TrendingUp className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </motion.div>
