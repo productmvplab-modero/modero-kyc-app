@@ -1118,20 +1118,21 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       id: inquiry.id,
                       data: { recommended_financing: inquiry.recommended_financing === 'santander' ? null : 'santander' }
                     })}
-                    className={['relative flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all text-left', inquiry.recommended_financing === 'santander' ? 'border-red-500 bg-red-50 shadow-md' : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/50'].join(' ')}
+                    className={`relative flex items-center gap-4 p-4 rounded-lg border-2 transition-all ${
+                      inquiry.recommended_financing === 'santander'
+                        ? 'border-red-500 bg-red-50 shadow-md'
+                        : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/30'
+                    }`}
                   >
-                    <div className="h-10 w-16 bg-gradient-to-r from-red-600 to-red-500 rounded-lg flex items-center justify-center shrink-0">
-                      <span className="text-white font-bold text-xs text-center leading-tight px-1">Santander</span>
+                    <div className="h-12 w-12 sm:h-14 sm:w-14 bg-gradient-to-br from-red-600 to-red-500 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
+                      <span className="text-white font-bold text-sm">S</span>
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 text-left min-w-0">
                       <p className="font-semibold text-sm sm:text-base text-slate-900">Santander</p>
-                      <p className="text-xs text-slate-500">Personal financing</p>
-                      <p className="text-xs text-slate-500">Competitive rates</p>
+                      <p className="text-xs text-slate-500">Personal financing with competitive rates</p>
                     </div>
                     {inquiry.recommended_financing === 'santander' && (
-                      <div className="absolute top-2 right-2">
-                        <CheckCircle2 className="w-5 h-5 text-red-500" />
-                      </div>
+                      <CheckCircle2 className="w-5 h-5 text-red-500 shrink-0" />
                     )}
                   </button>
                 </div>
