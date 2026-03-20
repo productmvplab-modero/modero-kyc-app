@@ -60,10 +60,13 @@ export default function Dashboard() {
       <Header />
       <div className="p-6">
         <div className="max-w-7xl mx-auto space-y-6">
-          <Card className="border-0 shadow-lg bg-white">
-            <CardContent className="p-4">
+          <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardContent className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 p-4">
               <div className="flex items-center gap-4">
-                <Filter className="w-4 h-4 text-slate-500" />
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                  <Filter className="w-4 h-4 text-white" />
+                </div>
                 <Select
                   value={statusFilter}
                   onValueChange={(value) => {
