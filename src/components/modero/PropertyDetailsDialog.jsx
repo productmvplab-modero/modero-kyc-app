@@ -63,6 +63,21 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
     }
   };
 
+  const handlePropertyPhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !property) return;
+    setUploadingPropertyPhoto(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      updatePropertyMutation.mutate({ id: property.id, data: { photo_url: file_url } });
+      toast.success('Property photo updated');
+    } catch {
+      toast.error('Failed to upload photo');
+    } finally {
+      setUploadingPropertyPhoto(false);
+    }
+  };
+
   if (!property) return null;
 
   const propertyInquiries = (inquiries || []).filter(i => i.property_id === property.id);
@@ -94,6 +109,37 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
               <CardTitle className="text-lg">{t('property_information')}</CardTitle>
             </CardHeader>
             <CardContent>
+              {/* Property Photo */}
+              <div className="mb-5">
+                {property.photo_url ? (
+                  <div className="relative rounded-xl overflow-hidden h-48 bg-slate-100 mb-2">
+                    <img src={property.photo_url} alt="Property" className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="rounded-xl h-32 bg-slate-100 flex items-center justify-center mb-2 border-2 border-dashed border-slate-200">
+                    <div className="text-center text-slate-400">
+                      <Home className="w-8 h-8 mx-auto mb-1" />
+                      <p className="text-xs">No property photo</p>
+                    </div>
+                  </div>
+                )}
+                <label className="cursor-pointer">
+                  <div className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 transition-colors text-white text-xs font-medium w-fit">
+                    {uploadingPropertyPhoto ? (
+                      <>
+                        <div className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Uploading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="h-3 w-3" />
+                        <span>Upload Property Photo</span>
+                      </>
+                    )}
+                  </div>
+                  <input type="file" accept="image/*" className="hidden" onChange={handlePropertyPhotoUpload} disabled={uploadingPropertyPhoto} />
+                </label>
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-slate-400" />
