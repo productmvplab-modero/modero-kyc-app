@@ -1067,16 +1067,26 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
             {/* Financing Options - only for qualified tenants */}
             {(inquiry.status === 'qualified' || inquiry.status === 'rented') && (
-            <Card className="border-emerald-200 bg-emerald-50/30">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <DollarSign className="w-5 h-5 text-emerald-600" />
-                  Financing Options
-                  <span className="ml-auto text-xs font-normal text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">Tenant Qualified</span>
-                </CardTitle>
-                <p className="text-sm text-slate-500">Recommend a financing solution to this tenant</p>
+            <Card className="border-0 shadow-md overflow-hidden">
+              <div className="h-1 bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-300" />
+              <CardHeader className="bg-gradient-to-br from-emerald-50 to-teal-50 border-b border-emerald-100 pb-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <CardTitle className="text-base sm:text-lg flex items-center gap-2 mb-2">
+                      <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center shadow-sm">
+                        <DollarSign className="w-4 h-4 text-white" />
+                      </div>
+                      Financing Options
+                    </CardTitle>
+                    <p className="text-xs sm:text-sm text-slate-600">Recommend a financing solution to help this tenant</p>
+                  </div>
+                  <div className="flex-shrink-0 px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-100 text-emerald-700 rounded-full flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Qualified</span>
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-5 sm:pt-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {/* Klarna */}
                     {(['klarna', 'both'].includes(inquiry.recommended_financing) ? true : true) && (
