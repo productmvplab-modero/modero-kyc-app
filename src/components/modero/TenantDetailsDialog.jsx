@@ -255,33 +255,30 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('pending')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
                   >
                     <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('pending')}</span>
-                    <span className="sm:hidden">Pending</span>
+                    {t('pending')}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('approved')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
                   >
                     <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('approve')}</span>
-                    <span className="sm:hidden">Approve</span>
+                    {t('approve')}
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('rejected')}
-                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
+                    className={`flex-1 text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
                   >
                     <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                    <span className="hidden sm:inline">{t('reject')}</span>
-                    <span className="sm:hidden">Reject</span>
+                    {t('reject')}
                   </Button>
-                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -341,18 +338,18 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
           {/* Application Progress */}
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">{t('application_progress')}</CardTitle>
+            <CardHeader className="px-3 sm:px-6 pt-4 sm:pt-6">
+              <CardTitle className="text-base sm:text-lg">{t('application_progress')}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-3 sm:px-6 pb-4 sm:pb-6">
               <div className="space-y-4">
-                <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div className="w-full h-2 sm:h-3 bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 transition-all duration-500"
                     style={{ width: `${(inquiry.progress_step / 5) * 100}%` }}
                   />
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5 sm:gap-2">
                   {progressSteps.map((step) => (
                     <button
                       key={step.step}
@@ -474,10 +471,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </Card>
 
             {/* ID Verification - Identomat */}
-              <Card className="overflow-hidden border-0 shadow-md">
-              <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-              <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
-                <CardTitle className="text-base sm:text-lg flex items-center gap-2 min-w-0">
+            <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
                   <Shield className="w-4 h-4 text-white" />
                 </div>
