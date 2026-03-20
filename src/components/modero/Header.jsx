@@ -78,9 +78,9 @@ export default function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-3 hover:bg-slate-50">
-                    <Avatar className="h-8 w-8">
+                    <Avatar className="h-8 w-8 ring-2 ring-orange-200">
                       <AvatarImage src={user.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`} />
-                      <AvatarFallback>
+                      <AvatarFallback className="bg-gradient-to-br from-orange-500 to-amber-400 text-white font-semibold">
                         {user.full_name ? user.full_name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'}
                       </AvatarFallback>
                     </Avatar>
