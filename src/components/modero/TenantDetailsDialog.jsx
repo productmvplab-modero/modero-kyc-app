@@ -938,11 +938,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             <CardContent>
               <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <creditStatus.icon className={`w-8 h-8 ${
-                    inquiry.credit_check_status === 'approved' ? 'text-emerald-600' :
-                    inquiry.credit_check_status === 'rejected' ? 'text-red-600' :
-                    'text-amber-600'
-                  }`} />
+                  <creditStatus.icon className={['w-8 h-8', inquiry.credit_check_status === 'approved' ? 'text-emerald-600' : inquiry.credit_check_status === 'rejected' ? 'text-red-600' : 'text-amber-600'].join(' ')} />
                   <div>
                     <p className="font-semibold text-slate-900">{t('credit_verification')}</p>
                     <p className="text-sm text-slate-600 mt-0.5">{t('db_assessment')}</p>
