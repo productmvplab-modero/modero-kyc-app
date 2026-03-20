@@ -666,9 +666,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 </div>
               </div>
             </CardContent>
+            )}
           </Card>
 
-          {/* Employment Information */}
+          {/* Employment Information - REMOVED (moved to collapsible section) */}
           <Card className="overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
             <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
