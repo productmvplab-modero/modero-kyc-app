@@ -983,6 +983,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 </div>
               </div>
             </CardContent>
+            )}
           </Card>
 
           <Separator />
