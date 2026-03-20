@@ -1063,10 +1063,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </div>
             </CardContent>
             )}
-          </Card>
+            </Card>
 
-          {/* Financing Options - only for qualified tenants */}
-          {(inquiry.status === 'qualified' || inquiry.status === 'rented') && (
+            {/* Financing Options - only for qualified tenants */}
+            {(inquiry.status === 'qualified' || inquiry.status === 'rented') && (
             <Card className="border-emerald-200 bg-emerald-50/30">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
