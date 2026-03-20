@@ -102,7 +102,7 @@ export default function Dashboard() {
             <MetricCard title={t('verification_rate')} value={`${verificationRate}%`} subtitle={`${verificationCompleted} ${t('verified_tenants')}`} icon={ShieldCheck} trend="up" trendValue={18} color="amber" index={3} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             <InquiryFunnel inquiries={filteredInquiries} />
             <RevenueChart propertyOwners={propertyOwners} />
           </div>

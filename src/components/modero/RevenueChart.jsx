@@ -29,7 +29,7 @@ export default function RevenueChart({ propertyOwners }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.35 }}
     >
-      <Card className="border-0 shadow-lg">
+      <Card className="border-0 shadow-lg h-full">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-indigo-600" />

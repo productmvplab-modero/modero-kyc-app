@@ -31,7 +31,7 @@ export default function InquiryFunnel({ inquiries }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
     >
-      <Card className="border-0 shadow-lg">
+      <Card className="border-0 shadow-lg h-full">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-bold text-slate-900">{t('inquiry_pipeline')}</CardTitle>
           <p className="text-sm text-slate-500 mt-1">{t('tenant_qualification_funnel')}</p>
