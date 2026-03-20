@@ -466,10 +466,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 inquiry.id_verification_status === 'in_progress' ? 'border-amber-200 bg-amber-50' :
                 'border-orange-100 bg-gradient-to-r from-orange-50 to-amber-50'
               }`}>
-                {/* Decorative background icon */}
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-5">
-                  <Shield className="w-20 h-20" />
-                </div>
+
                 <div className="flex items-center gap-4">
                   {(inquiry.id_verification_status === 'completed' || inquiry.id_verification_status === 'failed' || inquiry.id_verification_status === 'in_progress') && (
                     <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
