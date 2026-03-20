@@ -111,8 +111,8 @@ export default function ProfileEditor({ user }) {
           </div>
         </div>
 
-      {/* Fields */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Fields */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[
           { label: 'First Name', field: 'first_name', placeholder: 'John' },
           { label: 'Surname', field: 'last_name', placeholder: 'Doe' },
@@ -143,6 +143,7 @@ export default function ProfileEditor({ user }) {
             {user?.email}
             <span className="ml-2 text-xs text-slate-400">(cannot be changed)</span>
           </div>
+        </div>
         </div>
       </div>
     </div>
