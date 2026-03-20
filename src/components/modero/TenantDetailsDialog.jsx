@@ -80,7 +80,21 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
   const [uploadingDoc, setUploadingDoc] = useState(null);
   const [notesValue, setNotesValue] = React.useState('');
   const [notesSaved, setNotesSaved] = React.useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    personal: true,
+    employment: true,
+    financial: true,
+    documents: true,
+    verification: false,
+    profiles: false,
+    credit: false,
+    notes: false,
+  });
   const queryClient = useQueryClient();
+
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
 
   // Sync notesValue when inquiry changes
   useEffect(() => {
