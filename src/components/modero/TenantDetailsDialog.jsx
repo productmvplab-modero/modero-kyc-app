@@ -927,20 +927,24 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           <Separator />
 
           {/* Credit Check */}
-          <Card>
-            <CardHeader>
+          <Card className="border-amber-100">
+            <CardHeader className="pb-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-t-xl border-b border-amber-100">
               <CardTitle className="text-lg flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-amber-600" />
-                {t('credit_check')}
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center">
+                  <BarChart3 className="w-4 h-4 text-white" />
+                </div>
+                <span>{t('credit_check')}</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <creditStatus.icon className={['w-8 h-8', inquiry.credit_check_status === 'approved' ? 'text-emerald-600' : inquiry.credit_check_status === 'rejected' ? 'text-red-600' : 'text-amber-600'].join(' ')} />
+            <CardContent className="pt-4">
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-100">
+                <div className="flex items-center gap-4">
+                  <div className={['h-12 w-12 rounded-xl flex items-center justify-center shrink-0', inquiry.credit_check_status === 'approved' ? 'bg-emerald-100' : inquiry.credit_check_status === 'rejected' ? 'bg-red-100' : 'bg-amber-100'].join(' ')}>
+                    <creditStatus.icon className={['w-6 h-6', inquiry.credit_check_status === 'approved' ? 'text-emerald-600' : inquiry.credit_check_status === 'rejected' ? 'text-red-600' : 'text-amber-600'].join(' ')} />
+                  </div>
                   <div>
                     <p className="font-semibold text-slate-900">{t('credit_verification')}</p>
-                    <p className="text-sm text-slate-600 mt-0.5">{t('db_assessment')}</p>
+                    <p className="text-sm text-slate-500 mt-0.5">{t('db_assessment')}</p>
                   </div>
                 </div>
                 <Badge className={creditStatus.color}>
