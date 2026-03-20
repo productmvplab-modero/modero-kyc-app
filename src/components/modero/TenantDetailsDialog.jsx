@@ -706,7 +706,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div>
                     <p className="text-xs text-slate-500">Credit Score</p>
                     <p className="text-sm font-medium text-slate-900">
-                      {inquiry.credit_score ? `${inquiry.credit_score}/100` : '—'}
+                      {inquiry.credit_score ? (inquiry.credit_score + '/100') : '—'}
                     </p>
                   </div>
                 </div>
