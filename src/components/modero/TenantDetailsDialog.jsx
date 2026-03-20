@@ -996,11 +996,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                       id: inquiry.id,
                       data: { recommended_financing: inquiry.recommended_financing === 'santander' ? null : 'santander' }
                     })}
-                    className={`relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left ${
-                      inquiry.recommended_financing === 'santander'
-                        ? 'border-red-500 bg-red-50 shadow-md'
-                        : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/50'
-                    }`}
+                    className={['relative flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left', inquiry.recommended_financing === 'santander' ? 'border-red-500 bg-red-50 shadow-md' : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/50'].join(' ')}
                   >
                     <div className="h-12 w-20 bg-gradient-to-r from-red-600 to-red-500 rounded-lg flex items-center justify-center shrink-0">
                       <span className="text-white font-bold text-xs text-center leading-tight px-1">Santander</span>
