@@ -684,7 +684,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   <div>
                     <p className="text-xs text-slate-500">Monthly Income</p>
                     <p className="text-sm font-medium text-slate-900">
-                      {inquiry.monthly_income ? `€${inquiry.monthly_income.toLocaleString()}` : '—'}
+                      {inquiry.monthly_income ? ('€' + inquiry.monthly_income.toLocaleString()) : '—'}
                     </p>
                   </div>
                 </div>
