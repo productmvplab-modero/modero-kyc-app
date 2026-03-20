@@ -792,12 +792,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </div>
             </CardContent>
             )}
-          </Card>
+            </Card>
 
-          <Separator />
+            <Separator />
 
-          {/* Bank Account Verification */}
-          <Card className="border-orange-100">
+            {/* Bank Account Verification */}
+            <Card className="border-orange-100">
             <CardHeader className="pb-3 bg-gradient-to-r from-orange-50 to-amber-50 rounded-t-xl border-b border-orange-100">
               <CardTitle className="text-lg flex items-center gap-2">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center">
