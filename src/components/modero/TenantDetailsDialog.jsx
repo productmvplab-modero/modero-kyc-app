@@ -570,7 +570,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   },
                 ].map(({ logo, name, provider, bg, status }) => (
                   <div key={name} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
-                    <div className={`h-9 w-9 rounded-lg ${bg} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
+                    <div className={['h-9 w-9 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0', bg].join(' ')}>
                       {logo}
                     </div>
                     <div className="flex-1 min-w-0">
