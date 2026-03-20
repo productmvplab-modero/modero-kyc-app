@@ -218,29 +218,29 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </div>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Modero Score Highlight */}
-          <Card className="bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-200">
-                    <span className="text-3xl font-bold text-white">{moderoScore}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900">{t('modero_score')}</h3>
-                    <p className="text-sm text-slate-600">{t('overall_rating')}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800">{t('excellent')}</Badge>}
-                      {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800">{t('good')}</Badge>}
-                      {moderoScore < 60 && <Badge className="bg-red-100 text-red-800">{t('needs_review')}</Badge>}
-                    </div>
-                  </div>
-                </div>
-                <TrendingUp className="w-12 h-12 text-orange-400" />
-              </div>
-            </CardContent>
-          </Card>
+        <div className="space-y-4 sm:space-y-6">
+           {/* Modero Score Highlight */}
+           <Card className="bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
+             <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
+               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                 <div className="flex items-start gap-3 sm:gap-4">
+                   <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-200 shrink-0">
+                     <span className="text-2xl sm:text-3xl font-bold text-white">{moderoScore}</span>
+                   </div>
+                   <div className="flex-1 min-w-0">
+                     <h3 className="text-base sm:text-xl font-bold text-slate-900">{t('modero_score')}</h3>
+                     <p className="text-xs sm:text-sm text-slate-600 mt-0.5">{t('overall_rating')}</p>
+                     <div className="flex items-center gap-2 mt-2 flex-wrap">
+                       {moderoScore >= 80 && <Badge className="bg-emerald-100 text-emerald-800 text-xs">{t('excellent')}</Badge>}
+                       {moderoScore >= 60 && moderoScore < 80 && <Badge className="bg-amber-100 text-amber-800 text-xs">{t('good')}</Badge>}
+                       {moderoScore < 60 && <Badge className="bg-red-100 text-red-800 text-xs">{t('needs_review')}</Badge>}
+                     </div>
+                   </div>
+                 </div>
+                 <TrendingUp className="w-10 sm:w-12 h-10 sm:h-12 text-orange-400 shrink-0" />
+               </div>
+             </CardContent>
+           </Card>
 
           {/* Landlord Decision */}
           <Card className="border-2 border-dashed">
