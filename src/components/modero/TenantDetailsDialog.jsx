@@ -701,21 +701,29 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 </div>
               </div>
             </CardContent>
+            )}
           </Card>
 
           {/* Financial Information */}
           <Card className="overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
-                  <DollarSign className="w-4 h-4 text-white" />
-                </div>
-                {t('financial_information')}
-              </CardTitle>
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3 px-4 sm:pb-4">
+              <button
+                onClick={() => toggleSection('financial')}
+                className="w-full flex items-center justify-between hover:opacity-75 transition-opacity"
+              >
+                <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                    <DollarSign className="w-3 sm:w-4 h-3 sm:h-4 text-white" />
+                  </div>
+                  {t('financial_information')}
+                </CardTitle>
+                <ChevronDown className={`w-5 h-5 transition-transform ${expandedSections.financial ? 'rotate-180' : ''}`} />
+              </button>
             </CardHeader>
-            <CardContent className="pt-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {expandedSections.financial && (
+            <CardContent className="pt-4 sm:pt-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 <div className="flex items-center gap-3">
                   <DollarSign className="w-5 h-5 text-slate-400" />
                   <div>
