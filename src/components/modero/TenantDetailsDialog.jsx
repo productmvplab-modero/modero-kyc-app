@@ -502,7 +502,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   {inquiry.id_verification_status === 'completed' ? '✓ Completed' :
                    inquiry.id_verification_status === 'failed' ? '✗ Failed' :
                    inquiry.id_verification_status === 'in_progress' ? '⏳ In Progress' :
-                   '○ Pending'}
+                   'Pending'}
                 </div>
               </div>
             </CardContent>
