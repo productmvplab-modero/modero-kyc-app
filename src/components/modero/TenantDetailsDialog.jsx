@@ -255,30 +255,33 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('pending')}
-                    className={inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
                   >
-                    <Clock className="w-4 h-4 mr-1" />
-                    {t('pending')}
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                    <span className="hidden sm:inline">{t('pending')}</span>
+                    <span className="sm:hidden">Pending</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('approved')}
-                    className={inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
                   >
-                    <ThumbsUp className="w-4 h-4 mr-1" />
-                    {t('approve')}
+                    <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                    <span className="hidden sm:inline">{t('approve')}</span>
+                    <span className="sm:hidden">Approve</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('rejected')}
-                    className={inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
                   >
-                    <ThumbsDown className="w-4 h-4 mr-1" />
-                    {t('reject')}
+                    <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                    <span className="hidden sm:inline">{t('reject')}</span>
+                    <span className="sm:hidden">Reject</span>
                   </Button>
-                </div>
+                  </div>
               </div>
             </CardContent>
           </Card>
