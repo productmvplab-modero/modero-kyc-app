@@ -448,45 +448,67 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </Card>
 
           {/* ID Verification - Identomat */}
-          <Card>
-            <CardHeader>
+          <Card className="overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+            <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Shield className="w-5 h-5" />
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm">
+                  <Shield className="w-4 h-4 text-white" />
+                </div>
                 {t('id_verification')}
-                <span className="ml-1 text-xs font-normal text-slate-500">· Identomat</span>
+                <span className="ml-1 text-xs font-normal px-2 py-0.5 rounded-full bg-orange-100 text-orange-600">Identomat</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                <div className="flex items-center gap-3">
-                  {inquiry.id_verification_status === 'completed' ? (
-                    <CheckCircle2 className="w-8 h-8 text-emerald-600" />
-                  ) : inquiry.id_verification_status === 'failed' ? (
-                    <XCircle className="w-8 h-8 text-red-600" />
-                  ) : inquiry.id_verification_status === 'in_progress' ? (
-                    <Clock className="w-8 h-8 text-amber-600" />
-                  ) : (
-                    <AlertCircle className="w-8 h-8 text-slate-400" />
-                  )}
+            <CardContent className="pt-5">
+              <div className={`relative flex items-center justify-between p-5 rounded-xl border-2 ${
+                inquiry.id_verification_status === 'completed' ? 'border-emerald-200 bg-emerald-50' :
+                inquiry.id_verification_status === 'failed' ? 'border-red-200 bg-red-50' :
+                inquiry.id_verification_status === 'in_progress' ? 'border-amber-200 bg-amber-50' :
+                'border-orange-100 bg-gradient-to-r from-orange-50 to-amber-50'
+              }`}>
+                {/* Decorative background icon */}
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-5">
+                  <Shield className="w-20 h-20" />
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-md ${
+                    inquiry.id_verification_status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-emerald-600' :
+                    inquiry.id_verification_status === 'failed' ? 'bg-gradient-to-br from-red-500 to-red-600' :
+                    inquiry.id_verification_status === 'in_progress' ? 'bg-gradient-to-br from-amber-400 to-amber-500' :
+                    'bg-gradient-to-br from-orange-400 to-amber-400'
+                  }`}>
+                    {inquiry.id_verification_status === 'completed' ? (
+                      <CheckCircle2 className="w-7 h-7 text-white" />
+                    ) : inquiry.id_verification_status === 'failed' ? (
+                      <XCircle className="w-7 h-7 text-white" />
+                    ) : inquiry.id_verification_status === 'in_progress' ? (
+                      <Clock className="w-7 h-7 text-white" />
+                    ) : (
+                      <AlertCircle className="w-7 h-7 text-white" />
+                    )}
+                  </div>
                   <div>
-                    <p className="font-semibold text-slate-900">Identity Verification Status</p>
-                    <p className="text-sm text-slate-600 mt-0.5">Biometric ID check via Identomat</p>
+                    <p className="font-bold text-slate-900 text-base">Identity Verification</p>
+                    <p className="text-sm text-slate-500 mt-0.5">Biometric ID check via Identomat</p>
                     {inquiry.dni_nie_number && (
-                      <p className="text-xs text-slate-500 mt-1">NIE/DNI: <span className="font-medium text-slate-700">{inquiry.dni_nie_number}</span></p>
+                      <div className="flex items-center gap-1.5 mt-1.5">
+                        <CreditCard className="w-3.5 h-3.5 text-orange-400" />
+                        <p className="text-xs text-slate-500">NIE/DNI: <span className="font-semibold text-slate-700">{inquiry.dni_nie_number}</span></p>
+                      </div>
                     )}
                   </div>
                 </div>
-                <Badge className={
-                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-800' :
-                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-800' :
-                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-800' :
-                  'bg-slate-100 text-slate-800'
+                <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                  inquiry.id_verification_status === 'completed' ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-300' :
+                  inquiry.id_verification_status === 'failed' ? 'bg-red-100 text-red-700 ring-1 ring-red-300' :
+                  inquiry.id_verification_status === 'in_progress' ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300' :
+                  'bg-orange-100 text-orange-700 ring-1 ring-orange-300'
                 }>
-                  {inquiry.id_verification_status === 'completed' ? 'Completed' :
-                   inquiry.id_verification_status === 'failed' ? 'Failed' :
-                   inquiry.id_verification_status === 'in_progress' ? 'In Progress' :
-                   'Pending'}
-                </Badge>
+                  {inquiry.id_verification_status === 'completed' ? '✓ Completed' :
+                   inquiry.id_verification_status === 'failed' ? '✗ Failed' :
+                   inquiry.id_verification_status === 'in_progress' ? '⏳ In Progress' :
+                   '○ Pending'}
+                </div>
               </div>
             </CardContent>
           </Card>
