@@ -223,7 +223,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
            <Card className="bg-gradient-to-r from-orange-50 to-amber-50 border-orange-200">
              <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                 <div className="flex items-start gap-3 sm:gap-4">
+                 <div className="flex items-center gap-4 sm:gap-6 flex-1">
                    <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-200 shrink-0">
                      <span className="text-2xl sm:text-3xl font-bold text-white">{moderoScore}</span>
                    </div>
@@ -237,7 +237,6 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                      </div>
                    </div>
                  </div>
-                 <TrendingUp className="w-10 sm:w-12 h-10 sm:h-12 text-orange-400 shrink-0" />
                </div>
              </CardContent>
            </Card>
