@@ -41,8 +41,9 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
     >
-      <Card className="border-0 shadow-lg">
-        <CardHeader className="pb-4 border-b">
+      <Card className="overflow-hidden border-0 shadow-md">
+        <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+        <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
           <CardTitle className="text-xl font-bold text-slate-900">{t('recent_inquiries')}</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
