@@ -31,24 +31,25 @@ export default function MyAccount() {
     <div className="min-h-screen bg-slate-50">
       {/* Page Header */}
       <div className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-6 py-8">
-          <h1 className="text-2xl font-bold text-slate-900">My Account</h1>
-          <p className="text-slate-500 text-sm mt-1">Manage your profile and tenant screening settings</p>
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">My Account</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1">Manage your profile and tenant screening settings</p>
 
           {/* Tabs */}
-          <div className="flex gap-1 mt-6 border-b border-slate-200">
+          <div className="flex gap-0 sm:gap-1 mt-4 sm:mt-6 border-b border-slate-200 overflow-x-auto">
             {tabs.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
-                className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium border-b-2 transition-colors -mb-px whitespace-nowrap ${
                   activeTab === id
                     ? 'border-orange-500 text-orange-500'
                     : 'border-transparent text-slate-500 hover:text-slate-700'
                 }`}
               >
-                <Icon className="w-4 h-4" />
-                {label}
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">{label}</span>
+                <span className="sm:hidden">{label.split(' ')[0]}</span>
               </button>
             ))}
           </div>
@@ -56,7 +57,7 @@ export default function MyAccount() {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         {activeTab === 'profile' && <ProfileEditor user={user} />}
         {activeTab === 'kyc' && <KycRulesSettings userEmail={user?.email} />}
       </div>

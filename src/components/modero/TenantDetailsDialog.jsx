@@ -192,12 +192,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto [&>button]:p-3 [&>button]:rounded-xl [&>button]:right-3 [&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-5 [&>button>svg]:w-5">
+      <DialogContent className="w-[95vw] max-w-5xl max-h-[95vh] overflow-y-auto p-3 sm:p-6 [&>button]:p-3 [&>button]:rounded-xl [&>button]:right-3 [&>button]:top-3 [&>button]:hover:bg-slate-100 [&>button>svg]:h-5 [&>button>svg]:w-5">
         <DialogHeader>
-          <div className="flex items-center gap-3 pr-8">
-            <DialogTitle className="text-2xl font-bold">{t('tenant_profile')}</DialogTitle>
+          <div className="flex items-center gap-2 sm:gap-3 pr-8 flex-wrap">
+            <DialogTitle className="text-xl sm:text-2xl font-bold">{t('tenant_profile')}</DialogTitle>
             <Badge className={currentStatus.color}>
-              <currentStatus.icon className="w-4 h-4 mr-1" />
+              <currentStatus.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
               {currentStatus.label}
             </Badge>
           </div>
@@ -229,39 +229,42 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
 
           {/* Landlord Decision */}
           <Card className="border-2 border-dashed">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="pt-4 sm:pt-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
                 <div>
-                  <h3 className="font-semibold text-lg">{t('landlord_decision')}</h3>
-                  <p className="text-sm text-slate-600">{t('review_approve_desc')}</p>
+                  <h3 className="font-semibold text-base sm:text-lg">{t('landlord_decision')}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5">{t('review_approve_desc')}</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1 sm:gap-2 flex-wrap">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('pending')}
-                    className={inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'pending' ? 'bg-amber-50' : ''}`}
                   >
-                    <Clock className="w-4 h-4 mr-1" />
-                    {t('pending')}
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                    <span className="hidden sm:inline">{t('pending')}</span>
+                    <span className="sm:hidden">Pending</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('approved')}
-                    className={inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'approved' ? 'bg-emerald-50 text-emerald-700' : ''}`}
                   >
-                    <ThumbsUp className="w-4 h-4 mr-1" />
-                    {t('approve')}
+                    <ThumbsUp className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                    <span className="hidden sm:inline">{t('approve')}</span>
+                    <span className="sm:hidden">Approve</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleLandlordDecision('rejected')}
-                    className={inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}
+                    className={`text-xs sm:text-sm ${inquiry.landlord_decision === 'rejected' ? 'bg-red-50 text-red-700' : ''}`}
                   >
-                    <ThumbsDown className="w-4 h-4 mr-1" />
-                    {t('reject')}
+                    <ThumbsDown className="w-3 h-3 sm:w-4 sm:h-4 mr-0.5 sm:mr-1" />
+                    <span className="hidden sm:inline">{t('reject')}</span>
+                    <span className="sm:hidden">Reject</span>
                   </Button>
                 </div>
               </div>
@@ -269,17 +272,17 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           </Card>
 
           {/* Profile Header */}
-          <div className="flex items-start gap-6">
-            <div className="relative">
-              <Avatar className="h-24 w-24">
+          <div className="flex items-start gap-3 sm:gap-6">
+            <div className="relative flex-shrink-0">
+              <Avatar className="h-16 w-16 sm:h-24 sm:w-24">
                 <AvatarImage src={inquiry.profile_picture_url} />
-                <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
+                <AvatarFallback className="text-lg sm:text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
                   {inquiry.tenant_name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <label className="absolute bottom-0 right-0 cursor-pointer">
-                <div className="h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
-                  <Upload className="h-4 w-4 text-white" />
+                <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
+                  <Upload className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                 </div>
                 <input
                   type="file"
@@ -290,10 +293,10 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                 />
               </label>
             </div>
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-slate-900">{inquiry.tenant_name}</h2>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-slate-600 text-sm">{t('idealista_id')}:</span>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-2xl font-bold text-slate-900 line-clamp-1">{inquiry.tenant_name}</h2>
+              <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
+                <span className="text-slate-600">{t('idealista_id')}:</span>
                 {inquiry.idealista_id ? (
                   <button
                     onClick={() => {
@@ -303,20 +306,20 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         setTimeout(() => onOpenProperty(linkedProperty), 150);
                       }
                     }}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-orange-600 hover:text-orange-800 hover:underline transition-colors"
+                    className="inline-flex items-center gap-1 font-semibold text-orange-600 hover:text-orange-800 hover:underline transition-colors"
                     title={t('property_information')}
                   >
-                    <Link className="w-3.5 h-3.5" />
+                    <Link className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                     #{inquiry.idealista_id}
                   </button>
                 ) : (
-                  <span className="text-slate-500 text-sm">—</span>
+                  <span className="text-slate-500">—</span>
                 )}
               </div>
-              <div className="flex gap-2 mt-2">
-                {inquiry.age && <Badge variant="outline">{inquiry.age} years old</Badge>}
-                {inquiry.gender && <Badge variant="outline">{inquiry.gender}</Badge>}
-                {inquiry.nationality && <Badge variant="outline">{inquiry.nationality}</Badge>}
+              <div className="flex gap-2 mt-2 flex-wrap">
+                {inquiry.age && <Badge variant="outline" className="text-xs">{inquiry.age} years old</Badge>}
+                {inquiry.gender && <Badge variant="outline" className="text-xs">{inquiry.gender}</Badge>}
+                {inquiry.nationality && <Badge variant="outline" className="text-xs">{inquiry.nationality}</Badge>}
               </div>
             </div>
           </div>
@@ -371,74 +374,74 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 text-slate-400" />
-                  <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Email</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-slate-900">{inquiry.tenant_email}</p>
-                      {inquiry.email_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <p className="text-xs sm:text-sm font-medium text-slate-900 truncate">{inquiry.tenant_email}</p>
+                      {inquiry.email_verified && <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 flex-shrink-0" />}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Phone</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-slate-900">{inquiry.tenant_phone || '—'}</p>
-                      {inquiry.mobile_verified && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
+                    <div className="flex items-center gap-1 sm:gap-2">
+                      <p className="text-xs sm:text-sm font-medium text-slate-900">{inquiry.tenant_phone || '—'}</p>
+                      {inquiry.mobile_verified && <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 flex-shrink-0" />}
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Address</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.address || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900 truncate">{inquiry.address || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Postal Code</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.postal_code || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">{inquiry.postal_code || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">City</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.city || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">{inquiry.city || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Globe className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Country</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.country || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">{inquiry.country || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Place of Birth</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.place_of_birth || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900 truncate">{inquiry.place_of_birth || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <CreditCard className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">DNI/NIE Number</p>
-                    <p className="text-sm font-medium text-slate-900">{inquiry.dni_nie_number || '—'}</p>
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">{inquiry.dni_nie_number || '—'}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Shield className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">GDPR Verified</p>
-                    <Badge className={inquiry.gdpr_verified ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}>
+                    <Badge className={`text-xs ${inquiry.gdpr_verified ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}`}>
                       {inquiry.gdpr_verified ? 'Verified' : 'Pending'}
                     </Badge>
                   </div>
@@ -685,52 +688,52 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-5">
-              <div className="grid grid-cols-4 gap-4">
-                <div className="flex items-center gap-3">
-                  <DollarSign className="w-5 h-5 text-slate-400" />
-                  <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Monthly Income</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs sm:text-sm font-medium text-slate-900 truncate">
                       {inquiry.monthly_income ? ('€' + inquiry.monthly_income.toLocaleString()) : '—'}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <TrendingUp className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0 mt-1" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Income Ratio</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-slate-900">{incomeRatio}%</p>
-                      <Badge className={incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}>
+                    <div className="flex items-center gap-1">
+                      <p className="text-xs sm:text-sm font-medium text-slate-900">{incomeRatio}%</p>
+                      <Badge className={`text-xs ${incomeRatioHealthy ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}`}>
                         {incomeRatioHealthy ? 'Healthy' : 'High'}
                       </Badge>
                     </div>
                     <p className="text-xs text-slate-500">Target: &lt;40%</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <CreditCard className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Credit Score</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">
                       {inquiry.credit_score ? (inquiry.credit_score + '/100') : '—'}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Users className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Occupants</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">
                       {inquiry.number_of_occupants || '—'}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <PawPrint className="w-5 h-5 text-slate-400" />
-                  <div>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <PawPrint className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 flex-shrink-0" />
+                  <div className="min-w-0">
                     <p className="text-xs text-slate-500">Pets</p>
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-xs sm:text-sm font-medium text-slate-900">
                       {inquiry.has_pets ? (inquiry.pet_details || 'Yes') : 'No'}
                     </p>
                   </div>
