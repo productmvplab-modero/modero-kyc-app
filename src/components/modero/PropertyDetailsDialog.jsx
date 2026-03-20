@@ -40,6 +40,7 @@ const statusInfo = {
 export default function PropertyDetailsDialog({ property, inquiries, open, onOpenChange }) {
   const { t } = useLanguage();
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [uploadingPropertyPhoto, setUploadingPropertyPhoto] = useState(false);
   const queryClient = useQueryClient();
 
   const updatePropertyMutation = useMutation({
@@ -59,6 +60,21 @@ export default function PropertyDetailsDialog({ property, inquiries, open, onOpe
       toast.error('Failed to upload photo');
     } finally {
       setUploadingPhoto(false);
+    }
+  };
+
+  const handlePropertyPhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !property) return;
+    setUploadingPropertyPhoto(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      updatePropertyMutation.mutate({ id: property.id, data: { photo_url: file_url } });
+      toast.success('Property photo updated');
+    } catch {
+      toast.error('Failed to upload photo');
+    } finally {
+      setUploadingPropertyPhoto(false);
     }
   };
 
