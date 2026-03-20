@@ -13,9 +13,10 @@ const STATUS_CONFIG = {
 export default function VerificationStatusBadge({ status = 'pending' }) {
   const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.pending;
   const Icon = cfg.icon;
+  const showIcon = status !== 'pending';
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${cfg.color}`}>
-      <Icon className="w-3 h-3" />
+    <span className={['inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium', cfg.color].join(' ')}>
+      {showIcon && <Icon className="w-3 h-3" />}
       {cfg.label}
     </span>
   );
