@@ -60,54 +60,56 @@ export default function ProfileEditor({ user }) {
     : 'U';
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-xl font-semibold text-slate-900">Profile Information</h2>
-          <p className="text-sm text-slate-500 mt-1">Manage your personal account details</p>
-        </div>
-        {!editing ? (
-          <Button variant="outline" onClick={() => setEditing(true)} className="gap-2">
-            <Pencil className="w-4 h-4" /> Edit Profile
-          </Button>
-        ) : (
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={handleCancel} className="gap-2">
-              <X className="w-4 h-4" /> Cancel
-            </Button>
-            <Button onClick={handleSave} disabled={saveMutation.isPending} className="gap-2 bg-indigo-600 hover:bg-indigo-700">
-              {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-              Save Changes
-            </Button>
+    <div className="overflow-hidden rounded-2xl border-0 shadow-md">
+      <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
+      <div className="bg-white p-8">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-xl font-semibold text-slate-900">Profile Information</h2>
+            <p className="text-sm text-slate-500 mt-1">Manage your personal account details</p>
           </div>
-        )}
-      </div>
+          {!editing ? (
+            <Button variant="outline" onClick={() => setEditing(true)} className="gap-2">
+              <Pencil className="w-4 h-4" /> Edit Profile
+            </Button>
+          ) : (
+            <div className="flex gap-2">
+              <Button variant="outline" onClick={handleCancel} className="gap-2">
+                <X className="w-4 h-4" /> Cancel
+              </Button>
+              <Button onClick={handleSave} disabled={saveMutation.isPending} className="gap-2 bg-orange-500 hover:bg-orange-600">
+                {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                Save Changes
+              </Button>
+            </div>
+          )}
+        </div>
 
-      {/* Avatar */}
-      <div className="flex items-center gap-6 mb-8 pb-8 border-b border-slate-100">
-        <div className="relative">
-          <Avatar className="h-24 w-24 ring-4 ring-indigo-100">
-            <AvatarImage src={form.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`} />
-            <AvatarFallback className="text-2xl bg-indigo-100 text-indigo-600">{initials}</AvatarFallback>
-          </Avatar>
-          {editing && (
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors"
-            >
-              {uploadingPhoto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
-            </button>
-          )}
-          <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+        {/* Avatar */}
+        <div className="flex items-center gap-6 mb-8 pb-8 border-b border-slate-100">
+          <div className="relative">
+            <Avatar className="h-24 w-24 ring-4 ring-orange-200">
+              <AvatarImage src={form.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`} />
+              <AvatarFallback className="text-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white font-semibold">{initials}</AvatarFallback>
+            </Avatar>
+            {editing && (
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-white flex items-center justify-center shadow-lg hover:from-orange-600 hover:to-amber-500 transition-colors"
+              >
+                {uploadingPhoto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
+              </button>
+            )}
+            <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+          </div>
+          <div>
+            <p className="font-semibold text-slate-900 text-lg">{user?.full_name || 'Your Name'}</p>
+            <p className="text-slate-500 text-sm">{user?.email}</p>
+            {user?.role && (
+              <span className="inline-block mt-2 text-xs px-2 py-1 bg-orange-50 text-orange-700 rounded-full font-medium capitalize">{user.role}</span>
+            )}
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-slate-900 text-lg">{user?.full_name || 'Your Name'}</p>
-          <p className="text-slate-500 text-sm">{user?.email}</p>
-          {user?.role && (
-            <span className="inline-block mt-2 text-xs px-2 py-1 bg-indigo-50 text-indigo-700 rounded-full font-medium capitalize">{user.role}</span>
-          )}
-        </div>
-      </div>
 
       {/* Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
