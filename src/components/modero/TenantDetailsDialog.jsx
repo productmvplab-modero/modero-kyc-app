@@ -242,11 +242,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
            </Card>
 
           {/* Landlord Decision */}
-          <Card className="border-2 border-dashed">
+          <Card className="bg-gradient-to-r from-blue-50 to-slate-50 border-blue-200 overflow-hidden border-0 shadow-md">
+            <div className="h-1 bg-gradient-to-r from-blue-500 via-blue-400 to-slate-300" />
             <CardContent className="pt-4 sm:pt-6 px-3 sm:px-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-                <div className="flex-1">
-                  <h3 className="font-semibold text-base sm:text-lg">{t('landlord_decision')}</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-base sm:text-lg text-slate-900">{t('landlord_decision')}</h3>
                   <p className="text-xs sm:text-sm text-slate-600 mt-1">{t('review_approve_desc')}</p>
                 </div>
                 <div className="flex gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
