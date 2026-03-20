@@ -618,7 +618,7 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                   </div>
                   <p className="text-xs text-slate-500">{inquiry.xing_connected ? 'Connected' : 'Not connected'}</p>
                 </div>
-                <div className={`p-4 rounded-lg border-2 ${inquiry.facebook_connected ? 'border-orange-500 bg-orange-50' : 'border-slate-200'}`}>
+                <div className={['p-4 rounded-lg border-2', inquiry.facebook_connected ? 'border-orange-500 bg-orange-50' : 'border-slate-200'].join(' ')}>
                   <div className="flex items-center gap-2 mb-2">
                     <Facebook className="w-5 h-5 text-orange-500" />
                     <span className="font-medium">Facebook</span>
