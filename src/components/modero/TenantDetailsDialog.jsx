@@ -628,12 +628,12 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
               </button>
             </CardHeader>
             {expandedSections.profiles && (
-            <CardContent className="pt-4 sm:pt-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                <div className={['p-4 rounded-lg border-2', inquiry.linkedin_connected ? 'border-blue-500 bg-blue-50' : 'border-slate-200'].join(' ')}>
+            <CardContent className="pt-4 sm:pt-5 px-3 sm:px-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                <div className={['p-3 sm:p-4 rounded-lg border-2', inquiry.linkedin_connected ? 'border-blue-500 bg-blue-50' : 'border-slate-200'].join(' ')}>
                   <div className="flex items-center gap-2 mb-2">
-                    <Linkedin className="w-5 h-5 text-blue-600" />
-                    <span className="font-medium">LinkedIn</span>
+                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                    <span className="font-medium text-sm">LinkedIn</span>
                   </div>
                   {inquiry.linkedin_connected ? (
                     <div>
