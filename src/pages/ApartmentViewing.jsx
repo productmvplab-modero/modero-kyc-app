@@ -54,60 +54,6 @@ export default function ApartmentViewing() {
     enabled: !!tenantData?.property_id,
   });
 
-  // Admin mode queries
-  const { data: adminInquiries = [] } = useQuery({
-    queryKey: ['adminInquiries'],
-    queryFn: () => base44.entities.Inquiry.list(),
-    enabled: adminMode,
-  });
-
-  const { data: adminProperties = [] } = useQuery({
-    queryKey: ['adminProperties'],
-    queryFn: () => base44.entities.Property.list(),
-    enabled: adminMode,
-  });
-
-  const { data: adminBookings = [] } = useQuery({
-    queryKey: ['adminBookings'],
-    queryFn: () => base44.entities.ViewingBooking.list(),
-    enabled: adminMode,
-  });
-
-  const adminInquiryData = adminInquiries.find(i => i.id === adminInquiryId);
-  const adminPropertyData = adminProperties.find(p => p.id === adminPropertyId);
-  
-  const adminAvailableDates = useMemo(() => {
-    const dates = [];
-    const today = startOfToday();
-    for (let i = 0; i < 30; i++) {
-      const date = addDays(today, i);
-      const dayOfWeek = getDay(date);
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        dates.push(date);
-      }
-    }
-    return dates;
-  }, []);
-
-  const adminBookedDates = useMemo(() => {
-    if (!adminPropertyId) return [];
-    return adminBookings
-      .filter(b => b.property_id === adminPropertyId && b.status !== 'cancelled')
-      .map(b => b.viewing_date);
-  }, [adminBookings, adminPropertyId]);
-
-  const adminBookedTimes = useMemo(() => {
-    if (!adminSelectedDate || !adminPropertyId) return [];
-    return adminBookings
-      .filter(
-        b =>
-          b.property_id === adminPropertyId &&
-          b.viewing_date === adminSelectedDate &&
-          b.status !== 'cancelled'
-      )
-      .map(b => b.viewing_time);
-  }, [adminBookings, adminPropertyId, adminSelectedDate]);
-
   // Generate available dates based on booking rules
   const availableDates = useMemo(() => {
     const dates = [];
@@ -127,7 +73,7 @@ export default function ApartmentViewing() {
 
   const timeSlots = bookingRules?.available_time_slots || [];
 
-  // Create booking mutation
+  // Create booking mutation (tenant mode)
   const bookingMutation = useMutation({
     mutationFn: async () => {
       if (!selectedDate || !selectedTime || !tenantData) return;
@@ -160,6 +106,45 @@ export default function ApartmentViewing() {
       queryClient.invalidateQueries({ queryKey: ['viewingBookings'] });
       setSelectedDate(null);
       setSelectedTime(null);
+    },
+  });
+
+  // Create booking mutation (admin mode)
+  const adminBookingMutation = useMutation({
+    mutationFn: async () => {
+      const booking = await base44.entities.ViewingBooking.create({
+        inquiry_id: adminInquiryId,
+        property_id: adminPropertyId,
+        tenant_name: adminInquiryData.tenant_name,
+        tenant_email: adminInquiryData.tenant_email,
+        viewing_date: format(adminSelectedDate, 'yyyy-MM-dd'),
+        viewing_time: adminSelectedTime,
+        status: 'confirmed',
+      });
+
+      await base44.functions.invoke('sendViewingConfirmation', {
+        booking_id: booking.id,
+        inquiry_id: adminInquiryId,
+        property_id: adminPropertyId,
+        tenant_name: adminInquiryData.tenant_name,
+        tenant_email: adminInquiryData.tenant_email,
+        viewing_date: format(adminSelectedDate, 'EEEE, MMMM d, yyyy'),
+        viewing_time: adminSelectedTime,
+        property_address: adminPropertyData.address,
+        property_city: adminPropertyData.city,
+      });
+
+      await base44.entities.Inquiry.update(adminInquiryId, {
+        viewing_booked: true,
+        viewing_date: format(adminSelectedDate, 'yyyy-MM-dd'),
+        viewing_time: adminSelectedTime,
+      });
+
+      return booking;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['adminBookings', 'adminInquiries'] });
+      setStep('success');
     },
   });
 
