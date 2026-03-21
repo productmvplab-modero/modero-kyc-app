@@ -56,7 +56,7 @@ export default function Header() {
           {/* Pages Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
+              <button className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:text-orange-500 hover:border-orange-300 transition-colors bg-slate-50 hover:bg-slate-100">
                 Pages
                 <ChevronDown className="w-4 h-4" />
               </button>
