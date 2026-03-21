@@ -23,10 +23,10 @@ export default function SlackIntegration() {
 
   return (
     <Card className="overflow-hidden border-0 shadow-md">
-      <div className="h-1 bg-gradient-to-r from-purple-500 via-pink-400 to-red-300" />
-      <CardHeader className="bg-gradient-to-br from-purple-50 to-pink-50 border-b border-purple-100 pb-3">
+      <div className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300" />
+      <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-400 flex items-center justify-center shadow-sm">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center shadow-sm">
             <MessageCircle className="w-4 h-4 text-white" />
           </div>
           {t('connect_to_slack')}
