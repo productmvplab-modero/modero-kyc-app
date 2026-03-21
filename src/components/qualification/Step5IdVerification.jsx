@@ -39,6 +39,7 @@ export default function Step5IdVerification({ formData, updateForm, onNext, onBa
   const [loading, setLoading] = useState(false);
   const [simulating, setSimulating] = useState(null);
   const [businessEmail, setBusinessEmail] = useState('');
+  const [showIdModal, setShowIdModal] = useState(false);
 
   const simulate = (field, delay = 1500) => {
     setSimulating(field);
