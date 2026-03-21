@@ -259,10 +259,10 @@ export default function ViewingBooking() {
                   <p className="text-sm text-slate-500">{selectedInquiry.tenant_email}</p>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-700 mb-1">Property</h3>
-                  <p className="text-slate-900">{selectedProperty.address}</p>
-                  <p className="text-sm text-slate-500">{selectedProperty.city}</p>
-                </div>
+                   <h3 className="font-semibold text-slate-700 mb-1">Property</h3>
+                   <p className="text-slate-900">{selectedProperty?.address || '-'}</p>
+                   <p className="text-sm text-slate-500">{selectedProperty?.city || '-'}</p>
+                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-700 mb-1">Date</h3>
                   <p className="text-slate-900">{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
@@ -324,9 +324,9 @@ export default function ViewingBooking() {
                   <span className="font-semibold">{selectedInquiry.tenant_name}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-600">Property:</span>
-                  <span className="font-semibold">{selectedProperty.address}</span>
-                </div>
+                   <span className="text-slate-600">Property:</span>
+                   <span className="font-semibold">{selectedProperty?.address || '-'}</span>
+                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600">Date & Time:</span>
                   <span className="font-semibold">{format(selectedDate, 'd MMM yyyy')} at {selectedTime}</span>
