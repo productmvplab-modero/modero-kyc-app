@@ -103,11 +103,6 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
-          <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
-        </div>
-
-        <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_address')}</label>
           <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder={t('s2_address_ph')} className="bg-card" />
         </div>
