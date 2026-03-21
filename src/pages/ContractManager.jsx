@@ -138,6 +138,7 @@ export default function ContractManager() {
             <div className="mb-8">
               <ContractForm
                 inquiries={inquiries}
+                properties={properties}
                 onSubmit={(data) => createContractMutation.mutate(data)}
                 onCancel={() => setShowNewForm(false)}
                 isLoading={createContractMutation.isPending}
