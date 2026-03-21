@@ -75,7 +75,7 @@ export default function SlackIntegration() {
           <Button
             onClick={handleConnectSlack}
             disabled={isConnecting}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium flex items-center justify-center gap-2 h-10"
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium flex items-center justify-center gap-2 h-10"
           >
             <svg className="w-4 h-4" viewBox="0 0 127 127" fill="currentColor">
               <path d="M27.2 80c0 7.5-6.1 13.6-13.6 13.6C6.1 93.6 0 87.5 0 80c0-7.5 6.1-13.6 13.6-13.6h13.6V80zm6.8 0c0-7.5 6.1-13.6 13.6-13.6 7.5 0 13.6 6.1 13.6 13.6v34c0 7.5-6.1 13.6-13.6 13.6-7.5 0-13.6-6.1-13.6-13.6V80z"/>
