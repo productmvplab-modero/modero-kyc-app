@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import { CreditCard, ShieldCheck, Zap, CheckCircle2 } from 'lucide-react';
 import StepCard from './StepCard';
 
-const FINANCING_OPTIONS = [
-  { key: 'klarna', label: 'Klarna', icon: '🟢', color: 'border-green-300 bg-green-50', desc1: 'Buy now, pay later', desc2: 'Flexible instalments' },
-  { key: 'santander', label: 'Santander', icon: '🔴', color: 'border-red-200 bg-red-50', desc1: 'Personal financing', desc2: 'Competitive rates' },
-];
-
-export default function Step7CreditCheck({ formData, updateForm, onNext, onBack }) {
+export default function Step7CreditCheck({ formData, updateForm, onNext, onBack, t }) {
   const [loading, setLoading] = useState(false);
   const [running, setRunning] = useState(false);
   const [creditScore, setCreditScore] = useState(null);
@@ -15,7 +10,7 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack 
   const runCreditCheck = () => {
     setRunning(true);
     setTimeout(() => {
-      const score = Math.floor(Math.random() * 30) + 65; // 65–95
+      const score = Math.floor(Math.random() * 30) + 65;
       setCreditScore(score);
       updateForm({ credit_check_status: 'approved', credit_score: score });
       setRunning(false);
@@ -32,28 +27,33 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack 
   };
 
   const scoreColor = creditScore >= 80 ? 'text-green-600' : creditScore >= 65 ? 'text-amber-600' : 'text-red-600';
-  const scoreLabel = creditScore >= 80 ? 'Excellent' : creditScore >= 65 ? 'Good' : 'Needs Improvement';
+  const scoreLabel = creditScore >= 80 ? t('s7_excellent') : creditScore >= 65 ? t('s7_good') : t('s7_needs');
+
+  const financingOptions = [
+    { key: 'klarna', label: 'Klarna', icon: '🟢', color: 'border-green-300 bg-green-50', desc1: 'Buy now, pay later', desc2: 'Flexible instalments' },
+    { key: 'santander', label: 'Santander', icon: '🔴', color: 'border-red-200 bg-red-50', desc1: 'Personal financing', desc2: 'Competitive rates' },
+  ];
 
   return (
     <StepCard
       icon={CreditCard}
-      title="Credit Check & Financing"
-      subtitle="Final financial assessment — this step is required for qualification"
+      title={t('s7_title')}
+      subtitle={t('s7_subtitle')}
       onNext={async () => { setLoading(true); await onNext({ status: 'qualified', modero_score: creditScore || 70 }); setLoading(false); }}
       onBack={onBack}
       nextDisabled={formData.credit_check_status === 'pending'}
       loading={loading}
-      nextLabel="Submit Application"
+      nextLabel={t('s7_submit')}
+      t={t}
     >
-      {/* Credit Check */}
       <div className="rounded-xl border-2 border-slate-200 bg-white p-5">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-10 w-10 rounded-xl bg-orange-50 flex items-center justify-center">
             <ShieldCheck className="w-5 h-5 text-orange-500" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-800">Dun & Bradstreet Credit Check</p>
-            <p className="text-xs text-slate-500">Authoritative credit risk assessment</p>
+            <p className="text-sm font-semibold text-slate-800">{t('s7_dnb')}</p>
+            <p className="text-xs text-slate-500">{t('s7_dnb_sub')}</p>
           </div>
         </div>
 
@@ -61,34 +61,33 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack 
           <div className="text-center py-4">
             <div className={`text-5xl font-bold ${scoreColor} mb-1`}>{creditScore}</div>
             <div className={`text-sm font-semibold ${scoreColor}`}>{scoreLabel}</div>
-            <div className="text-xs text-slate-500 mt-1">out of 100</div>
+            <div className="text-xs text-slate-500 mt-1">{t('s7_out_of')}</div>
             <div className="mt-4 w-full bg-slate-100 rounded-full h-3">
               <div className={`h-3 rounded-full transition-all duration-1000 ${creditScore >= 80 ? 'bg-green-500' : creditScore >= 65 ? 'bg-amber-400' : 'bg-red-400'}`}
                 style={{ width: `${creditScore}%` }} />
             </div>
             <div className="flex items-center justify-center gap-1 mt-3 text-green-600">
               <CheckCircle2 className="w-4 h-4" />
-              <span className="text-sm font-medium">Credit check completed</span>
+              <span className="text-sm font-medium">{t('s7_completed')}</span>
             </div>
           </div>
         ) : (
           <button type="button" onClick={runCreditCheck} disabled={running}
             className="w-full h-11 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-70">
             {running ? (
-              <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Running assessment...</>
+              <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> {t('s7_running')}</>
             ) : (
-              <><Zap className="w-4 h-4" /> Run Credit Check</>
+              <><Zap className="w-4 h-4" /> {t('s7_run')}</>
             )}
           </button>
         )}
       </div>
 
-      {/* Financing Options */}
       <div>
-        <p className="text-sm font-semibold text-slate-700 mb-1">Financing Options (Optional)</p>
-        <p className="text-xs text-slate-400 mb-3">Select any financing options you'd like to explore for your rental</p>
+        <p className="text-sm font-semibold text-slate-700 mb-1">{t('s7_financing_title')}</p>
+        <p className="text-xs text-slate-400 mb-3">{t('s7_financing_sub')}</p>
         <div className="grid grid-cols-2 gap-3">
-          {FINANCING_OPTIONS.map(opt => {
+          {financingOptions.map(opt => {
             const selected = (formData.financing_options || []).includes(opt.key);
             return (
               <button key={opt.key} type="button" onClick={() => toggleFinancing(opt.key)}
