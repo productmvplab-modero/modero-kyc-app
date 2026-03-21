@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
-import { format, addDays, startOfToday, isWeekday } from 'date-fns';
+import { format, addDays, startOfToday, getDay } from 'date-fns';
 
 const TIME_SLOTS = [
   '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'
