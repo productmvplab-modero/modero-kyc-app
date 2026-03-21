@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Mail, Briefcase, FileCheck, CheckCircle2, AlertCircle, Camera } from 'lucide-react';
+import { Shield, Mail, Briefcase, FileCheck, CheckCircle2, AlertCircle, Camera, Send } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import StepCard from './StepCard';
 
