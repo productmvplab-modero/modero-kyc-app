@@ -46,9 +46,14 @@ export default function Header() {
           <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center flex-shrink-0">
             <span className="text-white text-2xl font-bold">M</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
-            Modero
-          </h1>
+          <div className="flex flex-col leading-tight">
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
+              Modero
+            </h1>
+            {user?.company_name && (
+              <span className="text-xs text-slate-500 font-medium">{user.company_name}</span>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
