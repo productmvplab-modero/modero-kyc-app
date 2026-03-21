@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Linkedin, Facebook, Mail, CheckCircle2, ChevronDown } from 'lucide-react';
+import { Linkedin, Facebook, Mail, CheckCircle2, ChevronDown, Shield } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
