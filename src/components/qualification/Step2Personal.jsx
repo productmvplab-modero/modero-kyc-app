@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { User, Upload, CheckCircle2 } from 'lucide-react';
+import { User, Upload } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import StepCard from './StepCard';
 import { base44 } from '@/api/base44Client';
 
-const GENDERS = ['male', 'female', 'other', 'prefer_not_to_say'];
-const GENDER_LABELS = { male: 'Male', female: 'Female', other: 'Other', prefer_not_to_say: 'Prefer not to say' };
-
-export default function Step2Personal({ formData, updateForm, onNext, onBack }) {
+export default function Step2Personal({ formData, updateForm, onNext, onBack, t }) {
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,15 +19,23 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack }) 
     setUploading(false);
   };
 
+  const genders = [
+    { val: 'male', label: t('s2_gender_male') },
+    { val: 'female', label: t('s2_gender_female') },
+    { val: 'other', label: t('s2_gender_other') },
+    { val: 'prefer_not_to_say', label: t('s2_gender_prefer') },
+  ];
+
   return (
     <StepCard
       icon={User}
-      title="Personal Information"
-      subtitle="Tell us about yourself so we can verify your identity"
+      title={t('s2_title')}
+      subtitle={t('s2_subtitle')}
       onNext={async () => { setLoading(true); await onNext(); setLoading(false); }}
       onBack={onBack}
       nextDisabled={!canContinue}
       loading={loading}
+      t={t}
     >
       {/* Profile Photo */}
       <div className="flex flex-col items-center mb-2">
@@ -47,72 +52,72 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack }) 
             <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
           </label>
         </div>
-        <p className="text-xs text-slate-400 mt-2">Upload a profile photo (optional)</p>
+        <p className="text-xs text-slate-400 mt-2">{t('s2_photo')}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">First Name *</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_first_name')}</label>
           <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Last Name *</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_last_name')}</label>
           <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Age</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_age')}</label>
           <Input type="number" min={18} max={99} value={formData.age} onChange={e => updateForm({ age: e.target.value })} placeholder="30" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Gender</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_gender')}</label>
           <select
             value={formData.gender}
             onChange={e => updateForm({ gender: e.target.value })}
             className="w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
           >
-            <option value="">Select gender</option>
-            {GENDERS.map(g => <option key={g} value={g}>{GENDER_LABELS[g]}</option>)}
+            <option value="">{t('s2_gender_placeholder')}</option>
+            {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">Nationality *</label>
-        <Input value={formData.nationality} onChange={e => updateForm({ nationality: e.target.value })} placeholder="e.g. Spanish" />
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_nationality')}</label>
+        <Input value={formData.nationality} onChange={e => updateForm({ nationality: e.target.value })} placeholder={t('s2_nationality_ph')} />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">Place of Birth</label>
-        <Input value={formData.place_of_birth} onChange={e => updateForm({ place_of_birth: e.target.value })} placeholder="e.g. Madrid" />
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_pob')}</label>
+        <Input value={formData.place_of_birth} onChange={e => updateForm({ place_of_birth: e.target.value })} placeholder={t('s2_pob_ph')} />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">DNI / NIE Number *</label>
-        <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder="e.g. 12345678A or X1234567B" />
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_dni')}</label>
+        <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={t('s2_dni_ph')} />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">Address</label>
-        <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder="Street and number" />
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_address')}</label>
+        <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder={t('s2_address_ph')} />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">City *</label>
-          <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder="Barcelona" />
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_city')}</label>
+          <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder={t('s2_city_ph')} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">Postal Code</label>
-          <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder="08001" />
+          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_postal')}</label>
+          <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">Country *</label>
-        <Input value={formData.country} onChange={e => updateForm({ country: e.target.value })} placeholder="Spain" />
+        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_country')}</label>
+        <Input value={formData.country} onChange={e => updateForm({ country: e.target.value })} placeholder={t('s2_country_ph')} />
       </div>
     </StepCard>
   );
