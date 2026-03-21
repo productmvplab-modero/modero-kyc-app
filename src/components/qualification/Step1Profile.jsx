@@ -125,15 +125,14 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
 
       {/* Form */}
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{t('s1_first_name')}</label>
-            <Input placeholder="John" value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">{t('s1_last_name')}</label>
-            <Input placeholder="Doe" value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">{t('s1_first_name')}</label>
+          <Input placeholder="John" value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">{t('s1_last_name')}</label>
+          <Input placeholder="Doe" value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} />
         </div>
 
         <div>
