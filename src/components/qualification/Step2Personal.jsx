@@ -133,13 +133,13 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">National Tax/Registration ID *</label>
           <p className="text-xs text-muted-foreground mb-2">
-            {formData.country === 'Spain' && 'e.g., NIF or CIF'}
-            {formData.country === 'France' && 'e.g., SIREN or SIRET'}
-            {formData.country === 'Germany' && 'e.g., Steuernummer'}
-            {formData.country === 'Netherlands' && 'e.g., BSN or BTW ID'}
-            {formData.country === 'Portugal' && 'e.g., NIF'}
-            {formData.country === 'Italy' && 'e.g., Codice Fiscale'}
-            {formData.country === 'Belgium' && 'e.g., National Register Number'}
+            {formData.country === 'Spain' && ''}
+            {formData.country === 'France' && ''}
+            {formData.country === 'Germany' && ''}
+            {formData.country === 'Netherlands' && ''}
+            {formData.country === 'Portugal' && ''}
+            {formData.country === 'Italy' && ''}
+            {formData.country === 'Belgium' && ''}
             {!['Spain', 'France', 'Germany', 'Netherlands', 'Portugal', 'Italy', 'Belgium'].includes(formData.country) && 'Please provide your national tax or registration ID'}
           </p>
           <Input value={formData.national_tax_id} onChange={e => updateForm({ national_tax_id: e.target.value })} placeholder="Enter your national tax/registration ID" className="bg-card" />
