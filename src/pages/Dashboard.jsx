@@ -57,13 +57,13 @@ export default function Dashboard() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50">
+    <div className="min-h-screen bg-background">
       <Header />
       <div className="p-3 sm:p-6">
         <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
-          <Card className="overflow-hidden border-0 shadow-md">
-            <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
-            <CardContent className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 p-3 sm:p-4">
+          <Card className="overflow-hidden border-0 shadow-sm">
+            <div className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300" />
+            <CardContent className="bg-card border-b border-border p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-4">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm flex-shrink-0">
                   <Filter className="w-4 h-4 text-white" />
