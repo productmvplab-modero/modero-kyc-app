@@ -150,7 +150,7 @@ export default function PropertyOwnerSignup() {
 
             <Button 
               type="submit" 
-              className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-violet-700 hover:to-purple-600 text-white py-6 text-lg font-semibold"
+              className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white py-6 text-lg font-semibold transition-all"
               disabled={isLoading}
             >
               {isLoading ? 'Creating Account...' : 'Create Account'}
