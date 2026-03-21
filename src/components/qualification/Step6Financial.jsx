@@ -39,23 +39,33 @@ export default function Step6Financial({ formData, updateForm, onNext, onBack, t
       loading={loading}
       t={t}
     >
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s6_income')}</label>
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">€</span>
-          <Input
-            type="number"
-            min={0}
-            className="pl-8"
-            placeholder="e.g. 2500"
-            value={formData.monthly_income}
-            onChange={e => updateForm({ monthly_income: e.target.value })}
-          />
-        </div>
-        {income > 0 && (
-          <p className="text-xs text-slate-500 mt-1">{t('s6_annual')}: €{(income * 12).toLocaleString()}</p>
-        )}
-      </div>
+      <div className="grid grid-cols-2 gap-3">
+         <div>
+           <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s6_income')}</label>
+           <div className="relative">
+             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">€</span>
+             <Input
+               type="number"
+               min={0}
+               className="pl-8"
+               placeholder="3000"
+               value={formData.monthly_income}
+               onChange={e => updateForm({ monthly_income: e.target.value })}
+             />
+           </div>
+         </div>
+         <div>
+           <label className="block text-sm font-medium text-slate-700 mb-1.5">Salary Day of Month</label>
+           <Input
+             type="number"
+             min={1}
+             max={31}
+             placeholder="1"
+             value={salaryDay}
+             onChange={e => updateForm({ salary_day_of_month: parseInt(e.target.value) || 1 })}
+           />
+         </div>
+       </div>
 
       {income > 0 && (
         <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
