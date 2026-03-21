@@ -49,8 +49,8 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
               <User className="w-10 h-10 text-muted-foreground" />
             </div>
           )}
-          <label className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:bg-primary/90 transition-colors shadow-md">
-            {uploading ? <div className="w-3 h-3 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4 text-primary-foreground" />}
+          <label className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center cursor-pointer hover:bg-orange-600 transition-colors shadow-md">
+            {uploading ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4 text-white" />}
             <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
           </label>
         </div>
