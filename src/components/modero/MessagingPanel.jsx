@@ -114,7 +114,7 @@ export default function MessagingPanel({ inquiry }) {
 
   const applyTemplate = (tpl) => {
     setSubject(tpl.subject);
-    setBody(tpl.body(inquiry.tenant_name || 'Applicant'));
+    setBody(tpl.body(inquiry.tenant_name || 'Applicant', inquiry));
     setSelectedType(tpl.id);
   };
 
