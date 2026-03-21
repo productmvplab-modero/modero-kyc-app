@@ -107,12 +107,19 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack,
             const selected = (formData.financing_options || []).includes(opt.key);
             return (
               <button key={opt.key} type="button" onClick={() => toggleFinancing(opt.key)}
-                className={`p-4 rounded-xl border-2 text-left transition-all ${selected ? opt.color : 'border-slate-200 bg-white hover:border-slate-300'}`}>
-                <div className="text-2xl mb-2">{opt.icon}</div>
+                className={`p-4 rounded-xl border-2 text-left transition-all ${selected ? `${opt.borderColor} ${opt.bgLight}` : 'border-slate-200 bg-white hover:border-slate-300'}`}>
+                <div className={`w-12 h-12 rounded-full ${opt.bgColor} text-white font-bold text-lg flex items-center justify-center mb-3`}>
+                  {opt.label[0]}
+                </div>
                 <div className="text-sm font-bold text-slate-800">{opt.label}</div>
-                <div className="text-xs text-slate-500 mt-1">{opt.desc1}</div>
-                <div className="text-xs text-slate-400">{opt.desc2}</div>
-                {selected && <div className="mt-2"><CheckCircle2 className="w-4 h-4 text-green-500" /></div>}
+                <div className="text-xs text-slate-600 mt-1">{opt.desc1}</div>
+                <div className="text-xs text-slate-500">{opt.desc2}</div>
+                {selected && (
+                  <div className="mt-3 flex items-center gap-1 text-green-600">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="text-xs font-medium">Selected</span>
+                  </div>
+                )}
               </button>
             );
           })}
