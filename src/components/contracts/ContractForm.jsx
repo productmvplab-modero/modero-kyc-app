@@ -188,16 +188,33 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">{t('contract_terms')}</label>
-              <Textarea
-                value={formData.contract_content}
-                onChange={(e) => setFormData(prev => ({ ...prev, contract_content: e.target.value }))}
-                rows={10}
-                className="font-mono text-xs"
-              />
-              <p className="text-xs text-slate-500 mt-2">{t('customize_template')}</p>
-            </div>
+            {/* Contract Template Selector */}
+            <ContractTemplateSelector
+              selectedOption={templateOption}
+              onOptionChange={handleTemplateOptionChange}
+              onPdfUpload={handlePdfUpload}
+            />
+
+            {/* Contract Terms - Show only for generate/customize */}
+            {(templateOption === 'generate' || templateOption === 'customize') && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('contract_terms')}</label>
+                <Textarea
+                  value={formData.contract_content}
+                  onChange={(e) => setFormData(prev => ({ ...prev, contract_content: e.target.value }))}
+                  rows={10}
+                  className="font-mono text-xs"
+                />
+                <p className="text-xs text-slate-500 mt-2">{t('customize_template')}</p>
+              </div>
+            )}
+
+            {/* Financing Offers */}
+            <FinancingOffers
+              selectedOffers={financingOffers}
+              onToggleOffer={toggleFinancingOffer}
+              eligible={selectedTenant.qualification_score >= 60}
+            />
 
             <div className="flex gap-3 pt-4">
               <Button
