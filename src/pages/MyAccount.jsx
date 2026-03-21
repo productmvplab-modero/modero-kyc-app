@@ -22,6 +22,12 @@ export default function MyAccount() {
     queryFn: () => base44.auth.me(),
   });
 
+  const { data: userProperties } = useQuery({
+    queryKey: ['userProperties', user?.email],
+    queryFn: () => user?.email ? base44.entities.Property.filter({ owner_email: user.email }) : Promise.resolve([]),
+    enabled: !!user?.email,
+  });
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -61,16 +67,10 @@ export default function MyAccount() {
       </div>
 
       {/* Content */}
-       <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
-         {activeTab === 'profile' && <ProfileEditor user={user} />}
-         {activeTab === 'kyc' && <KycRulesSettings userEmail={user?.email} />}
-         {activeTab === 'booking' && user?.email && (
-           <div className="space-y-6">
-             {/* For single property simplicity - in production would loop through user's properties */}
-             <BookingRulesManager propertyId="default" ownerEmail={user.email} />
-           </div>
-         )}
-       </div>
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+        {activeTab === 'profile' && <ProfileEditor user={user} />}
+        {activeTab === 'kyc' && <KycRulesSettings userEmail={user?.email} />}
+      </div>
     </div>
   );
 }
