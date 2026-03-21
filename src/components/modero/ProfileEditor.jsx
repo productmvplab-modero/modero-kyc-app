@@ -41,7 +41,10 @@ export default function ProfileEditor({ user }) {
     setUploadingPhoto(false);
   };
 
-  const handleSave = () => saveMutation.mutate(form);
+  const handleSave = () => {
+    const fullName = [form.first_name, form.last_name].filter(Boolean).join(' ');
+    saveMutation.mutate({ ...form, full_name: fullName || undefined });
+  };
 
   const handleCancel = () => {
     setForm({
