@@ -86,33 +86,63 @@ export default function Step6Financial({ formData, updateForm, onNext, onBack, t
         </div>
       )}
 
-      <div className={`rounded-xl border-2 p-4 transition-all ${formData.bank_account_connected ? 'border-green-300 bg-green-50' : 'border-slate-200 bg-white'}`}>
-        <div className="flex items-start gap-3">
-          <div className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 ${formData.bank_account_connected ? 'bg-green-100' : 'bg-blue-50'}`}>
-            <Building2 className={`w-5 h-5 ${formData.bank_account_connected ? 'text-green-600' : 'text-blue-500'}`} />
+      <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-4">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+            <Building2 className="w-5 h-5 text-orange-500" />
           </div>
           <div className="flex-1">
-            <div className="flex items-center justify-between gap-2 flex-wrap">
-              <div>
-                <span className="text-sm font-semibold text-slate-800">{t('s6_bank_title')}</span>
-                <span className="ml-2 text-xs text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">{t('s6_bank_optional')}</span>
-                <p className="text-xs text-slate-500 mt-0.5">{t('s6_bank_desc')}</p>
-              </div>
-              {formData.bank_account_connected ? (
-                <span className="flex items-center gap-1 text-xs text-green-600 font-medium bg-green-100 px-2 py-1 rounded-full">
-                  <CheckCircle2 className="w-3 h-3" /> {t('s6_bank_connected')}
-                </span>
-              ) : (
-                <button type="button" onClick={handleBankConnect} disabled={connectingBank}
-                  className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors flex items-center gap-1 shrink-0">
-                  {connectingBank ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Building2 className="w-3 h-3" />}
-                  {connectingBank ? t('s6_bank_connecting') : t('s6_bank_connect')}
-                </button>
-              )}
-            </div>
+            <h3 className="text-sm font-semibold text-slate-800">Connect your bank account</h3>
+            <p className="text-xs text-slate-600 mt-0.5">via PSD2 secure open banking</p>
           </div>
         </div>
+        <p className="text-xs text-slate-700 mb-3">Choose your bank to connect via PSD2 and verify your income — this will give you a <span className="text-orange-600 font-semibold">better chance to get qualified</span>.</p>
+        <div className="flex gap-2 mb-3">
+          <div className="flex items-center gap-1 bg-white px-3 py-2 rounded-lg border border-green-300">
+            <CheckCircle2 className="w-4 h-4 text-green-500" />
+            <span className="text-xs text-slate-700 font-medium">Encrypted & secure</span>
+          </div>
+          <div className="flex items-center gap-1 bg-white px-3 py-2 rounded-lg border border-orange-300">
+            <TrendingUp className="w-4 h-4 text-orange-500" />
+            <span className="text-xs text-slate-700 font-medium">Boosts your score</span>
+          </div>
+        </div>
+
+        {formData.bank_account_connected ? (
+          <div className="bg-green-500 text-white rounded-xl p-4 text-center font-semibold flex items-center justify-center gap-2">
+            <CheckCircle2 className="w-5 h-5" />
+            Bank Connected — {formData.connected_bank}
+          </div>
+        ) : (
+          <>
+            <button
+              onClick={() => setShowBankSelect(true)}
+              className="w-full h-12 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all mb-3"
+            >
+              <Building2 className="w-5 h-5" />
+              Connect my bank
+            </button>
+          </>
+        )}
+
+        {formData.bank_account_connected && (
+          <div className="grid grid-cols-3 gap-2 mt-3">
+            {[
+              { label: 'Employer', icon: '👤' },
+              { label: 'Salary Amount', icon: '€' },
+              { label: 'Pay Dates', icon: '📅' },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-green-100 rounded-lg p-3 text-center">
+                <CheckCircle2 className="w-4 h-4 text-green-600 mx-auto mb-1" />
+                <p className="text-xs font-medium text-green-700">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
+      {showBankSelect && <BankSelectionModal onClose={() => setShowBankSelect(false)} onSelect={handleBankSelect} />}
+      {selectedBank && <BankConnectingModal bank={selectedBank} onClose={() => setSelectedBank(null)} onSuccess={handleBankSuccess} />}
     </StepCard>
   );
 }
