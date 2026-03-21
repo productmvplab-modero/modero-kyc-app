@@ -40,86 +40,88 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
       t={t}
     >
       {/* Profile Photo */}
-      <div className="flex flex-col items-center mb-2">
+      <div className="flex flex-col items-center mb-6 pb-4 border-b border-border">
         <div className="relative">
           {formData.profile_picture_url ? (
-            <img src={formData.profile_picture_url} alt="Profile" className="h-20 w-20 rounded-full object-cover border-4 border-orange-100" />
+            <img src={formData.profile_picture_url} alt="Profile" className="h-24 w-24 rounded-full object-cover border-4 border-primary/10" />
           ) : (
-            <div className="h-20 w-20 rounded-full bg-slate-100 flex items-center justify-center border-4 border-slate-200">
-              <User className="w-8 h-8 text-slate-400" />
+            <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center border-4 border-border">
+              <User className="w-10 h-10 text-muted-foreground" />
             </div>
           )}
-          <label className="absolute bottom-0 right-0 h-7 w-7 rounded-full bg-orange-500 flex items-center justify-center cursor-pointer hover:bg-orange-600 transition-colors">
-            {uploading ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Upload className="w-3.5 h-3.5 text-white" />}
+          <label className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary flex items-center justify-center cursor-pointer hover:bg-primary/90 transition-colors shadow-md">
+            {uploading ? <div className="w-3 h-3 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4 text-primary-foreground" />}
             <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
           </label>
         </div>
-        <p className="text-xs text-slate-400 mt-2">{t('s2_photo')}</p>
+        <p className="text-xs text-muted-foreground mt-3 font-medium">{t('s2_photo')}</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_first_name')}</label>
-          <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" />
+      <div className="space-y-5">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_first_name')}</label>
+            <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" className="bg-card" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_last_name')}</label>
+            <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" className="bg-card" />
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_last_name')}</label>
-          <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" />
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_age')}</label>
+            <Input type="number" min={18} max={99} value={formData.age} onChange={e => updateForm({ age: e.target.value })} placeholder="30" className="bg-card" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_gender')}</label>
+            <select
+              value={formData.gender}
+              onChange={e => updateForm({ gender: e.target.value })}
+              className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            >
+              <option value="">{t('s2_gender_placeholder')}</option>
+              {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_age')}</label>
-          <Input type="number" min={18} max={99} value={formData.age} onChange={e => updateForm({ age: e.target.value })} placeholder="30" />
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')}</label>
+          <Input value={formData.nationality} onChange={e => updateForm({ nationality: e.target.value })} placeholder={t('s2_nationality_ph')} className="bg-card" />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_gender')}</label>
-          <select
-            value={formData.gender}
-            onChange={e => updateForm({ gender: e.target.value })}
-            className="w-full h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-          >
-            <option value="">{t('s2_gender_placeholder')}</option>
-            {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
-          </select>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_pob')}</label>
+          <Input value={formData.place_of_birth} onChange={e => updateForm({ place_of_birth: e.target.value })} placeholder={t('s2_pob_ph')} className="bg-card" />
         </div>
-      </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_nationality')}</label>
-        <Input value={formData.nationality} onChange={e => updateForm({ nationality: e.target.value })} placeholder={t('s2_nationality_ph')} />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_pob')}</label>
-        <Input value={formData.place_of_birth} onChange={e => updateForm({ place_of_birth: e.target.value })} placeholder={t('s2_pob_ph')} />
-      </div>
-
-      <div>
-         <label className="block text-sm font-medium text-slate-700 mb-1.5">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
-         <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_address')}</label>
-        <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder={t('s2_address_ph')} />
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_city')}</label>
-          <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder={t('s2_city_ph')} />
+          <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
+          <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_postal')}</label>
-          <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} />
-        </div>
-      </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('s2_country')}</label>
-        <Input value={formData.country} onChange={e => updateForm({ country: e.target.value })} placeholder={t('s2_country_ph')} />
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_address')}</label>
+          <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder={t('s2_address_ph')} className="bg-card" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_city')}</label>
+            <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder={t('s2_city_ph')} className="bg-card" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_postal')}</label>
+            <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} className="bg-card" />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')}</label>
+          <Input value={formData.country} onChange={e => updateForm({ country: e.target.value })} placeholder={t('s2_country_ph')} className="bg-card" />
+        </div>
       </div>
     </StepCard>
   );
