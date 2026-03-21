@@ -94,13 +94,10 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Tenant Information - Editable */}
+        {/* Tenant Information */}
         <div className="border-2 border-orange-200 rounded-xl p-6 bg-orange-50">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
-            <div>
-              <Badge className="bg-orange-600 text-white mb-2">Editable</Badge>
-              <h3 className="text-lg font-bold text-orange-900">Tenant Information</h3>
-            </div>
+            <h3 className="text-lg font-bold text-orange-900">Tenant Information</h3>
             <Button
               onClick={() => setIsEditingTenant(!isEditingTenant)}
               variant={isEditingTenant ? "default" : "outline"}
@@ -196,42 +193,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                 </div>
               </div>
 
-              {/* Custom Fields */}
-              {tenantInfo.customFields.map((field, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4 pt-2 border-t border-orange-200">
-                  <Input
-                    value={field.label}
-                    onChange={(e) => handleTenantCustomFieldChange(index, 'label', e.target.value)}
-                    placeholder="Field name"
-                    className="text-sm"
-                  />
-                  <div className="flex gap-2">
-                    <Input
-                      value={field.value}
-                      onChange={(e) => handleTenantCustomFieldChange(index, 'value', e.target.value)}
-                      placeholder="Value"
-                      className="text-sm flex-1"
-                    />
-                    <Button
-                      onClick={() => removeTenantCustomField(index)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
 
-              <Button
-                onClick={addTenantCustomField}
-                variant="outline"
-                className="w-full text-orange-600 hover:bg-orange-50 mt-2"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Field
-              </Button>
             </div>
           ) : (
             <div className="space-y-3">
@@ -299,28 +261,15 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                 </div>
               )}
 
-              {tenantInfo.customFields.map((field, index) => (
-                field.label && (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-4 h-4 flex-shrink-0" />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs text-orange-700 font-semibold">{field.label}</p>
-                      <p className="text-sm font-medium text-orange-900">{field.value}</p>
-                    </div>
-                  </div>
-                )
-              ))}
+
             </div>
           )}
         </div>
 
-        {/* Owner/Landlord Information - Editable */}
+        {/* Owner/Landlord Information */}
         <div className="border-2 border-orange-200 rounded-xl p-6 bg-orange-50">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
-            <div>
-              <Badge className="bg-orange-600 text-white mb-2">Editable</Badge>
-              <h3 className="text-lg font-bold text-orange-900">Landlord/Owner Information</h3>
-            </div>
+            <h3 className="text-lg font-bold text-orange-900">Landlord/Owner Information</h3>
             <Button
               onClick={() => setIsEditingLandlord(!isEditingLandlord)}
               variant={isEditingLandlord ? "default" : "outline"}
@@ -374,42 +323,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                 </div>
               </div>
 
-              {/* Custom Fields */}
-              {landlordInfo.customFields.map((field, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4 pt-2 border-t border-orange-200">
-                  <Input
-                    value={field.label}
-                    onChange={(e) => handleCustomFieldChange(index, 'label', e.target.value)}
-                    placeholder="Field name"
-                    className="text-sm"
-                  />
-                  <div className="flex gap-2">
-                    <Input
-                      value={field.value}
-                      onChange={(e) => handleCustomFieldChange(index, 'value', e.target.value)}
-                      placeholder="Value"
-                      className="text-sm flex-1"
-                    />
-                    <Button
-                      onClick={() => removeCustomField(index)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
 
-              <Button
-                onClick={addCustomField}
-                variant="outline"
-                className="w-full text-orange-600 hover:bg-orange-50 mt-2"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Add Field
-              </Button>
             </div>
           ) : (
             <div className="space-y-3">
@@ -453,17 +367,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                 </div>
               )}
 
-              {landlordInfo.customFields.map((field, index) => (
-                field.label && (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-4 h-4 flex-shrink-0" />
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs text-orange-700 font-semibold">{field.label}</p>
-                      <p className="text-sm font-medium text-orange-900">{field.value}</p>
-                    </div>
-                  </div>
-                )
-              ))}
+
             </div>
           )}
         </div>
