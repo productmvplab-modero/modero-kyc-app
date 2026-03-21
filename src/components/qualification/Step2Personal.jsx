@@ -116,6 +116,22 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
           <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
         </div>
 
+        {/* National Tax/Registration ID */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">National Tax/Registration ID *</label>
+          <p className="text-xs text-muted-foreground mb-2">
+            {formData.country === 'Spain' && 'e.g., NIF or CIF'}
+            {formData.country === 'France' && 'e.g., SIREN or SIRET'}
+            {formData.country === 'Germany' && 'e.g., Steuernummer'}
+            {formData.country === 'Netherlands' && 'e.g., BSN or BTW ID'}
+            {formData.country === 'Portugal' && 'e.g., NIF'}
+            {formData.country === 'Italy' && 'e.g., Codice Fiscale'}
+            {formData.country === 'Belgium' && 'e.g., National Register Number'}
+            {!['Spain', 'France', 'Germany', 'Netherlands', 'Portugal', 'Italy', 'Belgium'].includes(formData.country) && 'Please provide your national tax or registration ID'}
+          </p>
+          <Input value={formData.national_tax_id} onChange={e => updateForm({ national_tax_id: e.target.value })} placeholder="Enter your national tax/registration ID" className="bg-card" />
+        </div>
+
         {/* Age */}
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_age')}</label>
