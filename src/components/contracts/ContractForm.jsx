@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { X } from 'lucide-react';
+import TenantProfileCard from './TenantProfileCard';
+import ContractTemplateSelector from './ContractTemplateSelector';
+import FinancingOffers from './FinancingOffers';
 
 const DEFAULT_CONTRACT_TEMPLATE = `RENTAL AGREEMENT
 
