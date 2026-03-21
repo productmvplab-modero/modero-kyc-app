@@ -29,7 +29,7 @@ export default function MyAccount() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50">
       <Header />
       {/* Page Header */}
       <div className="bg-white border-b border-slate-200">
