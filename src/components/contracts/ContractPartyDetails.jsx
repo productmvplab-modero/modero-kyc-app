@@ -16,12 +16,26 @@ const getCountryIdLabel = (country) => {
 };
 
 export default function ContractPartyDetails({ tenant, property, idealista_id }) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingLandlord, setIsEditingLandlord] = useState(false);
+  const [isEditingTenant, setIsEditingTenant] = useState(false);
+  
   const [landlordInfo, setLandlordInfo] = useState({
     name: property?.property_owner || '',
     email: property?.owner_email || '',
     phone: property?.agent_phone || '',
     address: property?.address || '',
+    customFields: []
+  });
+
+  const [tenantInfo, setTenantInfo] = useState({
+    name: tenant?.tenant_name || '',
+    email: tenant?.tenant_email || '',
+    phone: tenant?.tenant_phone || '',
+    address: tenant?.address || '',
+    postalCode: tenant?.postal_code || '',
+    city: tenant?.city || '',
+    dniNie: tenant?.dni_nie_number || '',
+    taxId: tenant?.national_tax_id || '',
     customFields: []
   });
 
@@ -51,71 +65,253 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
     }));
   };
 
+  const handleTenantFieldChange = (field, value) => {
+    setTenantInfo(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleTenantCustomFieldChange = (index, field, value) => {
+    setTenantInfo(prev => {
+      const updated = [...prev.customFields];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, customFields: updated };
+    });
+  };
+
+  const addTenantCustomField = () => {
+    setTenantInfo(prev => ({
+      ...prev,
+      customFields: [...prev.customFields, { label: '', value: '' }]
+    }));
+  };
+
+  const removeTenantCustomField = (index) => {
+    setTenantInfo(prev => ({
+      ...prev,
+      customFields: prev.customFields.filter((_, i) => i !== index)
+    }));
+  };
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Tenant Information */}
-        <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-          <div className="mb-4 pb-3 border-b border-slate-200">
-            <Badge className="bg-emerald-100 text-emerald-700 border border-emerald-200 mb-2">Tenant</Badge>
-            <h3 className="text-lg font-bold text-slate-900">{tenant?.tenant_name || 'N/A'}</h3>
+        {/* Tenant Information - Editable */}
+        <div className="border-2 border-emerald-200 rounded-xl p-6 bg-emerald-50">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-emerald-200">
+            <div>
+              <Badge className="bg-emerald-600 text-white mb-2">Editable</Badge>
+              <h3 className="text-lg font-bold text-emerald-900">Tenant Information</h3>
+            </div>
+            <Button
+              onClick={() => setIsEditingTenant(!isEditingTenant)}
+              variant={isEditingTenant ? "default" : "outline"}
+              className={`text-sm h-8 ${isEditingTenant ? 'bg-emerald-600 hover:bg-emerald-700' : ''}`}
+            >
+              {isEditingTenant ? 'Save' : 'Edit'}
+            </Button>
           </div>
-          
-          <div className="space-y-3">
-            {tenant?.tenant_email && (
-              <div className="flex items-start gap-3">
-                <Mail className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs text-slate-600">Email</p>
-                  <p className="text-sm font-medium text-slate-900 break-all">{tenant.tenant_email}</p>
-                </div>
-              </div>
-            )}
-            
-            {tenant?.tenant_phone && (
-              <div className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs text-slate-600">Phone</p>
-                  <p className="text-sm font-medium text-slate-900">{tenant.tenant_phone}</p>
-                </div>
-              </div>
-            )}
-            
-            {tenant?.address && (
-              <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs text-slate-600">Address</p>
-                  <p className="text-sm font-medium text-slate-900">
-                    {tenant.address}{tenant.postal_code ? `, ${tenant.postal_code}` : ''}{tenant.city ? ` ${tenant.city}` : ''}
-                  </p>
-                </div>
-              </div>
-            )}
 
-            {tenant?.dni_nie_number && (
-              <div className="bg-white border border-slate-300 rounded-lg p-3 mt-2">
-                <div className="flex items-center gap-2 mb-1">
-                  <FileText className="w-4 h-4 text-slate-500" />
-                  <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
-                    {getCountryIdLabel(tenant.country)}
-                  </p>
+          {isEditingTenant ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Name</label>
+                  <Input
+                    value={tenantInfo.name}
+                    onChange={(e) => handleTenantFieldChange('name', e.target.value)}
+                    placeholder="Tenant name"
+                    className="text-sm"
+                  />
                 </div>
-                <p className="text-sm font-bold text-slate-900 font-mono">{tenant.dni_nie_number}</p>
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Email</label>
+                  <Input
+                    value={tenantInfo.email}
+                    onChange={(e) => handleTenantFieldChange('email', e.target.value)}
+                    placeholder="tenant@email.com"
+                    className="text-sm"
+                  />
+                </div>
               </div>
-            )}
 
-            {tenant?.national_tax_id && tenant.national_tax_id !== tenant.dni_nie_number && (
-              <div className="bg-white border border-slate-300 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <FileText className="w-4 h-4 text-slate-500" />
-                  <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">National Tax ID</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Phone</label>
+                  <Input
+                    value={tenantInfo.phone}
+                    onChange={(e) => handleTenantFieldChange('phone', e.target.value)}
+                    placeholder="+34 XXX XXX XXX"
+                    className="text-sm"
+                  />
                 </div>
-                <p className="text-sm font-bold text-slate-900 font-mono">{tenant.national_tax_id}</p>
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Address</label>
+                  <Input
+                    value={tenantInfo.address}
+                    onChange={(e) => handleTenantFieldChange('address', e.target.value)}
+                    placeholder="Tenant address"
+                    className="text-sm"
+                  />
+                </div>
               </div>
-            )}
-          </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Postal Code</label>
+                  <Input
+                    value={tenantInfo.postalCode}
+                    onChange={(e) => handleTenantFieldChange('postalCode', e.target.value)}
+                    placeholder="Postal code"
+                    className="text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">City</label>
+                  <Input
+                    value={tenantInfo.city}
+                    onChange={(e) => handleTenantFieldChange('city', e.target.value)}
+                    placeholder="City"
+                    className="text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">ID Number</label>
+                  <Input
+                    value={tenantInfo.dniNie}
+                    onChange={(e) => handleTenantFieldChange('dniNie', e.target.value)}
+                    placeholder="DNI/NIE"
+                    className="text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Tax ID</label>
+                  <Input
+                    value={tenantInfo.taxId}
+                    onChange={(e) => handleTenantFieldChange('taxId', e.target.value)}
+                    placeholder="Tax ID"
+                    className="text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Custom Fields */}
+              {tenantInfo.customFields.map((field, index) => (
+                <div key={index} className="grid grid-cols-2 gap-4 pt-2 border-t border-emerald-200">
+                  <Input
+                    value={field.label}
+                    onChange={(e) => handleTenantCustomFieldChange(index, 'label', e.target.value)}
+                    placeholder="Field name"
+                    className="text-sm"
+                  />
+                  <div className="flex gap-2">
+                    <Input
+                      value={field.value}
+                      onChange={(e) => handleTenantCustomFieldChange(index, 'value', e.target.value)}
+                      placeholder="Value"
+                      className="text-sm flex-1"
+                    />
+                    <Button
+                      onClick={() => removeTenantCustomField(index)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
+              <Button
+                onClick={addTenantCustomField}
+                variant="outline"
+                className="w-full text-emerald-600 hover:bg-emerald-50 mt-2"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Field
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {tenantInfo.name && (
+                <div className="flex items-start gap-3">
+                  <div className="w-4 h-4 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-emerald-700 font-semibold">Name</p>
+                    <p className="text-sm font-medium text-emerald-900">{tenantInfo.name}</p>
+                  </div>
+                </div>
+              )}
+
+              {tenantInfo.email && (
+                <div className="flex items-start gap-3">
+                  <Mail className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-emerald-700 font-semibold">Email</p>
+                    <p className="text-sm font-medium text-emerald-900 break-all">{tenantInfo.email}</p>
+                  </div>
+                </div>
+              )}
+
+              {tenantInfo.phone && (
+                <div className="flex items-start gap-3">
+                  <Phone className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-emerald-700 font-semibold">Phone</p>
+                    <p className="text-sm font-medium text-emerald-900">{tenantInfo.phone}</p>
+                  </div>
+                </div>
+              )}
+
+              {tenantInfo.address && (
+                <div className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs text-emerald-700 font-semibold">Address</p>
+                    <p className="text-sm font-medium text-emerald-900">
+                      {tenantInfo.address}
+                      {tenantInfo.postalCode && `, ${tenantInfo.postalCode}`}
+                      {tenantInfo.city && ` ${tenantInfo.city}`}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {tenantInfo.dniNie && (
+                <div className="bg-white border border-emerald-300 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <FileText className="w-4 h-4 text-emerald-600" />
+                    <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">ID Number</p>
+                  </div>
+                  <p className="text-sm font-bold text-emerald-900 font-mono">{tenantInfo.dniNie}</p>
+                </div>
+              )}
+
+              {tenantInfo.taxId && (
+                <div className="bg-white border border-emerald-300 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <FileText className="w-4 h-4 text-emerald-600" />
+                    <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Tax ID</p>
+                  </div>
+                  <p className="text-sm font-bold text-emerald-900 font-mono">{tenantInfo.taxId}</p>
+                </div>
+              )}
+
+              {tenantInfo.customFields.map((field, index) => (
+                field.label && (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="w-4 h-4 flex-shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs text-emerald-700 font-semibold">{field.label}</p>
+                      <p className="text-sm font-medium text-emerald-900">{field.value}</p>
+                    </div>
+                  </div>
+                )
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Owner/Landlord Information - Editable */}
@@ -126,15 +322,15 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
               <h3 className="text-lg font-bold text-orange-900">Landlord/Owner Information</h3>
             </div>
             <Button
-              onClick={() => setIsEditing(!isEditing)}
-              variant={isEditing ? "default" : "outline"}
-              className={`text-sm h-8 ${isEditing ? 'bg-orange-600 hover:bg-orange-700' : ''}`}
+              onClick={() => setIsEditingLandlord(!isEditingLandlord)}
+              variant={isEditingLandlord ? "default" : "outline"}
+              className={`text-sm h-8 ${isEditingLandlord ? 'bg-orange-600 hover:bg-orange-700' : ''}`}
             >
-              {isEditing ? 'Save' : 'Edit'}
+              {isEditingLandlord ? 'Save' : 'Edit'}
             </Button>
           </div>
 
-          {isEditing ? (
+          {isEditingLandlord ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
