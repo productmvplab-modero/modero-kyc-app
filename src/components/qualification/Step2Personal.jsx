@@ -43,9 +43,9 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
       <div className="flex flex-col items-center mb-6 pb-4 border-b border-border">
         <div className="relative">
           {formData.profile_picture_url ? (
-            <img src={formData.profile_picture_url} alt="Profile" className="h-24 w-24 rounded-full object-cover border-4 border-primary/10" />
+            <img src={formData.profile_picture_url} alt="Profile" className="h-24 w-24 rounded-full object-cover border-4 border-secondary" />
           ) : (
-            <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center border-4 border-border">
+            <div className="h-24 w-24 rounded-full bg-secondary flex items-center justify-center border-4 border-secondary">
               <User className="w-10 h-10 text-muted-foreground" />
             </div>
           )}
