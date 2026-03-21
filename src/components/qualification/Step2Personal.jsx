@@ -58,14 +58,19 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
       </div>
 
       <div className="space-y-5">
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_first_name')}</label>
+          <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" className="bg-card" />
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_first_name')}</label>
-            <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" className="bg-card" />
-          </div>
           <div>
             <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_last_name')}</label>
             <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" className="bg-card" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
+            <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
           </div>
         </div>
 
