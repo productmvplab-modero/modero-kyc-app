@@ -94,6 +94,7 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                 ) : (
                   recentInquiries.map((inquiry) => {
                     const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
+                    const isDeleting = deleteMutation.isPending && deleteMutation.variables === inquiry.id;
                     return (
                       <TableRow 
                         key={inquiry.id} 
