@@ -122,6 +122,8 @@ export default function Dashboard() {
           <div id="recent-inquiries">
             <RecentInquiries inquiries={filteredInquiries} properties={properties} />
           </div>
+
+          <SlackIntegration />
         </div>
       </div>
 
