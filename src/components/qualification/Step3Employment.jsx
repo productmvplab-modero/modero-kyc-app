@@ -86,6 +86,19 @@ export default function Step3Employment({ formData, updateForm, onNext, onBack, 
           </div>
         )}
       </div>
+
+      <div className="border-t border-slate-100 pt-4">
+        <label className="block text-sm font-medium text-slate-700 mb-3">Smoking Status</label>
+        <div className="flex gap-3">
+          {[{ val: false, label: 'Non-Smoker' }, { val: true, label: 'Smoker' }].map(opt => (
+            <button key={String(opt.val)} type="button"
+              onClick={() => updateForm({ is_smoker: opt.val })}
+              className={`flex-1 py-2.5 rounded-lg border-2 text-sm font-medium transition-all ${formData.is_smoker === opt.val ? 'border-green-400 bg-green-50 text-green-700' : 'border-slate-200 hover:border-slate-300 text-slate-600'}`}>
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
     </StepCard>
   );
 }
