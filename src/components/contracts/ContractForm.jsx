@@ -4,7 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { X } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { X, ChevronDown } from 'lucide-react';
 import TenantProfileCard from './TenantProfileCard';
 import ContractTemplateSelector from './ContractTemplateSelector';
 import FinancingOffers from './FinancingOffers';
@@ -74,6 +76,7 @@ Both parties agree to the terms and conditions above.`;
 export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading, properties = [] }) {
   const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [templateOption, setTemplateOption] = useState('generate');
   const [financingOffers, setFinancingOffers] = useState([]);
   const [formData, setFormData] = useState({
@@ -135,18 +138,60 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
       <CardContent className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">{t('select_tenant')}</label>
-          <select
-            value={selectedInquiry}
-            onChange={(e) => handleInquiryChange(e.target.value)}
-            className="w-full h-10 px-4 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-          >
-            <option value="">-- {t('select_tenant')} --</option>
-            {inquiries.map(inq => (
-              <option key={inq.id} value={inq.id}>
-                {inq.tenant_name} • {inq.tenant_email} {inq.status === 'qualified' ? '✓' : ''}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="w-full h-11 px-4 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white hover:bg-slate-50 transition-colors flex items-center justify-between"
+            >
+              {selectedTenant ? (
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src={selectedTenant.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${selectedTenant.tenant_name}`} />
+                    <AvatarFallback className="text-xs">{selectedTenant.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium text-slate-900">{selectedTenant.tenant_name}</span>
+                </div>
+              ) : (
+                <span className="text-sm text-slate-500">-- {t('select_tenant')} --</span>
+              )}
+              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {dropdownOpen && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+                {inquiries.length === 0 ? (
+                  <div className="p-4 text-center text-sm text-slate-500">
+                    {t('no_inquiries')}
+                  </div>
+                ) : (
+                  inquiries.map(inq => (
+                    <button
+                      key={inq.id}
+                      onClick={() => {
+                        handleInquiryChange(inq.id);
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full px-4 py-3 hover:bg-orange-50 transition-colors border-b border-slate-100 last:border-b-0 flex items-center justify-between gap-3 text-left"
+                    >
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <Avatar className="h-8 w-8 flex-shrink-0">
+                          <AvatarImage src={inq.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inq.tenant_name}`} />
+                          <AvatarFallback className="text-xs">{inq.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-slate-900 truncate">{inq.tenant_name}</p>
+                          <p className="text-xs text-slate-500 truncate">{inq.tenant_email}</p>
+                        </div>
+                      </div>
+                      {inq.status === 'qualified' && (
+                        <Badge className="bg-emerald-100 text-emerald-700 border border-emerald-200 flex-shrink-0">✓</Badge>
+                      )}
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Tenant Profile Summary */}
