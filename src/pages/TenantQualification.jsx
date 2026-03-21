@@ -71,7 +71,17 @@ export default function TenantQualification() {
       delete payload.qualification_token;
     }
     if (inquiryId) {
-      await base44.entities.Inquiry.update(inquiryId, payload);
+      try {
+        await base44.entities.Inquiry.update(inquiryId, payload);
+      } catch (error) {
+        // If inquiry doesn't exist, create a new one
+        if (error.message && error.message.includes('not found')) {
+          const created = await base44.entities.Inquiry.create({ ...payload, status: 'new', progress_step: 1 });
+          setInquiryId(created.id);
+        } else {
+          throw error;
+        }
+      }
     } else {
       const created = await base44.entities.Inquiry.create({ ...payload, status: 'new', progress_step: 1 });
       setInquiryId(created.id);
