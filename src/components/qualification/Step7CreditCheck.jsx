@@ -39,7 +39,7 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack,
       icon={CreditCard}
       title={t('s7_title')}
       subtitle={t('s7_subtitle')}
-      onNext={async () => { setLoading(true); await onNext({ status: 'qualified', modero_score: creditScore || 70 }); setLoading(false); }}
+      onNext={async () => { setLoading(true); await onNext({ status: 'qualified', modero_score: creditScore || 70, qualification_score: creditScore || 70 }); setLoading(false); }}
       onBack={onBack}
       nextDisabled={formData.credit_check_status === 'pending'}
       loading={loading}
