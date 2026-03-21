@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import Header from '@/components/modero/Header';
 import { format, addDays, startOfToday, getDay } from 'date-fns';
 
 const TIME_SLOTS = [
@@ -115,7 +116,9 @@ export default function ApartmentViewing() {
   const canBook = selectedDate && selectedTime && !bookingMutation.isPending;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+      <Header />
+      <div className="py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-orange-600 mb-2">Schedule Your Apartment Viewing</h1>
@@ -219,6 +222,7 @@ export default function ApartmentViewing() {
             )}
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );
