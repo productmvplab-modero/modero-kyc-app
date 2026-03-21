@@ -50,8 +50,8 @@ export default function Header() {
             <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
               Modero
             </h1>
-            {user?.company_name && (
-              <span className="text-xs text-slate-500 font-medium">{user.company_name}</span>
+            {user?.full_name && (
+              <span className="text-xs text-slate-500 font-medium">{user.full_name}</span>
             )}
           </div>
         </div>
