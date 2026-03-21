@@ -116,17 +116,42 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
           <label className="block text-sm font-medium text-slate-700 mb-2">{t('select_tenant')}</label>
           <select
             value={selectedInquiry}
-            onChange={(e) => setSelectedInquiry(e.target.value)}
+            onChange={(e) => handleInquiryChange(e.target.value)}
             className="w-full h-10 px-4 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           >
             <option value="">-- {t('select_tenant')} --</option>
             {inquiries.map(inq => (
               <option key={inq.id} value={inq.id}>
-                {inq.tenant_name} • {inq.tenant_email}
+                {inq.tenant_name} • {inq.tenant_email} {inq.status === 'qualified' ? '✓' : ''}
               </option>
             ))}
           </select>
         </div>
+
+        {/* Tenant Profile Summary */}
+        {selectedTenant && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="font-semibold text-blue-900 mb-3">Tenant Profile</h4>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div>
+                <p className="text-blue-700 text-xs mb-1">Status</p>
+                <p className="font-semibold text-blue-900 capitalize">{selectedTenant.status}</p>
+              </div>
+              <div>
+                <p className="text-blue-700 text-xs mb-1">Qualification Score</p>
+                <p className="font-semibold text-blue-900">{selectedTenant.qualification_score || 'N/A'}/100</p>
+              </div>
+              <div>
+                <p className="text-blue-700 text-xs mb-1">Employment</p>
+                <p className="font-semibold text-blue-900 capitalize">{selectedTenant.employment_status || 'N/A'}</p>
+              </div>
+              <div>
+                <p className="text-blue-700 text-xs mb-1">Monthly Income</p>
+                <p className="font-semibold text-blue-900">€{selectedTenant.monthly_income?.toLocaleString() || 'N/A'}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {selectedInquiry && (
           <>
