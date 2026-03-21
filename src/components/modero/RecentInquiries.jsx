@@ -43,8 +43,7 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
   });
 
   const recentInquiries = [...inquiries]
-    .sort((a, b) => new Date(b.created_date) - new Date(a.created_date))
-    .slice(0, 10);
+    .sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
 
   const handleRowClick = (inquiry) => {
     setSelectedInquiry(inquiry);
@@ -69,59 +68,56 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
         <CardHeader className="bg-gradient-to-br from-orange-50 to-amber-50 border-b border-orange-100 pb-4">
           <CardTitle className="text-xl font-bold text-slate-900">{t('recent_inquiries')}</CardTitle>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-slate-50">
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('tenant_label')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden sm:table-cell">{t('idealista_id')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden md:table-cell">{t('income')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('score')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('status_label')}</TableHead>
-                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden lg:table-cell">{t('date_label')}</TableHead>
-                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden xl:table-cell text-right">{t('contact')}</TableHead>
-                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm text-right">Actions</TableHead>
-                  </TableRow>
-              </TableHeader>
-              <TableBody>
-                {recentInquiries.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-slate-500">
-                      {t('no_inquiries')}
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  recentInquiries.map((inquiry) => {
-                    const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
-                    const isDeleting = deleteMutation.isPending && deleteMutation.variables === inquiry.id;
-                    return (
-                      <TableRow 
-                         key={inquiry.id} 
-                         className={`hover:bg-slate-50 transition-colors ${!isDeleting ? 'cursor-pointer' : ''}`}
-                         onClick={() => !isDeleting && handleRowClick(inquiry)}
-                       >
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-8 w-8 flex-shrink-0">
-                              <AvatarImage src={inquiry.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
-                              <AvatarFallback className="text-xs">{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
-                            </Avatar>
-                            <span className="font-medium text-slate-900 text-xs sm:text-sm line-clamp-1">{inquiry.tenant_name}</span>
+        <CardContent className="p-4 sm:p-6">
+          {recentInquiries.length === 0 ? (
+            <div className="text-center py-12 text-slate-500">
+              {t('no_inquiries')}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {recentInquiries.map((inquiry) => {
+                const StatusIcon = statusConfig[inquiry.status]?.icon || Clock;
+                const isDeleting = deleteMutation.isPending && deleteMutation.variables === inquiry.id;
+                return (
+                  <motion.div
+                    key={inquiry.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-lg border border-slate-200 hover:border-orange-300 hover:shadow-md transition-all ${!isDeleting ? 'cursor-pointer' : 'opacity-50'}`}
+                    onClick={() => !isDeleting && handleRowClick(inquiry)}
+                  >
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-start justify-between gap-2">
+                        <Avatar className="h-10 w-10 flex-shrink-0">
+                          <AvatarImage src={inquiry.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${inquiry.tenant_name}`} />
+                          <AvatarFallback>{inquiry.tenant_name.split(' ').map(n => n[0]).join('').toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={(e) => handleDelete(e, inquiry.id)}
+                          disabled={deleteMutation.isPending}
+                          className="h-6 w-6 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-slate-900 text-sm line-clamp-1">{inquiry.tenant_name}</p>
+                        <p className="text-xs text-slate-500">{inquiry.tenant_email}</p>
+                      </div>
+                      <div className="space-y-2">
+                        {inquiry.monthly_income && (
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="text-slate-600">{t('income')}</span>
+                            <span className="font-medium text-slate-900">€{(inquiry.monthly_income / 1000).toFixed(0)}k</span>
                           </div>
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm text-slate-600 hidden sm:table-cell">
-                          {inquiry.idealista_id ? (
-                            <Badge variant="outline" className="text-xs">{inquiry.idealista_id}</Badge>
-                          ) : '—'}
-                        </TableCell>
-                        <TableCell className="text-xs sm:text-sm text-slate-900 hidden md:table-cell whitespace-nowrap">
-                          {inquiry.monthly_income ? `€${(inquiry.monthly_income / 1000).toFixed(0)}k` : '—'}
-                        </TableCell>
-                        <TableCell className="text-xs">
-                          {inquiry.qualification_score ? (
+                        )}
+                        {inquiry.qualification_score && (
+                          <div className="flex justify-between items-center gap-2 text-xs">
+                            <span className="text-slate-600">{t('score')}</span>
                             <div className="flex items-center gap-1">
-                              <div className="w-8 bg-slate-200 rounded-full h-1.5">
+                              <div className="w-12 bg-slate-200 rounded-full h-1.5">
                                 <div 
                                   className={`h-1.5 rounded-full ${
                                     inquiry.qualification_score >= 70 ? 'bg-emerald-500' :
@@ -130,43 +126,27 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                                   style={{ width: `${inquiry.qualification_score}%` }}
                                 />
                               </div>
-                              <span className="text-xs font-medium text-slate-700">{inquiry.qualification_score}</span>
+                              <span className="font-medium text-slate-700 w-6">{inquiry.qualification_score}</span>
                             </div>
-                          ) : '—'}
-                        </TableCell>
-                        <TableCell className="text-xs">
-                          <Badge 
-                            variant="secondary" 
-                            className={`${statusConfig[inquiry.status]?.color || 'bg-slate-100 text-slate-700'} border flex items-center gap-0.5 w-fit text-xs`}
-                          >
-                            <StatusIcon className="w-2.5 h-2.5 flex-shrink-0" />
-                            <span className="hidden sm:inline">{statusConfig[inquiry.status]?.label || inquiry.status}</span>
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-xs text-slate-600 hidden lg:table-cell whitespace-nowrap">
-                          {format(new Date(inquiry.created_date), "MMM d")}
-                        </TableCell>
-                        <TableCell className="text-xs text-slate-600 hidden xl:table-cell text-right">
-                          {inquiry.tenant_email}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={(e) => handleDelete(e, inquiry.id)}
-                            disabled={deleteMutation.isPending}
-                            className="h-8 w-8 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-                )}
-              </TableBody>
-            </Table>
-          </div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <Badge 
+                          variant="secondary" 
+                          className={`${statusConfig[inquiry.status]?.color || 'bg-slate-100 text-slate-700'} border flex items-center gap-0.5 text-xs`}
+                        >
+                          <StatusIcon className="w-2.5 h-2.5 flex-shrink-0" />
+                          <span>{statusConfig[inquiry.status]?.label || inquiry.status}</span>
+                        </Badge>
+                        <span className="text-xs text-slate-500">{format(new Date(inquiry.created_date), "MMM d")}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
