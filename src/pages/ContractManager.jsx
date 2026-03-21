@@ -11,9 +11,8 @@ import ContractCard from '@/components/contracts/ContractCard';
 export default function ContractManager() {
   const { t } = useLanguage();
   const queryClient = useQueryClient();
-  const [selectedInquiry, setSelectedInquiry] = useState(null);
-  const [editingContract, setEditingContract] = useState(null);
   const [showNewForm, setShowNewForm] = useState(false);
+  const [viewingContractId, setViewingContractId] = useState(null);
 
   const { data: contracts = [], isLoading: contractsLoading } = useQuery({
     queryKey: ['contracts'],
@@ -26,51 +25,51 @@ export default function ContractManager() {
   });
 
   const createContractMutation = useMutation({
-    mutationFn: async (contractData) => {
+    mutationFn: async (formData) => {
+      const inquiry = inquiries.find(i => i.id === formData.inquiryId);
+      const property = await base44.entities.Property.get(inquiry.property_id);
+
+      const contractData = {
+        property_id: inquiry.property_id,
+        inquiry_id: formData.inquiryId,
+        tenant_name: inquiry.tenant_name,
+        tenant_email: inquiry.tenant_email,
+        landlord_name: property.property_owner,
+        landlord_email: property.owner_email,
+        property_address: property.address,
+        monthly_rent: property.monthly_rent,
+        lease_start_date: formData.lease_start_date,
+        lease_end_date: formData.lease_end_date,
+        deposit_amount: formData.deposit_amount,
+        contract_content: formData.contract_content,
+        status: 'draft',
+      };
+
       return await base44.entities.RentalContract.create(contractData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] });
       setShowNewForm(false);
-      setSelectedInquiry(null);
     },
   });
 
   const sendContractMutation = useMutation({
     mutationFn: async (contractId) => {
-      const response = await base44.functions.invoke('sendContractForSignature', { contract_id: contractId });
-      return response.data;
+      return await base44.functions.invoke('sendContractForSignature', { contract_id: contractId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contracts'] });
-      setEditingContract(null);
     },
   });
 
-  const handleCreateContract = async () => {
-    if (!selectedInquiry || !editingContract) return;
-
-    const inquiry = inquiries.find(i => i.id === selectedInquiry);
-    const property = await base44.entities.Property.get(inquiry.property_id);
-
-    const contractData = {
-      property_id: inquiry.property_id,
-      inquiry_id: selectedInquiry,
-      tenant_name: inquiry.tenant_name,
-      tenant_email: inquiry.tenant_email,
-      landlord_name: property.property_owner,
-      landlord_email: property.owner_email,
-      property_address: property.address,
-      monthly_rent: property.monthly_rent,
-      lease_start_date: editingContract.lease_start_date,
-      lease_end_date: editingContract.lease_end_date,
-      deposit_amount: editingContract.deposit_amount,
-      contract_content: editingContract.contract_content,
-      status: 'draft',
-    };
-
-    await createContractMutation.mutateAsync(contractData);
-  };
+  const deleteContractMutation = useMutation({
+    mutationFn: async (contractId) => {
+      return await base44.entities.RentalContract.delete(contractId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contracts'] });
+    },
+  });
 
   if (contractsLoading) {
     return <div className="flex justify-center items-center h-screen"><div className="w-8 h-8 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div></div>;
