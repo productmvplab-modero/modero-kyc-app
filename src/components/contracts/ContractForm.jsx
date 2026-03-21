@@ -6,10 +6,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { X, ChevronDown } from 'lucide-react';
+import { X, ChevronDown, Send } from 'lucide-react';
 import TenantProfileCard from './TenantProfileCard';
 import ContractTemplateSelector from './ContractTemplateSelector';
 import FinancingOffers from './FinancingOffers';
+import ContractPartyDetails from './ContractPartyDetails';
 
 const DEFAULT_CONTRACT_TEMPLATE = `RENTAL AGREEMENT
 
@@ -73,7 +74,7 @@ TERMS AND CONDITIONS:
 
 Both parties agree to the terms and conditions above.`;
 
-export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading, properties = [] }) {
+export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading, properties = [], onSendForSigning }) {
   const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -194,9 +195,16 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
           </div>
         </div>
 
-        {/* Tenant Profile Summary */}
+        {/* Tenant and Owner Details */}
         {selectedTenant && (
-          <TenantProfileCard tenant={selectedTenant} />
+          <>
+            <TenantProfileCard tenant={selectedTenant} />
+            <ContractPartyDetails 
+              tenant={selectedTenant} 
+              property={selectedProperty}
+              idealista_id={selectedTenant.idealista_id}
+            />
+          </>
         )}
 
         {selectedInquiry && (
