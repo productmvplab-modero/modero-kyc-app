@@ -148,6 +148,17 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                         <TableCell className="text-xs text-slate-600 hidden xl:table-cell text-right">
                           {inquiry.tenant_email}
                         </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={(e) => handleDelete(e, inquiry.id)}
+                            disabled={deleteMutation.isPending}
+                            className="h-8 w-8 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })
