@@ -260,6 +260,15 @@ const translations = {
     slack_connect_button: 'Conectar a Slack',
     slack_connecting: 'Conectando...',
     slack_redirect_text: 'Será redirigido para autorizar la aplicación Modero Slack',
+    // Email Verification
+    email_verification_headline: 'A un clic de distancia',
+    email_verification_subtitle: 'Verifique su correo para continuar su solicitud',
+    email_verification_sent_to: 'Código de verificación enviado a',
+    email_verify_button: 'Verificar Correo',
+    email_verifying: 'Enviando...',
+    email_verification_notice: 'Enlace Seguro',
+    email_verification_security: 'Este enlace de verificación es único para usted. Nunca lo comparta ni reenvíe este correo a otros.',
+    email_verification_skip: 'Omitir por ahora',
     },
     pt: {
     my_account: 'Minha Conta', edit_profile: 'Editar Perfil', settings: 'Configurações',
