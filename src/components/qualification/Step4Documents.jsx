@@ -23,7 +23,7 @@ function DocUploader({ docType, documents, onUpload, t }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-slate-800">{docType.label}</span>
-            {docType.required && <span className="text-xs text-orange-500 font-medium">{t('s4_required')}</span>}
+            {!docType.required && <span className="text-xs text-slate-400 font-medium">optional</span>}
             {url && <CheckCircle2 className="w-4 h-4 text-green-500 ml-auto" />}
           </div>
           <p className="text-xs text-slate-500 mt-0.5">{docType.desc}</p>
