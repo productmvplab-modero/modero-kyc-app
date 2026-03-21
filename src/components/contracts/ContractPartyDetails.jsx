@@ -1,6 +1,17 @@
 import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, FileText } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+
+const getCountryIdLabel = (country) => {
+  if (!country) return 'ID Number';
+  const upperCountry = country.toUpperCase();
+  if (upperCountry.includes('SPAIN')) return 'NIE / NIF';
+  if (upperCountry.includes('PORTUGAL')) return 'NIF';
+  if (upperCountry.includes('ITALY')) return 'Codice Fiscale';
+  if (upperCountry.includes('FRANCE')) return 'INSEE';
+  if (upperCountry.includes('GERMANY')) return 'Steuer-ID';
+  return 'ID Number';
+};
 
 export default function ContractPartyDetails({ tenant, property, idealista_id }) {
   return (
@@ -55,9 +66,24 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
             )}
 
             {tenant?.dni_nie_number && (
-              <div>
-                <p className="text-xs text-slate-600 mb-1">ID Number</p>
-                <p className="text-sm font-medium text-slate-900">{tenant.dni_nie_number}</p>
+              <div className="bg-white border border-slate-300 rounded-lg p-3 mt-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <FileText className="w-4 h-4 text-slate-500" />
+                  <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                    {getCountryIdLabel(tenant.country)}
+                  </p>
+                </div>
+                <p className="text-sm font-bold text-slate-900 font-mono">{tenant.dni_nie_number}</p>
+              </div>
+            )}
+
+            {tenant?.national_tax_id && tenant.national_tax_id !== tenant.dni_nie_number && (
+              <div className="bg-white border border-slate-300 rounded-lg p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <FileText className="w-4 h-4 text-slate-500" />
+                  <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide">National Tax ID</p>
+                </div>
+                <p className="text-sm font-bold text-slate-900 font-mono">{tenant.national_tax_id}</p>
               </div>
             )}
           </div>
