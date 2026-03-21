@@ -112,7 +112,7 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
 
         {/* Country */}
         <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')} *</label>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')} *</label>
           <select
             value={formData.country}
             onChange={e => updateForm({ country: e.target.value })}
@@ -161,19 +161,6 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
           >
             <option value="">{t('s2_gender_placeholder')}</option>
             {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
-          </select>
-        </div>
-
-        {/* Nationality */}
-        <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')}</label>
-          <select
-            value={formData.nationality}
-            onChange={e => updateForm({ nationality: e.target.value })}
-            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-          >
-            <option value="">{t('s2_nationality_ph')}</option>
-            {nationalities.map(nat => <option key={nat} value={nat}>{nat}</option>)}
           </select>
         </div>
 
