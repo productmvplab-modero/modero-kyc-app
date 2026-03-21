@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogIn, LogOut, User, Settings, Globe, BarChart3 } from "lucide-react";
+import { LogIn, LogOut, User, Settings, Globe, ChevronDown } from "lucide-react";
 import NotificationsBell from '@/components/modero/NotificationsBell';
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -53,10 +53,41 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link to="/Analytics" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
-            <BarChart3 className="w-4 h-4" />
-            Analytics
-          </Link>
+          {/* Pages Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
+                Pages
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48">
+              <DropdownMenuItem asChild>
+                <Link to="/">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/MyAccount">My Account</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/Analytics">Analytics</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ViewingBooking">Viewing Booking</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ApartmentViewing">Apartment Viewing</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ContractManager">Contract Manager</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/TenantQualification">Tenant Qualification</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           {isAuthenticated && <NotificationsBell />}
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
