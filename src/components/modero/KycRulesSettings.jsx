@@ -335,7 +335,7 @@ export default function KycRulesSettings({ userEmail }) {
                 rules.integration_business_email_enabled && 10,
                 rules.integration_dnb_enabled && 30,
                 rules.integration_psd2_enabled && 20,
-              ].filter(Boolean).reduce((a, b) => a + b, 0)} / 110 pts
+              ].filter(Boolean).reduce((a, b) => a + b, 0)} / 100 pts
             </span>
           </div>
           <div className="w-full bg-slate-200 rounded-full h-2">
