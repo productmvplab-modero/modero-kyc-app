@@ -26,6 +26,8 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
     { val: 'prefer_not_to_say', label: t('s2_gender_prefer') },
   ];
 
+  const showGermanIdField = formData.country === 'Germany' || formData.country === 'germany' || formData.nationality === 'German';
+
   return (
     <StepCard
       icon={User}
