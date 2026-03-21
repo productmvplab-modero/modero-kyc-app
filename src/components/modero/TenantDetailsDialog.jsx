@@ -48,6 +48,7 @@ import {
 import { toast } from 'sonner';
 import { useLanguage } from '@/components/LanguageContext';
 import VerificationStatusBadge from '@/components/modero/VerificationStatusBadge';
+import MessagingPanel from '@/components/modero/MessagingPanel';
 
 const statusConfig = {
   new: { label: 'New', color: 'bg-blue-100 text-blue-800', icon: Clock },
