@@ -286,12 +286,14 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
           {/* Profile Header */}
           <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6 px-3 sm:px-0">
           <div className="relative">
-            <Avatar className="h-16 w-16 sm:h-24 sm:w-24">
-              <AvatarImage src={inquiry.profile_picture_url} />
-              <AvatarFallback className="text-xl sm:text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
-                {inquiry.tenant_name?.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
+            <div className="rounded-full p-[3px] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 shadow-lg shadow-orange-200/50">
+              <Avatar className="h-16 w-16 sm:h-24 sm:w-24 ring-2 ring-white">
+                <AvatarImage src={inquiry.profile_picture_url} />
+                <AvatarFallback className="text-xl sm:text-2xl bg-gradient-to-br from-orange-400 to-amber-300 text-white">
+                  {inquiry.tenant_name?.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+            </div>
             <label className="absolute bottom-0 right-0 cursor-pointer">
               <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-orange-500 flex items-center justify-center hover:bg-orange-600">
                 <Upload className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
