@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, Check, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLanguage } from '@/components/LanguageContext';
 
 export default function SlackIntegration() {
+  const { t } = useLanguage();
   const [isConnecting, setIsConnecting] = useState(false);
 
   const handleConnectSlack = async () => {
