@@ -98,69 +98,91 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
        </div>
 
       <div className="space-y-5">
+        {/* First Name */}
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_first_name')}</label>
           <Input value={formData.first_name} onChange={e => updateForm({ first_name: e.target.value })} placeholder="John" className="bg-card" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_last_name')}</label>
-            <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" className="bg-card" />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
-            <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_age')}</label>
-            <Input type="number" min={18} max={99} value={formData.age} onChange={e => updateForm({ age: e.target.value })} placeholder="30" className="bg-card" />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_gender')}</label>
-            <select
-              value={formData.gender}
-              onChange={e => updateForm({ gender: e.target.value })}
-              className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-            >
-              <option value="">{t('s2_gender_placeholder')}</option>
-              {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
-            </select>
-          </div>
-        </div>
-
+        {/* Last Name */}
         <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')}</label>
-          <Input value={formData.nationality} onChange={e => updateForm({ nationality: e.target.value })} placeholder={t('s2_nationality_ph')} className="bg-card" />
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_last_name')}</label>
+          <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" className="bg-card" />
         </div>
 
+        {/* DNI/ID */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
+          <Input value={formData.dni_nie_number} onChange={e => updateForm({ dni_nie_number: e.target.value })} placeholder={showGermanIdField ? "e.g., 12345678 A" : t('s2_dni_ph')} className="bg-card" />
+        </div>
+
+        {/* Age */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_age')}</label>
+          <Input type="number" min={18} max={99} value={formData.age} onChange={e => updateForm({ age: e.target.value })} placeholder="30" className="bg-card" />
+        </div>
+
+        {/* Gender */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_gender')}</label>
+          <select
+            value={formData.gender}
+            onChange={e => updateForm({ gender: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+          >
+            <option value="">{t('s2_gender_placeholder')}</option>
+            {genders.map(g => <option key={g.val} value={g.val}>{g.label}</option>)}
+          </select>
+        </div>
+
+        {/* Nationality */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')} *</label>
+          <select
+            value={formData.nationality}
+            onChange={e => updateForm({ nationality: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+          >
+            <option value="">{t('s2_nationality_ph')}</option>
+            {nationalities.map(nat => <option key={nat} value={nat}>{nat}</option>)}
+          </select>
+        </div>
+
+        {/* Place of Birth */}
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_pob')}</label>
           <Input value={formData.place_of_birth} onChange={e => updateForm({ place_of_birth: e.target.value })} placeholder={t('s2_pob_ph')} className="bg-card" />
         </div>
 
+        {/* Street Address */}
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_address')}</label>
           <Input value={formData.address} onChange={e => updateForm({ address: e.target.value })} placeholder={t('s2_address_ph')} className="bg-card" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_city')}</label>
-            <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder={t('s2_city_ph')} className="bg-card" />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_postal')}</label>
-            <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} className="bg-card" />
-          </div>
+        {/* City */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_city')}</label>
+          <Input value={formData.city} onChange={e => updateForm({ city: e.target.value })} placeholder={t('s2_city_ph')} className="bg-card" />
         </div>
 
+        {/* Postal Code */}
         <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')}</label>
-          <Input value={formData.country} onChange={e => updateForm({ country: e.target.value })} placeholder={t('s2_country_ph')} className="bg-card" />
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_postal')}</label>
+          <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} className="bg-card" />
+        </div>
+
+        {/* Country */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')} *</label>
+          <select
+            value={formData.country}
+            onChange={e => updateForm({ country: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+          >
+            <option value="">{t('s2_country_ph')}</option>
+            {countries.map(country => <option key={country} value={country}>{country}</option>)}
+          </select>
         </div>
       </div>
     </StepCard>
