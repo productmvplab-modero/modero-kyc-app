@@ -79,9 +79,10 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden md:table-cell">{t('income')}</TableHead>
                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('score')}</TableHead>
                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm">{t('status_label')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden lg:table-cell">{t('date_label')}</TableHead>
-                  <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden xl:table-cell text-right">{t('contact')}</TableHead>
-                </TableRow>
+                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden lg:table-cell">{t('date_label')}</TableHead>
+                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm hidden xl:table-cell text-right">{t('contact')}</TableHead>
+                   <TableHead className="font-semibold whitespace-nowrap text-xs sm:text-sm text-right">Actions</TableHead>
+                  </TableRow>
               </TableHeader>
               <TableBody>
                 {recentInquiries.length === 0 ? (
