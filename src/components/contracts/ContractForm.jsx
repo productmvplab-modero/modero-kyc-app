@@ -80,6 +80,7 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [templateOption, setTemplateOption] = useState('generate');
   const [financingOffers, setFinancingOffers] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
   const [formData, setFormData] = useState({
     lease_start_date: '',
     lease_end_date: '',
@@ -309,7 +310,17 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-medium text-slate-700">{t('contract_terms')}</label>
-                  <span className="text-xs text-slate-500">Editable</span>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={() => setShowPreview(true)}
+                      variant="outline"
+                      size="sm"
+                      className="text-xs"
+                    >
+                      👁️ Preview
+                    </Button>
+                    <span className="text-xs text-slate-500">Editable</span>
+                  </div>
                 </div>
                 <Textarea
                   value={formData.contract_content}
@@ -347,6 +358,43 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
           </>
         )}
       </CardContent>
+
+      {/* Contract Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+            <CardHeader className="flex flex-row items-center justify-between border-b">
+              <CardTitle>Contract Preview</CardTitle>
+              <button 
+                onClick={() => setShowPreview(false)} 
+                className="text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </CardHeader>
+            <CardContent className="overflow-y-auto flex-1 p-6">
+              <div className="bg-white border border-slate-200 rounded-lg p-8 whitespace-pre-wrap font-normal text-sm leading-relaxed text-slate-800">
+                {formData.contract_content}
+              </div>
+            </CardContent>
+            <div className="border-t p-4 flex gap-3 bg-slate-50">
+              <Button
+                onClick={() => setShowPreview(false)}
+                variant="outline"
+                className="flex-1"
+              >
+                Close Preview
+              </Button>
+              <Button
+                onClick={() => setShowPreview(false)}
+                className="flex-1 bg-orange-600 hover:bg-orange-700"
+              >
+                Continue Editing
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </Card>
   );
 }
