@@ -2,7 +2,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 
-export default function StepCard({ icon: Icon, title, subtitle, children, onNext, onBack, nextLabel = 'Continue', nextDisabled = false, loading = false, hideBack = false }) {
+export default function StepCard({ icon, title, subtitle, children, onNext, onBack, nextLabel = 'Continue', nextDisabled = false, loading = false, hideBack = false }) {
+  const Icon = icon;
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
       <div className="mb-6 text-center">

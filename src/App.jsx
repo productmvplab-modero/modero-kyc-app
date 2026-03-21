@@ -4,7 +4,6 @@ import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
 import PropertyOwnerSignup from './pages/PropertyOwnerSignup'
-import TenantQualification from './pages/TenantQualification'
 import MyAccount from './pages/MyAccount'
 import Analytics from './pages/Analytics'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -66,6 +65,7 @@ const AuthenticatedApp = () => {
       <Route path="/PropertyOwnerSignup" element={<LayoutWrapper currentPageName="PropertyOwnerSignup"><PropertyOwnerSignup /></LayoutWrapper>} />
       <Route path="/MyAccount" element={<LayoutWrapper currentPageName="MyAccount"><MyAccount /></LayoutWrapper>} />
       <Route path="/Analytics" element={<LayoutWrapper currentPageName="Analytics"><Analytics /></LayoutWrapper>} />
+      <Route path="/TenantQualification" element={<TenantQualification />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
