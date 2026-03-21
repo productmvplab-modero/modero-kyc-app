@@ -17,6 +17,7 @@ const TOTAL_STEPS = 8;
 
 export default function TenantQualification() {
   const [lang, setLang] = useState(null); // null = language selection screen
+  const [welcomed, setWelcomed] = useState(false);
   const [step, setStep] = useState(1);
   const [inquiryId, setInquiryId] = useState(null);
   const [formData, setFormData] = useState({
