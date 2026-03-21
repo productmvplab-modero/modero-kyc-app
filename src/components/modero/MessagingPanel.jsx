@@ -8,7 +8,7 @@ import { ChevronDown, MessageSquare, Send, FileText, CheckCircle2, AlertCircle, 
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
-const QUALIFICATION_URL = 'https://app.base44.com/modero-kyc/PropertyOwnerSignup';
+const QUALIFICATION_URL = 'https://tenantqualification.base44.app';
 
 const TEMPLATES = [
   {
