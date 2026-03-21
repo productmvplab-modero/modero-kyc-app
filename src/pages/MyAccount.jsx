@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { User, Settings } from 'lucide-react';
+import Header from '@/components/modero/Header';
 import ProfileEditor from '@/components/modero/ProfileEditor';
 import KycRulesSettings from '@/components/modero/KycRulesSettings';
 
@@ -29,6 +30,7 @@ export default function MyAccount() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <Header />
       {/* Page Header */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">

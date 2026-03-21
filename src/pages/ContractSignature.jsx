@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { FileText, CheckCircle2, AlertCircle } from 'lucide-react';
+import Header from '@/components/modero/Header';
 
 export default function ContractSignature() {
   const { t } = useLanguage();
@@ -55,21 +56,27 @@ export default function ContractSignature() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+        <Header />
+        <div className="flex items-center justify-center px-4 min-h-screen">
         <div className="w-8 h-8 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+      </div>
       </div>
     );
   }
 
   if (!contract) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+        <Header />
+        <div className="flex items-center justify-center px-4 min-h-screen">
         <Card className="max-w-md w-full">
           <CardContent className="pt-6 text-center">
             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
             <p className="text-slate-600">{t('contract_not_found')}</p>
           </CardContent>
         </Card>
+      </div>
       </div>
     );
   }
@@ -79,7 +86,9 @@ export default function ContractSignature() {
   const partyName = role === 'tenant' ? contract.tenant_name : contract.landlord_name;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+      <Header />
+      <div className="py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -194,6 +203,7 @@ export default function ContractSignature() {
             </div>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );

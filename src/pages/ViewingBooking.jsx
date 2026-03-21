@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
+import Header from '@/components/modero/Header';
 import { format, addDays, startOfToday, getDay } from 'date-fns';
 
 const TIME_SLOTS = [
@@ -114,7 +115,9 @@ export default function ViewingBooking() {
 
   if (step === 'select') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+        <Header />
+        <div className="p-6">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-slate-800 mb-2">Book Your Apartment Viewing</h1>
@@ -234,12 +237,15 @@ export default function ViewingBooking() {
           )}
         </div>
       </div>
+      </div>
     );
   }
 
   if (step === 'confirm') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+        <Header />
+        <div className="p-6">
         <div className="max-w-2xl mx-auto">
           <Card className="shadow-lg">
             <CardHeader>
@@ -294,11 +300,14 @@ export default function ViewingBooking() {
           </Card>
         </div>
       </div>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+      <Header />
+      <div className="p-6">
       <div className="max-w-2xl mx-auto">
         <Card className="shadow-lg">
           <CardContent className="pt-12 pb-12 text-center">
@@ -339,6 +348,7 @@ export default function ViewingBooking() {
           </CardContent>
         </Card>
       </div>
+    </div>
     </div>
   );
 }

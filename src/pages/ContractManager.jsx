@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { FileText, Send, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import Header from '@/components/modero/Header';
 import { format } from 'date-fns';
 
 const DEFAULT_CONTRACT_TEMPLATE = `RENTAL AGREEMENT
@@ -140,7 +141,9 @@ export default function ContractManager() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+      <Header />
+      <div className="py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-orange-600 mb-2">{t('rental_contracts')}</h1>
@@ -333,6 +336,7 @@ export default function ContractManager() {
             </Card>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
