@@ -97,7 +97,7 @@ export default function EmailTemplatePreview({ template, onClose }) {
                 {template.variables.map((v, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-sm">
                     <code className="font-mono text-orange-600 font-semibold bg-slate-100 px-2 py-1 rounded">
-                      {{{v.name}}}
+                      {`{{${v.name}}}`}
                     </code>
                     <span className="text-slate-600">{v.description}</span>
                   </div>
