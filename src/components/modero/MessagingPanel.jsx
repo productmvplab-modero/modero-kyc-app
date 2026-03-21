@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ChevronDown, MessageSquare, Send, FileText, CheckCircle2, AlertCircle, Clock, Mail, Zap, Pencil, X, Check } from 'lucide-react';
+import { ChevronDown, MessageSquare, Send, FileText, CheckCircle2, AlertCircle, Clock, Mail, Zap, Pencil, X, Check, Link } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
@@ -112,6 +112,14 @@ export default function MessagingPanel({ inquiry }) {
     onError: (err) => toast.error('Failed to send message'),
   });
 
+  const sendQualificationLinkMutation = useMutation({
+    mutationFn: () => base44.functions.invoke('sendQualificationLink', { inquiry_id: inquiry.id }),
+    onSuccess: () => {
+      toast.success('Qualification link sent to tenant');
+    },
+    onError: (err) => toast.error('Failed to send qualification link'),
+  });
+
   const applyTemplate = (tpl) => {
     setSubject(tpl.subject);
     setBody(tpl.body(inquiry.tenant_name || 'Applicant', inquiry));
@@ -160,6 +168,19 @@ export default function MessagingPanel({ inquiry }) {
 
       {expanded && (
         <CardContent className="pt-4 sm:pt-5 px-3 sm:px-6 space-y-5">
+
+          {/* Quick Send Qualification Link Button */}
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              onClick={() => sendQualificationLinkMutation.mutate()}
+              disabled={sendQualificationLinkMutation.isPending}
+              className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2 flex-1"
+            >
+              <Link className="w-4 h-4" />
+              {sendQualificationLinkMutation.isPending ? 'Sending...' : 'Send Qualification Link'}
+            </Button>
+          </div>
 
           {/* Quick Templates */}
           <div>
