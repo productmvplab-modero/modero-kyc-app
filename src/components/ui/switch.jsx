@@ -1,5 +1,6 @@
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
+import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -13,8 +14,10 @@ const Switch = React.forwardRef(({ className, ...props }, ref) => (
     ref={ref}>
     <SwitchPrimitives.Thumb
       className={cn(
-        "pointer-events-none block h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 flex items-center justify-center"
-      )} />
+        "pointer-events-none flex items-center justify-center h-5 w-5 rounded-full bg-white shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+      )}>
+      <Check className="h-3 w-3 text-emerald-500 opacity-0 peer-data-[state=checked]:opacity-100 transition-opacity hidden data-[state=checked]:block" />
+    </SwitchPrimitives.Thumb>
   </SwitchPrimitives.Root>
 ))
 Switch.displayName = SwitchPrimitives.Root.displayName
