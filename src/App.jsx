@@ -9,6 +9,8 @@ import MyAccount from './pages/MyAccount'
 import Analytics from './pages/Analytics'
 import ViewingBooking from './pages/ViewingBooking'
 import ApartmentViewing from './pages/ApartmentViewing'
+import ContractManager from './pages/ContractManager'
+import ContractSignature from './pages/ContractSignature'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -71,6 +73,8 @@ const AuthenticatedApp = () => {
       <Route path="/TenantQualification" element={<TenantQualification />} />
       <Route path="/ViewingBooking" element={<LayoutWrapper currentPageName="ViewingBooking"><ViewingBooking /></LayoutWrapper>} />
       <Route path="/ApartmentViewing" element={<LayoutWrapper currentPageName="ApartmentViewing"><ApartmentViewing /></LayoutWrapper>} />
+      <Route path="/ContractManager" element={<LayoutWrapper currentPageName="ContractManager"><ContractManager /></LayoutWrapper>} />
+      <Route path="/ContractSignature" element={<ContractSignature />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
