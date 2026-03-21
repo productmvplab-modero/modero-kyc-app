@@ -40,22 +40,22 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
       t={t}
     >
       {/* Profile Photo */}
-      <div className="flex flex-col items-center mb-6 pb-4 border-b border-border">
-        <div className="relative">
-          {formData.profile_picture_url ? (
-            <img src={formData.profile_picture_url} alt="Profile" className="h-24 w-24 rounded-full object-cover border-4 border-secondary" />
-          ) : (
-            <div className="h-24 w-24 rounded-full bg-secondary flex items-center justify-center border-4 border-secondary">
-              <User className="w-10 h-10 text-muted-foreground" />
-            </div>
-          )}
-          <label className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-orange-500 flex items-center justify-center cursor-pointer hover:bg-orange-600 transition-colors shadow-md">
-            {uploading ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4 text-white" />}
-            <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
-          </label>
-        </div>
-        <p className="text-xs text-muted-foreground mt-3 font-medium">{t('s2_photo')}</p>
-      </div>
+       <div className="flex flex-col items-center mb-6 pb-4 border-b border-border">
+         <div className="relative">
+           {formData.profile_picture_url ? (
+             <img src={formData.profile_picture_url} alt="Profile" className="h-24 w-24 rounded-full object-cover border-4 border-secondary" />
+           ) : (
+             <div className="h-24 w-24 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center border-4 border-orange-200">
+               <User className="w-10 h-10 text-white" />
+             </div>
+           )}
+           <label className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center cursor-pointer hover:from-orange-500 hover:to-orange-700 transition-all shadow-md">
+             {uploading ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4 text-white" />}
+             <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+           </label>
+         </div>
+         <p className="text-xs text-muted-foreground mt-3 font-medium">{t('s2_photo')}</p>
+       </div>
 
       <div className="space-y-5">
         <div>
