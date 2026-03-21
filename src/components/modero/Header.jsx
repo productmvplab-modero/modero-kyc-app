@@ -11,7 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogIn, LogOut, User, Settings, Bell, Globe, BarChart3 } from "lucide-react";
+import { LogIn, LogOut, User, Settings, Globe, BarChart3 } from "lucide-react";
+import NotificationsBell from '@/components/modero/NotificationsBell';
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from '@/components/LanguageContext';
