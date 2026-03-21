@@ -92,7 +92,17 @@ export default function Step5IdVerification({ formData, updateForm, onNext, onBa
         onAction={() => simulate('email_verified')}
         actionLabel={simulating === 'email_verified' ? t('s5_sending') : t('s5_send_code')}
         verifiedLabel={t('s5_verified')}
-      />
+      >
+        {!formData.email_verified && (
+          <Input
+            className="mt-2 text-xs"
+            type="email"
+            placeholder="your@email.com"
+            value={formData.tenant_email}
+            onChange={e => updateForm({ tenant_email: e.target.value })}
+          />
+        )}
+      </VerificationItem>
 
       {/* ID Verification */}
       <VerificationItem
