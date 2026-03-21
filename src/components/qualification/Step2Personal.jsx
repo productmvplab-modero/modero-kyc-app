@@ -110,6 +110,19 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
           <Input value={formData.last_name} onChange={e => updateForm({ last_name: e.target.value })} placeholder="Doe" className="bg-card" />
         </div>
 
+        {/* Country */}
+        <div>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')} *</label>
+          <select
+            value={formData.country}
+            onChange={e => updateForm({ country: e.target.value })}
+            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+          >
+            <option value="">{t('s2_country_ph')}</option>
+            {countries.map(country => <option key={country} value={country}>{country}</option>)}
+          </select>
+        </div>
+
         {/* DNI/ID */}
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{showGermanIdField ? 'National ID (Personalausweis)' : t('s2_dni')}</label>
@@ -186,19 +199,6 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
         <div>
           <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_postal')}</label>
           <Input value={formData.postal_code} onChange={e => updateForm({ postal_code: e.target.value })} placeholder={t('s2_postal_ph')} className="bg-card" />
-        </div>
-
-        {/* Country */}
-        <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_country')} *</label>
-          <select
-            value={formData.country}
-            onChange={e => updateForm({ country: e.target.value })}
-            className="w-full h-10 rounded-md border border-input bg-card px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-          >
-            <option value="">{t('s2_country_ph')}</option>
-            {countries.map(country => <option key={country} value={country}>{country}</option>)}
-          </select>
         </div>
       </div>
     </StepCard>
