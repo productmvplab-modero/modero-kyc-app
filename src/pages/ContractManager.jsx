@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { FileText, AlertCircle, X, CheckCircle2, Send } from 'lucide-react';
+import { FileText, AlertCircle, X, CheckCircle2, Send, FileDown, Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import Header from '@/components/modero/Header';
@@ -206,20 +206,54 @@ export default function ContractManager() {
             </div>
           )}
 
-          {/* Contract Preview Modal */}
+          {/* Contract Preview Modal - Full Screen */}
           {showPreview && viewingContract && (
-            <div className="fixed inset-0 bg-black/60 flex items-end justify-center z-50 p-4">
-              <div className="bg-white rounded-t-2xl w-full max-h-[95vh] overflow-y-auto shadow-2xl">
-                <div className="sticky top-0 bg-white border-b border-slate-200 flex items-center justify-between p-6 rounded-t-2xl">
-                  <h2 className="text-2xl font-bold text-slate-900">Contract Preview</h2>
-                  <button onClick={() => setShowPreview(false)} className="text-slate-400 hover:text-slate-600 p-1 hover:bg-slate-100 rounded">
+            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl w-full h-[95vh] max-w-4xl overflow-hidden flex flex-col shadow-2xl">
+                {/* Header */}
+                <div className="sticky top-0 bg-gradient-to-r from-orange-600 to-orange-500 flex items-center justify-between p-6 z-10">
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">Contract Preview</h2>
+                    <p className="text-orange-100 text-sm mt-1">Rental Agreement - {viewingContract.tenant_name}</p>
+                  </div>
+                  <button onClick={() => setShowPreview(false)} className="text-white hover:bg-orange-700 p-2 rounded-lg transition-colors">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
-                <div className="p-8 bg-slate-50">
-                  <div className="bg-white border-2 border-slate-300 rounded-xl p-12 whitespace-pre-wrap font-normal text-base leading-relaxed text-slate-800 shadow-lg">
+
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto p-8 bg-slate-50">
+                  <div className="bg-white border-2 border-slate-200 rounded-xl p-12 whitespace-pre-wrap font-normal text-base leading-relaxed text-slate-800 shadow-md">
                     {viewingContract.contract_content}
                   </div>
+                </div>
+
+                {/* Footer Actions */}
+                <div className="bg-white border-t border-slate-200 p-6 flex gap-3 justify-end">
+                  <Button
+                    onClick={() => setShowPreview(false)}
+                    variant="outline"
+                    className="h-11"
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    onClick={async () => {
+                      try {
+                        const response = await base44.functions.invoke('generateContractPDF', { contract_id: viewingContract.id });
+                        const link = document.createElement('a');
+                        link.href = response.data.pdf_url;
+                        link.download = `contract_${viewingContract.tenant_name}.pdf`;
+                        link.click();
+                      } catch (error) {
+                        console.error('Error generating PDF:', error);
+                      }
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white h-11"
+                  >
+                    <FileDown className="w-4 h-4 mr-2" />
+                    Download PDF
+                  </Button>
                 </div>
               </div>
             </div>
