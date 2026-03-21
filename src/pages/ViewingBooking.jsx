@@ -63,7 +63,8 @@ export default function ViewingBooking() {
     const today = startOfToday();
     for (let i = 0; i < 30; i++) {
       const date = addDays(today, i);
-      if (isWeekday(date)) {
+      const dayOfWeek = getDay(date);
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Monday-Friday
         dates.push(date);
       }
     }
