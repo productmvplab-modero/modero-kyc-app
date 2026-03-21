@@ -54,60 +54,6 @@ export default function ApartmentViewing() {
     enabled: !!tenantData?.property_id,
   });
 
-  // Admin mode queries
-  const { data: adminInquiries = [] } = useQuery({
-    queryKey: ['adminInquiries'],
-    queryFn: () => base44.entities.Inquiry.list(),
-    enabled: adminMode,
-  });
-
-  const { data: adminProperties = [] } = useQuery({
-    queryKey: ['adminProperties'],
-    queryFn: () => base44.entities.Property.list(),
-    enabled: adminMode,
-  });
-
-  const { data: adminBookings = [] } = useQuery({
-    queryKey: ['adminBookings'],
-    queryFn: () => base44.entities.ViewingBooking.list(),
-    enabled: adminMode,
-  });
-
-  const adminInquiryData = adminInquiries.find(i => i.id === adminInquiryId);
-  const adminPropertyData = adminProperties.find(p => p.id === adminPropertyId);
-  
-  const adminAvailableDates = useMemo(() => {
-    const dates = [];
-    const today = startOfToday();
-    for (let i = 0; i < 30; i++) {
-      const date = addDays(today, i);
-      const dayOfWeek = getDay(date);
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        dates.push(date);
-      }
-    }
-    return dates;
-  }, []);
-
-  const adminBookedDates = useMemo(() => {
-    if (!adminPropertyId) return [];
-    return adminBookings
-      .filter(b => b.property_id === adminPropertyId && b.status !== 'cancelled')
-      .map(b => b.viewing_date);
-  }, [adminBookings, adminPropertyId]);
-
-  const adminBookedTimes = useMemo(() => {
-    if (!adminSelectedDate || !adminPropertyId) return [];
-    return adminBookings
-      .filter(
-        b =>
-          b.property_id === adminPropertyId &&
-          b.viewing_date === adminSelectedDate &&
-          b.status !== 'cancelled'
-      )
-      .map(b => b.viewing_time);
-  }, [adminBookings, adminPropertyId, adminSelectedDate]);
-
   // Generate available dates based on booking rules
   const availableDates = useMemo(() => {
     const dates = [];
@@ -127,7 +73,7 @@ export default function ApartmentViewing() {
 
   const timeSlots = bookingRules?.available_time_slots || [];
 
-  // Create booking mutation
+  // Create booking mutation (tenant mode)
   const bookingMutation = useMutation({
     mutationFn: async () => {
       if (!selectedDate || !selectedTime || !tenantData) return;
@@ -163,7 +109,7 @@ export default function ApartmentViewing() {
     },
   });
 
-  // Admin booking mutation
+  // Create booking mutation (admin mode)
   const adminBookingMutation = useMutation({
     mutationFn: async () => {
       const booking = await base44.entities.ViewingBooking.create({
@@ -188,15 +134,21 @@ export default function ApartmentViewing() {
         property_city: adminPropertyData.city,
       });
 
+      await base44.entities.Inquiry.update(adminInquiryId, {
+        viewing_booked: true,
+        viewing_date: format(adminSelectedDate, 'yyyy-MM-dd'),
+        viewing_time: adminSelectedTime,
+      });
+
       return booking;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['adminBookings'] });
+      queryClient.invalidateQueries({ queryKey: ['adminBookings', 'adminInquiries'] });
       setStep('success');
     },
   });
 
-  if (inquiryLoading) {
+  if (!adminMode && inquiryLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
@@ -204,7 +156,7 @@ export default function ApartmentViewing() {
     );
   }
 
-  if (!inquiry) {
+  if (!adminMode && !inquiry) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center px-4">
         <Card className="max-w-md w-full">
@@ -219,10 +171,261 @@ export default function ApartmentViewing() {
 
   const canBook = selectedDate && selectedTime && !bookingMutation.isPending;
 
+  // Admin mode view
+  if (adminMode) {
+    if (step === 'select') {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+          <Header />
+          <div className="p-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="mb-8 flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-bold text-slate-800 mb-2">Book Apartment Viewing</h1>
+                  <p className="text-slate-600">Admin: Select an inquiry and available date/time</p>
+                </div>
+                <Button variant="outline" onClick={() => setAdminMode(false)}>Tenant Mode</Button>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base">Select Application</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {adminInquiries.filter(i => i.status === 'qualified').map(inquiry => (
+                        <button
+                          key={inquiry.id}
+                          onClick={() => {
+                            setAdminInquiryId(inquiry.id);
+                            setAdminPropertyId(inquiry.property_id);
+                            setAdminSelectedDate(null);
+                            setAdminSelectedTime(null);
+                          }}
+                          className={`w-full p-3 rounded-lg text-left border-2 transition-all ${
+                            adminInquiryId === inquiry.id
+                              ? 'border-orange-500 bg-orange-50'
+                              : 'border-slate-200 hover:border-orange-200'
+                          }`}
+                        >
+                          <div className="font-semibold text-sm">{inquiry.tenant_name}</div>
+                          <div className="text-xs text-slate-500">{inquiry.tenant_email}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      Date
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {adminAvailableDates.map(date => {
+                        const isBooked = adminBookedDates.includes(format(date, 'yyyy-MM-dd'));
+                        const isSelected = adminSelectedDate && format(adminSelectedDate, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd');
+                        return (
+                          <button
+                            key={format(date, 'yyyy-MM-dd')}
+                            onClick={() => !isBooked && setAdminSelectedDate(date)}
+                            disabled={isBooked || !adminInquiryId}
+                            className={`w-full p-2 rounded-lg text-sm border-2 transition-all ${
+                              isSelected
+                                ? 'border-orange-500 bg-orange-50'
+                                : isBooked
+                                ? 'border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed'
+                                : 'border-slate-200 hover:border-orange-200'
+                            }`}
+                          >
+                            <div className="font-semibold">{format(date, 'd MMM')}</div>
+                            <div className="text-xs text-slate-500">{format(date, 'EEEE')}</div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      Time
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {TIME_SLOTS.map(time => {
+                        const isBooked = adminBookedTimes.includes(time);
+                        const isSelected = adminSelectedTime === time;
+                        return (
+                          <button
+                            key={time}
+                            onClick={() => !isBooked && setAdminSelectedTime(time)}
+                            disabled={isBooked || !adminSelectedDate}
+                            className={`w-full p-2 rounded-lg text-sm border-2 transition-all ${
+                              isSelected
+                                ? 'border-orange-500 bg-orange-50'
+                                : isBooked
+                                ? 'border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed'
+                                : 'border-slate-200 hover:border-orange-200'
+                            }`}
+                          >
+                            {time}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {adminSelectedDate && adminSelectedTime && (
+                <div className="mt-8 flex justify-end">
+                  <Button
+                    onClick={() => setStep('confirm')}
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+                  >
+                    Continue to Confirmation
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (step === 'confirm') {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+          <Header />
+          <div className="p-6">
+            <div className="max-w-2xl mx-auto">
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-2xl">Confirm Your Viewing</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-semibold text-slate-700 mb-1">Applicant</h3>
+                      <p className="text-slate-900">{adminInquiryData.tenant_name}</p>
+                      <p className="text-sm text-slate-500">{adminInquiryData.tenant_email}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-700 mb-1">Property</h3>
+                      <p className="text-slate-900">{adminPropertyData.address}</p>
+                      <p className="text-sm text-slate-500">{adminPropertyData.city}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-700 mb-1">Date</h3>
+                      <p className="text-slate-900">{format(adminSelectedDate, 'EEEE, MMMM d, yyyy')}</p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-slate-700 mb-1">Time</h3>
+                      <p className="text-slate-900">{adminSelectedTime}</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
+                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-blue-900">
+                      A confirmation email will be sent to <strong>{adminInquiryData.tenant_email}</strong> with the viewing details.
+                    </p>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => setStep('select')}
+                      disabled={adminBookingMutation.isPending}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      onClick={() => adminBookingMutation.mutate()}
+                      disabled={adminBookingMutation.isPending}
+                      className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 flex-1"
+                    >
+                      {adminBookingMutation.isPending ? 'Confirming...' : 'Confirm Booking'}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+        <Header />
+        <div className="p-6">
+          <div className="max-w-2xl mx-auto">
+            <Card className="shadow-lg">
+              <CardContent className="pt-12 pb-12 text-center">
+                <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">Viewing Confirmed!</h2>
+                <p className="text-slate-600 mb-6">
+                  Confirmation email sent to <strong>{adminInquiryData.tenant_email}</strong>
+                </p>
+                <div className="bg-slate-50 rounded-lg p-6 mb-6 text-left">
+                  <p className="text-sm font-semibold text-slate-600 mb-4">Appointment Details:</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Applicant:</span>
+                      <span className="font-semibold">{adminInquiryData.tenant_name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Property:</span>
+                      <span className="font-semibold">{adminPropertyData.address}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Date & Time:</span>
+                      <span className="font-semibold">{format(adminSelectedDate, 'd MMM yyyy')} at {adminSelectedTime}</span>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => {
+                    setStep('select');
+                    setAdminInquiryId(null);
+                    setAdminPropertyId(null);
+                    setAdminSelectedDate(null);
+                    setAdminSelectedTime(null);
+                  }}
+                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+                >
+                  Book Another Viewing
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Tenant mode view
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
+      <Header />
       <div className="py-8 px-4">
       <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-orange-600 mb-2">Schedule Your Apartment Viewing</h1>
+            <p className="text-slate-500">Select a convenient date and time to visit the property</p>
+          </div>
+          <Button variant="outline" onClick={() => setAdminMode(true)}>Admin Mode</Button>
+        </div>
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-orange-600 mb-2">Schedule Your Apartment Viewing</h1>
           <p className="text-slate-500">Select a convenient date and time to visit the property</p>
