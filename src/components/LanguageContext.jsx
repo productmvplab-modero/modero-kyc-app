@@ -482,6 +482,19 @@ const translations = {
     landlord: 'Proprietario',
     already_signed: 'Già Firmato',
     you_have_signed: 'Hai già firmato questo contratto. In attesa dell\'altra parte per completare.',
+    // Slack Integration
+    connect_to_slack: 'Connetti a Slack',
+    slack_description: 'Rimani connesso con il nostro team per feedback e aggiornamenti',
+    slack_not_connected: 'Non Connesso',
+    slack_benefits_text: 'Connetti il tuo account Slack per ricevere notifiche, condividere feedback e comunicare con il nostro team in tempo reale.',
+    slack_benefit_1: 'Ricevi notifiche in tempo reale sui candidati',
+    slack_benefit_2: 'Condividi feedback e collabora con i membri del team',
+    slack_benefit_3: 'Ricevi avvisi istantanei sui cambiamenti importanti dello stato della candidatura',
+    slack_benefit_4: 'Comunica con il team di supporto di Modero',
+    slack_benefits_title: 'Vantaggi',
+    slack_connect_button: 'Connetti a Slack',
+    slack_connecting: 'Connessione in corso...',
+    slack_redirect_text: 'Verrai reindirizzato per autorizzare l\'app Modero Slack',
     },
     };
 
