@@ -53,14 +53,6 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
 
   return (
     <div className="space-y-4">
-      {/* Idealista Reference */}
-      {idealista_id && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-xs text-blue-600 font-semibold uppercase tracking-wide mb-1">Idealista Reference</p>
-          <p className="text-lg font-bold text-blue-900">{idealista_id}</p>
-        </div>
-      )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Tenant Information */}
         <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
