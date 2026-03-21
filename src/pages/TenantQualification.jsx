@@ -91,44 +91,7 @@ export default function TenantQualification() {
 
   // Language selection screen (always first step)
   if (!lang) {
-    return <LanguageSelect onSelect={setLang} />;
-  }
-
-  // Welcome screen (after language selection)
-  if (!welcomed) {
-    const idealista = formData.idealista_id || 'N/A';
-    const welcomeText = {
-      en: { title: 'Welcome! Begin your application process', subtitle: `You have applied to rent an Apartment in Alicante with Idealista reference ${idealista}. Please select your preferred language to begin the Qualification process.`, btn: 'Get Started' },
-      es: { title: '¡Bienvenido! Comienza tu proceso de solicitud', subtitle: `Ha solicitado alquilar un Apartamento en Alicante con referencia Idealista ${idealista}. Seleccione su idioma preferido para comenzar el proceso de Calificación.`, btn: 'Empezar' },
-      pt: { title: 'Bem-vindo! Inicie o seu processo de candidatura', subtitle: `Você solicitou alugar um Apartamento em Alicante com referência Idealista ${idealista}. Selecione seu idioma preferido para iniciar o processo de Qualificação.`, btn: 'Começar' },
-      it: { title: 'Benvenuto! Inizia il tuo processo di candidatura', subtitle: `Hai richiesto di affittare un Appartamento ad Alicante con riferimento Idealista ${idealista}. Seleziona la tua lingua preferita per iniziare il processo di Qualificazione.`, btn: 'Inizia' },
-    }[lang];
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center px-4">
-        <div className="w-full max-w-md text-center">
-          <div className="flex flex-col items-center mb-8">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center mb-4 shadow-lg shadow-orange-200">
-              <span className="text-white text-3xl font-bold">M</span>
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">Modero</h1>
-          </div>
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <div className="h-14 w-14 rounded-full bg-orange-100 flex items-center justify-center mx-auto mb-5">
-              <span className="text-2xl">🏠</span>
-            </div>
-            <h2 className="text-xl font-bold text-slate-800 mb-3">{welcomeText.title}</h2>
-            <p className="text-slate-500 text-sm mb-8">{welcomeText.subtitle}</p>
-            <button
-              onClick={() => setWelcomed(true)}
-              className="w-full h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all"
-            >
-              {welcomeText.btn}
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+    return <LanguageSelect onSelect={(selectedLang) => { setLang(selectedLang); setWelcomed(true); }} />;
   }
 
   const stepProps = { formData, updateForm, onNext: next, onBack: back, inquiryId, t };
