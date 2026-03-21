@@ -112,7 +112,7 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
 
         {/* Country */}
         <div>
-          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')} <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-semibold text-foreground mb-2">{t('s2_nationality')} <span className="text-orange-500">*</span></label>
           <select
             value={formData.country}
             onChange={e => updateForm({ country: e.target.value })}
