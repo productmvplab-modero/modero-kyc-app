@@ -24,9 +24,9 @@ Deno.serve(async (req) => {
       await base44.entities.Inquiry.update(inquiry_id, { qualification_token: token });
     }
 
-    // Build the qualification link
-    const appUrl = Deno.env.get('APP_URL') || 'http://localhost:5173';
-    const qualificationLink = `${appUrl}/TenantQualification?token=${token}&property_id=${inquiry.property_id}&idealista_id=${inquiry.idealista_id || ''}`;
+    // Build the qualification link using request origin
+    const origin = req.headers.get('origin') || req.headers.get('referer')?.split('/').slice(0, 3).join('/') || 'http://localhost:5173';
+    const qualificationLink = `${origin}/TenantQualification?token=${token}&property_id=${inquiry.property_id}&idealista_id=${inquiry.idealista_id || ''}`;
 
     // Send message to tenant
     const messageBody = `${user.full_name} has sent you a link to start your apartment qualification process:\n\n${qualificationLink}\n\nClick the link above to begin. It's quick, secure, and completely confidential.`;
