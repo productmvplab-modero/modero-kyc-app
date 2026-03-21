@@ -10,6 +10,7 @@ import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
 import ContractCard from '@/components/contracts/ContractCard';
 import ContractPartyDetails from '@/components/contracts/ContractPartyDetails';
+import FinancialOverview from '@/components/contracts/FinancialOverview';
 
 export default function ContractManager() {
   const { t } = useLanguage();
@@ -306,6 +307,16 @@ export default function ContractManager() {
                       )}
                     </>
                   )}
+
+                  {/* Financial Overview */}
+                  <div className="pt-6 border-t border-slate-200">
+                    <FinancialOverview 
+                      contract={{
+                        monthly_rent: viewingContract.monthly_rent || 0,
+                        deposit_amount: viewingContract.deposit_amount || 0,
+                      }}
+                    />
+                  </div>
 
                   {/* Status Summary */}
                   <div className="pt-4 border-t border-slate-200">
