@@ -15,6 +15,8 @@ export default function ContractManager() {
   const queryClient = useQueryClient();
   const [showNewForm, setShowNewForm] = useState(false);
   const [viewingContractId, setViewingContractId] = useState(null);
+  const [signatureName, setSignatureName] = useState('');
+  const [signatureRole, setSignatureRole] = useState('landlord');
 
   const { data: contracts = [], isLoading: contractsLoading } = useQuery({
     queryKey: ['contracts'],
