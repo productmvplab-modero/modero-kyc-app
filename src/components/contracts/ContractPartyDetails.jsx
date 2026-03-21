@@ -95,16 +95,16 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Tenant Information - Editable */}
-        <div className="border-2 border-emerald-200 rounded-xl p-6 bg-emerald-50">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-emerald-200">
+        <div className="border-2 border-orange-200 rounded-xl p-6 bg-orange-50">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
             <div>
-              <Badge className="bg-emerald-600 text-white mb-2">Editable</Badge>
-              <h3 className="text-lg font-bold text-emerald-900">Tenant Information</h3>
+              <Badge className="bg-orange-600 text-white mb-2">Editable</Badge>
+              <h3 className="text-lg font-bold text-orange-900">Tenant Information</h3>
             </div>
             <Button
               onClick={() => setIsEditingTenant(!isEditingTenant)}
               variant={isEditingTenant ? "default" : "outline"}
-              className={`text-sm h-8 ${isEditingTenant ? 'bg-emerald-600 hover:bg-emerald-700' : ''}`}
+              className={`text-sm h-8 ${isEditingTenant ? 'bg-orange-600 hover:bg-orange-700' : ''}`}
             >
               {isEditingTenant ? 'Save' : 'Edit'}
             </Button>
@@ -114,7 +114,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Name</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Name</label>
                   <Input
                     value={tenantInfo.name}
                     onChange={(e) => handleTenantFieldChange('name', e.target.value)}
@@ -123,7 +123,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Email</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Email</label>
                   <Input
                     value={tenantInfo.email}
                     onChange={(e) => handleTenantFieldChange('email', e.target.value)}
@@ -135,7 +135,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Phone</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Phone</label>
                   <Input
                     value={tenantInfo.phone}
                     onChange={(e) => handleTenantFieldChange('phone', e.target.value)}
@@ -144,7 +144,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Address</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Address</label>
                   <Input
                     value={tenantInfo.address}
                     onChange={(e) => handleTenantFieldChange('address', e.target.value)}
@@ -156,7 +156,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Postal Code</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Postal Code</label>
                   <Input
                     value={tenantInfo.postalCode}
                     onChange={(e) => handleTenantFieldChange('postalCode', e.target.value)}
@@ -165,7 +165,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">City</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">City</label>
                   <Input
                     value={tenantInfo.city}
                     onChange={(e) => handleTenantFieldChange('city', e.target.value)}
@@ -177,7 +177,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">ID Number</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">ID Number</label>
                   <Input
                     value={tenantInfo.dniNie}
                     onChange={(e) => handleTenantFieldChange('dniNie', e.target.value)}
@@ -186,7 +186,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-emerald-700 mb-1">Tax ID</label>
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Tax ID</label>
                   <Input
                     value={tenantInfo.taxId}
                     onChange={(e) => handleTenantFieldChange('taxId', e.target.value)}
@@ -198,7 +198,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
 
               {/* Custom Fields */}
               {tenantInfo.customFields.map((field, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4 pt-2 border-t border-emerald-200">
+                <div key={index} className="grid grid-cols-2 gap-4 pt-2 border-t border-orange-200">
                   <Input
                     value={field.label}
                     onChange={(e) => handleTenantCustomFieldChange(index, 'label', e.target.value)}
@@ -227,7 +227,7 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
               <Button
                 onClick={addTenantCustomField}
                 variant="outline"
-                className="w-full text-emerald-600 hover:bg-emerald-50 mt-2"
+                className="w-full text-orange-600 hover:bg-orange-50 mt-2"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Field
@@ -239,38 +239,38 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                 <div className="flex items-start gap-3">
                   <div className="w-4 h-4 flex-shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-emerald-700 font-semibold">Name</p>
-                    <p className="text-sm font-medium text-emerald-900">{tenantInfo.name}</p>
+                    <p className="text-xs text-orange-700 font-semibold">Name</p>
+                    <p className="text-sm font-medium text-orange-900">{tenantInfo.name}</p>
                   </div>
                 </div>
               )}
 
               {tenantInfo.email && (
                 <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <Mail className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-emerald-700 font-semibold">Email</p>
-                    <p className="text-sm font-medium text-emerald-900 break-all">{tenantInfo.email}</p>
+                    <p className="text-xs text-orange-700 font-semibold">Email</p>
+                    <p className="text-sm font-medium text-orange-900 break-all">{tenantInfo.email}</p>
                   </div>
                 </div>
               )}
 
               {tenantInfo.phone && (
                 <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <Phone className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-emerald-700 font-semibold">Phone</p>
-                    <p className="text-sm font-medium text-emerald-900">{tenantInfo.phone}</p>
+                    <p className="text-xs text-orange-700 font-semibold">Phone</p>
+                    <p className="text-sm font-medium text-orange-900">{tenantInfo.phone}</p>
                   </div>
                 </div>
               )}
 
               {tenantInfo.address && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <MapPin className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-emerald-700 font-semibold">Address</p>
-                    <p className="text-sm font-medium text-emerald-900">
+                    <p className="text-xs text-orange-700 font-semibold">Address</p>
+                    <p className="text-sm font-medium text-orange-900">
                       {tenantInfo.address}
                       {tenantInfo.postalCode && `, ${tenantInfo.postalCode}`}
                       {tenantInfo.city && ` ${tenantInfo.city}`}
@@ -280,22 +280,22 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
               )}
 
               {tenantInfo.dniNie && (
-                <div className="bg-white border border-emerald-300 rounded-lg p-3">
+                <div className="bg-white border border-orange-300 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">ID Number</p>
+                    <FileText className="w-4 h-4 text-orange-600" />
+                    <p className="text-xs font-semibold text-orange-700 uppercase tracking-wide">ID Number</p>
                   </div>
-                  <p className="text-sm font-bold text-emerald-900 font-mono">{tenantInfo.dniNie}</p>
+                  <p className="text-sm font-bold text-orange-900 font-mono">{tenantInfo.dniNie}</p>
                 </div>
               )}
 
               {tenantInfo.taxId && (
-                <div className="bg-white border border-emerald-300 rounded-lg p-3">
+                <div className="bg-white border border-orange-300 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Tax ID</p>
+                    <FileText className="w-4 h-4 text-orange-600" />
+                    <p className="text-xs font-semibold text-orange-700 uppercase tracking-wide">Tax ID</p>
                   </div>
-                  <p className="text-sm font-bold text-emerald-900 font-mono">{tenantInfo.taxId}</p>
+                  <p className="text-sm font-bold text-orange-900 font-mono">{tenantInfo.taxId}</p>
                 </div>
               )}
 
@@ -304,8 +304,8 @@ export default function ContractPartyDetails({ tenant, property, idealista_id })
                   <div key={index} className="flex items-start gap-3">
                     <div className="w-4 h-4 flex-shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs text-emerald-700 font-semibold">{field.label}</p>
-                      <p className="text-sm font-medium text-emerald-900">{field.value}</p>
+                      <p className="text-xs text-orange-700 font-semibold">{field.label}</p>
+                      <p className="text-sm font-medium text-orange-900">{field.value}</p>
                     </div>
                   </div>
                 )
