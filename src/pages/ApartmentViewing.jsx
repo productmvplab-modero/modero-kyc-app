@@ -7,12 +7,20 @@ import { Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-r
 import { format, addDays, startOfToday, getDay, isAfter, addHours } from 'date-fns';
 import Header from '@/components/modero/Header';
 
+const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
+
 export default function ApartmentViewing() {
   const queryClient = useQueryClient();
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [inquiryId, setInquiryId] = useState(null);
   const [tenantData, setTenantData] = useState(null);
+  const [adminMode, setAdminMode] = useState(false);
+  const [adminInquiryId, setAdminInquiryId] = useState(null);
+  const [adminPropertyId, setAdminPropertyId] = useState(null);
+  const [adminSelectedDate, setAdminSelectedDate] = useState(null);
+  const [adminSelectedTime, setAdminSelectedTime] = useState(null);
+  const [step, setStep] = useState('select'); // 'select', 'confirm', 'success'
 
   // Get inquiry ID from URL
   React.useEffect(() => {
