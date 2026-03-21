@@ -52,6 +52,10 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <Link to="/Analytics" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
+            <BarChart3 className="w-4 h-4" />
+            Analytics
+          </Link>
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-fit sm:w-[140px] border-slate-200 gap-2">
