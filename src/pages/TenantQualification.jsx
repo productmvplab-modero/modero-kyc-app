@@ -9,42 +9,41 @@ import Step7CreditCheck from '@/components/qualification/Step7CreditCheck';
 import Step8Complete from '@/components/qualification/Step8Complete';
 import QualificationHeader from '@/components/qualification/QualificationHeader';
 import QualificationProgress from '@/components/qualification/QualificationProgress';
+import LanguageSelect from '@/components/qualification/LanguageSelect';
+import { qLangs } from '@/components/qualification/QualificationLang';
 import { base44 } from '@/api/base44Client';
 
 const TOTAL_STEPS = 8;
 
 export default function TenantQualification() {
+  const [lang, setLang] = useState(null); // null = language selection screen
   const [step, setStep] = useState(1);
   const [inquiryId, setInquiryId] = useState(null);
   const [formData, setFormData] = useState({
-    // Step 1
     first_name: '', last_name: '', tenant_email: '', tenant_phone: '',
     mobile_verified: false, linkedin_connected: false, xing_connected: false, facebook_connected: false,
-    // Step 2
     address: '', postal_code: '', city: '', country: 'Spain',
     gender: '', nationality: '', place_of_birth: '', dni_nie_number: '', age: '',
     profile_picture_url: '',
-    // Step 3
     employment_status: '', company_name: '', number_of_occupants: 1, has_pets: false, pet_details: '',
-    // Step 4
     documents: { cv_url: '', payslip_url: '', work_contract_url: '', id_document_url: '' },
-    // Step 5
     id_verification_status: 'pending', email_verified: false, business_email_verified: false, gdpr_verified: false,
-    // Step 6
     monthly_income: '', bank_account_connected: false, bank_verification_status: 'pending',
-    // Step 7
     credit_check_status: 'pending', financing_options: [],
-    // Meta
     property_id: '', idealista_id: '',
   });
 
-  // Read property/inquiry params from URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const pid = params.get('property_id') || '';
     const iid = params.get('idealista_id') || '';
     setFormData(prev => ({ ...prev, property_id: pid, idealista_id: iid }));
   }, []);
+
+  const t = (key) => {
+    if (!lang) return qLangs.en[key] ?? key;
+    return qLangs[lang]?.[key] ?? qLangs.en[key] ?? key;
+  };
 
   const updateForm = (data) => setFormData(prev => ({ ...prev, ...data }));
 
@@ -75,14 +74,19 @@ export default function TenantQualification() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const stepProps = { formData, updateForm, onNext: next, onBack: back, inquiryId };
+  // Language selection screen
+  if (!lang) {
+    return <LanguageSelect onSelect={setLang} />;
+  }
+
+  const stepProps = { formData, updateForm, onNext: next, onBack: back, inquiryId, t };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
       <QualificationHeader />
       <div className="max-w-2xl mx-auto px-4 py-8">
         {step < TOTAL_STEPS && (
-          <QualificationProgress currentStep={step} totalSteps={TOTAL_STEPS} />
+          <QualificationProgress currentStep={step} totalSteps={TOTAL_STEPS} t={t} />
         )}
         <div className="mt-6">
           {step === 1 && <Step1Profile {...stepProps} />}
