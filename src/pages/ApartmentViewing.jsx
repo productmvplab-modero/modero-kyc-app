@@ -73,6 +73,65 @@ export default function ApartmentViewing() {
 
   const timeSlots = bookingRules?.available_time_slots || [];
 
+  // Fetch all inquiries for admin mode
+  const { data: adminInquiries = [] } = useQuery({
+    queryKey: ['adminInquiries'],
+    queryFn: () => base44.entities.Inquiry.list(),
+    enabled: adminMode,
+  });
+
+  // Fetch selected inquiry details in admin mode
+  const { data: adminInquiryData = {} } = useQuery({
+    queryKey: ['adminInquiryData', adminInquiryId],
+    queryFn: () => adminInquiryId ? base44.entities.Inquiry.get(adminInquiryId) : null,
+    enabled: !!adminInquiryId,
+  });
+
+  // Fetch selected property details in admin mode
+  const { data: adminPropertyData = {} } = useQuery({
+    queryKey: ['adminPropertyData', adminPropertyId],
+    queryFn: () => adminPropertyId ? base44.entities.Property.get(adminPropertyId) : null,
+    enabled: !!adminPropertyId,
+  });
+
+  // Get booking rules for admin property
+  const { data: adminBookingRules } = useQuery({
+    queryKey: ['adminBookingRules', adminPropertyId],
+    queryFn: () => adminPropertyId ? 
+      base44.entities.BookingRules.filter({ property_id: adminPropertyId }).then(r => r[0]) : null,
+    enabled: !!adminPropertyId,
+  });
+
+  // Generate available dates for admin
+  const adminAvailableDates = useMemo(() => {
+    const dates = [];
+    const today = startOfToday();
+    const windowDays = adminBookingRules?.booking_window_days || 30;
+    const availableWeekdays = adminBookingRules?.available_weekdays || [1, 2, 3, 4, 5];
+
+    for (let i = 0; i < windowDays; i++) {
+      const date = addDays(today, i);
+      const dayOfWeek = getDay(date);
+      if (availableWeekdays.includes(dayOfWeek)) {
+        dates.push(date);
+      }
+    }
+    return dates;
+  }, [adminBookingRules]);
+
+  // Fetch existing bookings for admin to show booked slots
+  const { data: adminBookings = [] } = useQuery({
+    queryKey: ['adminBookings', adminPropertyId],
+    queryFn: () => adminPropertyId ? 
+      base44.entities.ViewingBooking.filter({ property_id: adminPropertyId }) : [],
+    enabled: !!adminPropertyId,
+  });
+
+  const adminBookedDates = adminBookings.map(b => b.viewing_date);
+  const adminBookedTimes = adminBookings
+    .filter(b => adminSelectedDate && b.viewing_date === format(adminSelectedDate, 'yyyy-MM-dd'))
+    .map(b => b.viewing_time);
+
   // Create booking mutation (tenant mode)
   const bookingMutation = useMutation({
     mutationFn: async () => {
