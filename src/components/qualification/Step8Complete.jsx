@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
-import { CheckCircle2, Star, Clock, Mail } from 'lucide-react';
+import { CheckCircle2, Star, Clock, Mail, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 
-export default function Step8Complete({ formData, t }) {
+export default function Step8Complete({ formData, t, inquiryId }) {
+  const navigate = useNavigate();
+  
   useEffect(() => {
     confetti({
       particleCount: 120,
@@ -11,6 +14,10 @@ export default function Step8Complete({ formData, t }) {
       colors: ['#f97316', '#fb923c', '#fdba74', '#fcd34d'],
     });
   }, []);
+
+  const handleBookViewing = () => {
+    navigate(`/ApartmentViewing?inquiry_id=${inquiryId}`);
+  };
 
   const score = formData.credit_score || formData.modero_score || 75;
   const name = formData.first_name || 'Applicant';
@@ -74,6 +81,16 @@ export default function Step8Complete({ formData, t }) {
             <p className="text-xs text-slate-500">{t('s8_email_desc')} <strong>{formData.tenant_email}</strong></p>
           </div>
         </div>
+      </div>
+
+      <div className="mt-8 pt-6 border-t border-slate-200">
+        <button
+          onClick={handleBookViewing}
+          className="w-full h-12 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 transition-all"
+        >
+          <Calendar className="w-5 h-5" />
+          Schedule Apartment Viewing
+        </button>
       </div>
 
       <p className="text-xs text-slate-400 mt-6">{t('s8_footer')}</p>

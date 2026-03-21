@@ -8,6 +8,7 @@ import TenantQualification from './pages/TenantQualification'
 import MyAccount from './pages/MyAccount'
 import Analytics from './pages/Analytics'
 import ViewingBooking from './pages/ViewingBooking'
+import ApartmentViewing from './pages/ApartmentViewing'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -69,6 +70,7 @@ const AuthenticatedApp = () => {
       <Route path="/Analytics" element={<LayoutWrapper currentPageName="Analytics"><Analytics /></LayoutWrapper>} />
       <Route path="/TenantQualification" element={<TenantQualification />} />
       <Route path="/ViewingBooking" element={<LayoutWrapper currentPageName="ViewingBooking"><ViewingBooking /></LayoutWrapper>} />
+      <Route path="/ApartmentViewing" element={<LayoutWrapper currentPageName="ApartmentViewing"><ApartmentViewing /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
