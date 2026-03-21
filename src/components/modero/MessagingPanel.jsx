@@ -123,10 +123,14 @@ export default function MessagingPanel({ inquiry }) {
       toast.error('Please fill in subject and message');
       return;
     }
+    if (!toEmail.trim()) {
+      toast.error('Please enter a recipient email');
+      return;
+    }
     sendMutation.mutate({
       inquiry_id: inquiry.id,
       tenant_name: inquiry.tenant_name,
-      tenant_email: inquiry.tenant_email,
+      tenant_email: toEmail.trim(),
       subject,
       body,
       type: selectedType,
