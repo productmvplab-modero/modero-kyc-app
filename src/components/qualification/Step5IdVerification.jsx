@@ -90,7 +90,7 @@ export default function Step5IdVerification({ formData, updateForm, onNext, onBa
         title={t('s5_email_title')} desc={t('s5_email_desc')}
         status={formData.email_verified ? 'done' : 'pending'}
         onAction={() => simulate('email_verified')}
-        actionLabel={simulating === 'email_verified' ? t('s5_sending') : t('s5_send_code')}
+        actionLabel={simulating === 'email_verified' ? 'Sending...' : 'Verify for Sent'}
         verifiedLabel={t('s5_verified')}
       >
         {!formData.email_verified && (
