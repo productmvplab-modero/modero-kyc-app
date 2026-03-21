@@ -8,7 +8,15 @@ import { ChevronDown, MessageSquare, Send, FileText, CheckCircle2, AlertCircle, 
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
-const QUALIFICATION_URL = 'https://tenantqualification.base44.app';
+const QUALIFICATION_BASE_URL = 'https://tenantqualification.base44.app';
+
+const getQualificationUrl = (inquiry) => {
+  const params = new URLSearchParams();
+  if (inquiry?.idealista_id) params.set('idealista_id', inquiry.idealista_id);
+  else if (inquiry?.property_id) params.set('property_id', inquiry.property_id);
+  const qs = params.toString();
+  return qs ? `${QUALIFICATION_BASE_URL}?${qs}` : QUALIFICATION_BASE_URL;
+};
 
 const TEMPLATES = [
   {
@@ -17,7 +25,7 @@ const TEMPLATES = [
     icon: FileText,
     color: 'bg-amber-100 text-amber-700',
     subject: 'Action Required: Start Your Qualification Process',
-    body: (name) => `Dear ${name},\n\nThank you for your interest in renting with us. To proceed with your application, please complete the qualification process by clicking the link below:\n\n${QUALIFICATION_URL}\n\nThis process takes only a few minutes and will allow us to verify your profile and move forward with your rental application.\n\nBest regards,\nModero KYC Team`,
+    body: (name, inquiry) => `Dear ${name},\n\nThank you for your interest in renting with us. To proceed with your application, please complete the qualification process by clicking the link below:\n\n${getQualificationUrl(inquiry)}\n\nThis process takes only a few minutes and will allow us to verify your profile and move forward with your rental application.\n\nBest regards,\nModero KYC Team`,
   },
   {
     id: 'status_update',
