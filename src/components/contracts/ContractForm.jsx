@@ -68,7 +68,7 @@ TERMS AND CONDITIONS:
 
 Both parties agree to the terms and conditions above.`;
 
-export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading }) {
+export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading, properties = [] }) {
   const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState('');
   const [formData, setFormData] = useState({
@@ -77,6 +77,21 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading 
     deposit_amount: '',
     contract_content: DEFAULT_CONTRACT_TEMPLATE,
   });
+
+  const selectedTenant = inquiries.find(i => i.id === selectedInquiry);
+  const selectedProperty = selectedTenant ? properties.find(p => p.id === selectedTenant.property_id) : null;
+
+  const handleInquiryChange = (inquiryId) => {
+    setSelectedInquiry(inquiryId);
+    
+    // Auto-fill with default template for now
+    if (inquiryId) {
+      setFormData(prev => ({
+        ...prev,
+        contract_content: DEFAULT_CONTRACT_TEMPLATE,
+      }));
+    }
+  };
 
   const handleSubmit = () => {
     if (!selectedInquiry || !formData.lease_start_date) {
