@@ -217,7 +217,7 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
                     disabled={smsCode.length !== 6 || verifyingCode}
                     className="flex-1 h-11 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-1"
                   >
-                    {verifyingCode ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Confirm Code'}
+                    {verifyingCode ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <><Shield className="w-4 h-4" /> Verify</>}
                   </button>
                 </div>
                 <button
