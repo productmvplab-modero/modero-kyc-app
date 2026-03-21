@@ -84,7 +84,15 @@ export default function MessagingPanel({ inquiry }) {
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [selectedType, setSelectedType] = useState('custom');
+  const [toEmail, setToEmail] = useState('');
+  const [editingEmail, setEditingEmail] = useState(false);
   const queryClient = useQueryClient();
+
+  // Sync toEmail when inquiry changes
+  React.useEffect(() => {
+    setToEmail(inquiry?.tenant_email || '');
+    setEditingEmail(false);
+  }, [inquiry?.id]);
 
   const { data: messages = [] } = useQuery({
     queryKey: ['messages', inquiry?.id],
