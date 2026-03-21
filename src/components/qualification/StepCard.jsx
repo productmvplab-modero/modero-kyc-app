@@ -2,8 +2,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 
-export default function StepCard({ icon, title, subtitle, children, onNext, onBack, nextLabel = 'Continue', nextDisabled = false, loading = false, hideBack = false }) {
+export default function StepCard({ icon, title, subtitle, children, onNext, onBack, nextLabel, nextDisabled = false, loading = false, hideBack = false, t }) {
   const Icon = icon;
+  const backLabel = t ? t('s2_back') : 'Back';
+  const continueLabel = nextLabel || (t ? t('s2_next') : 'Continue');
+
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
       <div className="mb-6 text-center">
@@ -21,7 +24,7 @@ export default function StepCard({ icon, title, subtitle, children, onNext, onBa
       <div className={`flex gap-3 mt-8 ${hideBack ? '' : 'justify-between'}`}>
         {!hideBack && (
           <Button variant="outline" onClick={onBack} className="flex items-center gap-2 border-slate-200">
-            <ArrowLeft className="w-4 h-4" /> Back
+            <ArrowLeft className="w-4 h-4" /> {backLabel}
           </Button>
         )}
         <Button
@@ -32,7 +35,7 @@ export default function StepCard({ icon, title, subtitle, children, onNext, onBa
           {loading ? (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
-            <>{nextLabel} <ArrowRight className="w-4 h-4" /></>
+            <>{continueLabel} <ArrowRight className="w-4 h-4" /></>
           )}
         </Button>
       </div>
