@@ -30,8 +30,24 @@ export default function Step7CreditCheck({ formData, updateForm, onNext, onBack,
   const scoreLabel = creditScore >= 80 ? t('s7_excellent') : creditScore >= 65 ? t('s7_good') : t('s7_needs');
 
   const financingOptions = [
-    { key: 'klarna', label: 'Klarna', icon: '🟢', color: 'border-green-300 bg-green-50', desc1: 'Buy now, pay later', desc2: 'Flexible instalments' },
-    { key: 'santander', label: 'Santander', icon: '🔴', color: 'border-red-200 bg-red-50', desc1: 'Personal financing', desc2: 'Competitive rates' },
+    { 
+      key: 'klarna', 
+      label: 'Klarna', 
+      bgColor: 'bg-gradient-to-br from-green-400 to-green-500',
+      borderColor: 'border-green-300',
+      bgLight: 'bg-green-50',
+      desc1: 'Buy now, pay later', 
+      desc2: 'Flexible instalments' 
+    },
+    { 
+      key: 'santander', 
+      label: 'Santander', 
+      bgColor: 'bg-gradient-to-br from-red-500 to-red-600',
+      borderColor: 'border-red-300',
+      bgLight: 'bg-red-50',
+      desc1: 'Personal financing', 
+      desc2: 'Competitive rates' 
+    },
   ];
 
   return (
