@@ -3,74 +3,10 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { FileText, Send, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { FileText, AlertCircle } from 'lucide-react';
 import Header from '@/components/modero/Header';
-import { format } from 'date-fns';
-
-const DEFAULT_CONTRACT_TEMPLATE = `RENTAL AGREEMENT
-
-This Rental Agreement ("Contract") is entered into between:
-
-LANDLORD:
-Name: [LANDLORD_NAME]
-Address: [LANDLORD_ADDRESS]
-Email: [LANDLORD_EMAIL]
-
-TENANT:
-Name: [TENANT_NAME]
-Email: [TENANT_EMAIL]
-
-PROPERTY:
-Address: [PROPERTY_ADDRESS]
-Description: Residential apartment
-
-TERMS AND CONDITIONS:
-
-1. LEASE PERIOD
-   Start Date: [LEASE_START]
-   End Date: [LEASE_END]
-
-2. RENT PAYMENT
-   Monthly Rent: €[MONTHLY_RENT]
-   Payment Due: 1st of each month
-   Payment Method: Bank transfer
-
-3. SECURITY DEPOSIT
-   Amount: €[DEPOSIT_AMOUNT]
-   Refundable upon lease termination
-
-4. UTILITIES & SERVICES
-   Tenant responsible for: Water, gas, electricity, internet
-   Landlord responsible for: Property maintenance, insurance
-
-5. HOUSE RULES
-   - Quiet hours: 10 PM to 8 AM
-   - No smoking inside the property
-   - No unauthorized pets
-   - No illegal activities
-   - No subletting without written consent
-
-6. MAINTENANCE & REPAIRS
-   Tenant shall report any damages immediately.
-   Landlord will repair structural issues within 15 days.
-
-7. TERMINATION
-   Either party may terminate with 30 days written notice.
-
-8. LIABILITY
-   Tenant is responsible for personal property insurance.
-   Landlord maintains building insurance.
-
-9. DISPUTE RESOLUTION
-   Disputes shall be resolved through mediation.
-
-10. GOVERNING LAW
-    This contract is governed by Spanish law.
-
-Both parties agree to the terms and conditions above.`;
+import ContractForm from '@/components/contracts/ContractForm';
+import ContractCard from '@/components/contracts/ContractCard';
 
 export default function ContractManager() {
   const { t } = useLanguage();
