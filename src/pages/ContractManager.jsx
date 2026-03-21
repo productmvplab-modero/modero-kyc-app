@@ -208,16 +208,16 @@ export default function ContractManager() {
 
           {/* Contract Preview Modal */}
           {showPreview && viewingContract && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-slate-200 flex items-center justify-between p-4">
-                  <h2 className="text-xl font-semibold text-slate-800">Contract Preview</h2>
-                  <button onClick={() => setShowPreview(false)} className="text-slate-400 hover:text-slate-600">
+            <div className="fixed inset-0 bg-black/60 flex items-end justify-center z-50 p-4">
+              <div className="bg-white rounded-t-2xl w-full max-h-[95vh] overflow-y-auto shadow-2xl">
+                <div className="sticky top-0 bg-white border-b border-slate-200 flex items-center justify-between p-6 rounded-t-2xl">
+                  <h2 className="text-2xl font-bold text-slate-900">Contract Preview</h2>
+                  <button onClick={() => setShowPreview(false)} className="text-slate-400 hover:text-slate-600 p-1 hover:bg-slate-100 rounded">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
-                <div className="p-8">
-                  <div className="bg-white border border-slate-200 rounded-lg p-8 whitespace-pre-wrap font-normal text-sm leading-relaxed text-slate-800 max-h-[70vh] overflow-y-auto">
+                <div className="p-8 bg-slate-50">
+                  <div className="bg-white border-2 border-slate-300 rounded-xl p-12 whitespace-pre-wrap font-normal text-base leading-relaxed text-slate-800 shadow-lg">
                     {viewingContract.contract_content}
                   </div>
                 </div>
