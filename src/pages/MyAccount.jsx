@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { User, Settings } from 'lucide-react';
+import { User, Settings, Calendar } from 'lucide-react';
 import Header from '@/components/modero/Header';
 import ProfileEditor from '@/components/modero/ProfileEditor';
 import KycRulesSettings from '@/components/modero/KycRulesSettings';
+import BookingRulesManager from '@/components/modero/BookingRulesManager';
 
 const tabs = [
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'kyc', label: 'KYC Rules', icon: Settings },
+  { id: 'booking', label: 'Booking Rules', icon: Calendar },
 ];
 
 export default function MyAccount() {
