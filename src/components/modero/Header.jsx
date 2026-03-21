@@ -53,44 +53,45 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          {/* Pages Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:text-orange-500 hover:border-orange-300 transition-colors bg-slate-50 hover:bg-slate-100">
-                Pages
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48">
-              <DropdownMenuItem asChild>
-                <Link to="/">Dashboard</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/MyAccount">My Account</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/Analytics">Analytics</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/ViewingBooking">Viewing Booking</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/ApartmentViewing">Apartment Viewing</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/ContractManager">Contract Manager</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to="/TenantQualification">Tenant Qualification</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          {isAuthenticated && <NotificationsBell />}
-          {/* Language Selector */}
-          <Select value={language} onValueChange={setLanguage}>
+           {isAuthenticated && <NotificationsBell />}
+           {/* Pages Dropdown */}
+           <DropdownMenu>
+             <DropdownMenuTrigger asChild>
+               <button className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:text-orange-500 hover:border-orange-300 transition-colors bg-slate-50 hover:bg-slate-100 w-[140px]">
+                 <LayoutGrid className="w-4 h-4" />
+                 Pages
+                 <ChevronDown className="w-4 h-4 ml-auto" />
+               </button>
+             </DropdownMenuTrigger>
+             <DropdownMenuContent align="start" className="w-48">
+               <DropdownMenuItem asChild>
+                 <Link to="/">Dashboard</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/MyAccount">My Account</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/Analytics">Analytics</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/ViewingBooking">Viewing Booking</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/ApartmentViewing">Apartment Viewing</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/ContractManager">Contract Manager</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
+               </DropdownMenuItem>
+               <DropdownMenuItem asChild>
+                 <Link to="/TenantQualification">Tenant Qualification</Link>
+               </DropdownMenuItem>
+             </DropdownMenuContent>
+           </DropdownMenu>
+           {/* Language Selector */}
+           <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-fit sm:w-[140px] border-slate-200 gap-2">
               <Globe className="w-4 h-4 shrink-0" />
               <span className="hidden sm:inline text-sm">
