@@ -8,14 +8,16 @@ import { ChevronDown, MessageSquare, Send, FileText, CheckCircle2, AlertCircle, 
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 
+const QUALIFICATION_URL = 'https://app.base44.com/modero-kyc/PropertyOwnerSignup';
+
 const TEMPLATES = [
   {
     id: 'document_request',
-    label: 'Request Missing Docs',
+    label: 'Start Qualification Process',
     icon: FileText,
     color: 'bg-amber-100 text-amber-700',
-    subject: 'Action Required: Missing Documents for Your Application',
-    body: (name) => `Dear ${name},\n\nThank you for your interest. To continue processing your application, we need the following documents:\n\n• Proof of income (payslips or bank statements)\n• Valid ID document (passport or DNI/NIE)\n• Work contract or employment letter\n\nPlease upload them at your earliest convenience through the tenant portal.\n\nBest regards,\nModero KYC Team`,
+    subject: 'Action Required: Start Your Qualification Process',
+    body: (name) => `Dear ${name},\n\nThank you for your interest in renting with us. To proceed with your application, please complete the qualification process by clicking the link below:\n\n${QUALIFICATION_URL}\n\nThis process takes only a few minutes and will allow us to verify your profile and move forward with your rental application.\n\nBest regards,\nModero KYC Team`,
   },
   {
     id: 'status_update',
