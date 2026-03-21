@@ -24,8 +24,25 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
   const [verifying, setVerifying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSocialConnect = (platform) => {
-    updateForm({ [`${platform}_connected`]: true });
+  const handleSocialConnect = async (platform) => {
+    if (platform === 'linkedin') {
+      setLoading(true);
+      try {
+        // LinkedIn data fetch (simulated - in production this would call a backend function)
+        const linkedinData = {
+          first_name: 'John',
+          last_name: 'Doe',
+          tenant_email: 'john.doe@example.com',
+        };
+        updateForm({ ...linkedinData, linkedin_connected: true });
+      } catch (error) {
+        console.error('LinkedIn connection failed:', error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      updateForm({ [`${platform}_connected`]: true });
+    }
   };
 
   const handleVerifyPhone = () => {
