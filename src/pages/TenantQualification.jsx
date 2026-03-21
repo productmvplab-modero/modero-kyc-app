@@ -38,7 +38,8 @@ export default function TenantQualification() {
     const params = new URLSearchParams(window.location.search);
     const pid = params.get('property_id') || '';
     const iid = params.get('idealista_id') || '';
-    setFormData(prev => ({ ...prev, property_id: pid, idealista_id: iid }));
+    const token = params.get('token') || '';
+    setFormData(prev => ({ ...prev, property_id: pid, idealista_id: iid, qualification_token: token }));
   }, []);
 
   const t = (key) => {
@@ -56,6 +57,10 @@ export default function TenantQualification() {
       status: 'screening',
       progress_step: step,
     };
+    // Don't override qualification_token if it exists
+    if (!payload.qualification_token) {
+      delete payload.qualification_token;
+    }
     if (inquiryId) {
       await base44.entities.Inquiry.update(inquiryId, payload);
     } else {
