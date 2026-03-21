@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Users, ShieldAlert, CheckCircle2, XCircle, AlertTriangle, BarChart3, PieChartIcon, Activity } from "lucide-react";
+import { TrendingUp, Users, ShieldAlert, CheckCircle2, XCircle, AlertTriangle, BarChart3, PieChart as PieChartIcon, Activity } from "lucide-react";
 import Header from "../components/modero/Header";
 import { format, subMonths, startOfMonth, endOfMonth, isWithinInterval, parseISO } from 'date-fns';
 
