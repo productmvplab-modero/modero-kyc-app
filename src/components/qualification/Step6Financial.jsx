@@ -11,14 +11,21 @@ export default function Step6Financial({ formData, updateForm, onNext, onBack, t
   const [selectedBank, setSelectedBank] = useState(null);
 
   const income = parseFloat(formData.monthly_income) || 0;
+  const salaryDay = formData.salary_day_of_month || 1;
   const canContinue = income > 0;
 
-  const handleBankConnect = () => {
-    setConnectingBank(true);
-    setTimeout(() => {
-      updateForm({ bank_account_connected: true, bank_verification_status: 'verified' });
-      setConnectingBank(false);
-    }, 2000);
+  const handleBankSelect = (bank) => {
+    setSelectedBank(bank);
+    setShowBankSelect(false);
+  };
+
+  const handleBankSuccess = (bank) => {
+    updateForm({
+      bank_account_connected: true,
+      bank_verification_status: 'verified',
+      connected_bank: bank.name
+    });
+    setSelectedBank(null);
   };
 
   return (
