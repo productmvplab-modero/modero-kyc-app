@@ -22,6 +22,9 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
   const [countryCode, setCountryCode] = useState(COUNTRY_CODES[0]);
   const [showCountryList, setShowCountryList] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
+  const [smsCode, setSmsCode] = useState('');
+  const [verifyingCode, setVerifyingCode] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSocialConnect = async (platform) => {
@@ -45,11 +48,29 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
     }
   };
 
-  const handleVerifyPhone = () => {
+  const handleSendCode = () => {
     if (!phoneInput) return;
     setVerifying(true);
     setTimeout(() => {
+      setCodeSent(true);
+      setVerifying(false);
+    }, 1200);
+  };
+
+  const handleVerifyCode = () => {
+    if (!smsCode || smsCode.length !== 6) return;
+    setVerifyingCode(true);
+    setTimeout(() => {
       updateForm({ tenant_phone: `${countryCode.code}${phoneInput}`, mobile_verified: true });
+      setVerifyingCode(false);
+      setCodeSent(false);
+      setSmsCode('');
+    }, 1200);
+  };
+
+  const handleResendCode = () => {
+    setVerifying(true);
+    setTimeout(() => {
       setVerifying(false);
     }, 1200);
   };
@@ -125,12 +146,14 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
 
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-2">{t('s1_mobile')}</label>
-          <div className="space-y-2">
+          <div className="space-y-4">
+            {/* Country Code Selector */}
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setShowCountryList(p => !p)}
-                className="w-full h-11 flex items-center justify-between px-4 border border-slate-200 rounded-md bg-white text-sm hover:bg-slate-50 transition-colors"
+                disabled={codeSent || formData.mobile_verified}
+                className="w-full h-11 flex items-center justify-between px-4 border border-slate-200 rounded-md bg-white text-sm hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span className="flex items-center gap-2">
                   <span className="text-lg">{countryCode.flag}</span>
@@ -155,25 +178,65 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
               )}
             </div>
 
-            <div className="flex gap-2">
-              <Input
-                type="tel"
-                placeholder="612 345 678"
-                value={phoneInput}
-                onChange={e => setPhoneInput(e.target.value)}
-                disabled={formData.mobile_verified}
-                className="flex-1"
-              />
-              <button
-                type="button"
-                onClick={handleVerifyPhone}
-                disabled={!phoneInput || formData.mobile_verified || verifying}
-                className={`flex-1 h-9 rounded-md text-sm font-medium transition-all flex items-center justify-center gap-1 ${formData.mobile_verified ? 'bg-green-100 text-green-700' : 'bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white disabled:opacity-50'}`}
-              >
-                {verifying ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> :
-                  formData.mobile_verified ? <><CheckCircle2 className="w-3.5 h-3.5 mr-1" />{t('s1_verified')}</> : t('s1_verify')}
-              </button>
-            </div>
+            {!codeSent && !formData.mobile_verified && (
+              <>
+                <div className="flex gap-2">
+                  <Input
+                    type="tel"
+                    placeholder="612 345 678"
+                    value={phoneInput}
+                    onChange={e => setPhoneInput(e.target.value)}
+                    className="flex-1 h-11"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSendCode}
+                    disabled={!phoneInput || verifying}
+                    className="flex-1 h-11 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-1"
+                  >
+                    {verifying ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <>Sent ✓</>}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {codeSent && !formData.mobile_verified && (
+              <>
+                <p className="text-slate-500 text-sm">Enter the 6-digit code sent to {countryCode.code}{phoneInput}</p>
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder="123456"
+                    value={smsCode}
+                    onChange={e => setSmsCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    maxLength="6"
+                    className="flex-1 h-11 text-center text-2xl tracking-widest font-semibold"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleVerifyCode}
+                    disabled={smsCode.length !== 6 || verifyingCode}
+                    className="flex-1 h-11 rounded-md bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white font-semibold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-1"
+                  >
+                    {verifyingCode ? <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'Confirm Code'}
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResendCode}
+                  className="text-orange-600 hover:text-orange-700 text-sm font-medium"
+                >
+                  Resend code
+                </button>
+              </>
+            )}
+
+            {formData.mobile_verified && (
+              <div className="h-11 rounded-md bg-green-100 border border-green-300 flex items-center px-4">
+                <CheckCircle2 className="w-5 h-5 text-green-600 mr-2" />
+                <span className="text-green-700 font-medium text-sm">{countryCode.code}{phoneInput} verified</span>
+              </div>
+            )}
           </div>
         </div>
 
