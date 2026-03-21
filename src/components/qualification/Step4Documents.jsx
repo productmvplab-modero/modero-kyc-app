@@ -67,7 +67,7 @@ export default function Step4Documents({ formData, updateForm, onNext, onBack, t
       subtitle={t('s4_subtitle')}
       onNext={async () => { setLoading(true); await onNext(); setLoading(false); }}
       onBack={onBack}
-      nextDisabled={!allRequired}
+      nextDisabled={false}
       loading={loading}
       t={t}
     >
