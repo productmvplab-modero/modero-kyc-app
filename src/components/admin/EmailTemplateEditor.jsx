@@ -228,7 +228,7 @@ export default function EmailTemplateEditor({ template, onSave, onCancel, isSavi
                     title={v.description}
                     className="font-mono text-sm text-orange-600 hover:text-orange-700 font-semibold cursor-pointer"
                   >
-                    {{{v.name}}}
+                    {`{{${v.name}}}`}
                   </button>
                   <button
                     onClick={() => handleRemoveVariable(idx)}
