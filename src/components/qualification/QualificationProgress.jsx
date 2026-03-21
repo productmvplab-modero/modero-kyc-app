@@ -1,18 +1,15 @@
 import React from 'react';
 
-const STEP_LABELS = [
-  'Profile', 'Personal', 'Employment', 'Documents',
-  'Verification', 'Financial', 'Credit', 'Complete'
-];
-
-export default function QualificationProgress({ currentStep, totalSteps }) {
+export default function QualificationProgress({ currentStep, totalSteps, t }) {
   const pct = Math.round(((currentStep - 1) / (totalSteps - 1)) * 100);
+  const stepKeys = ['step_profile','step_personal','step_employment','step_documents','step_verification','step_financial','step_credit','step_complete'];
+  const label = t(stepKeys[currentStep - 1]) || stepKeys[currentStep - 1];
 
   return (
     <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-4">
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm font-semibold text-slate-700">
-          Step {currentStep} of {totalSteps - 1}: {STEP_LABELS[currentStep - 1]}
+          {t('step_of')} {currentStep} {t('of')} {totalSteps - 1}: {label}
         </span>
         <span className="text-sm font-bold text-orange-500">{pct}%</span>
       </div>
@@ -23,10 +20,10 @@ export default function QualificationProgress({ currentStep, totalSteps }) {
         />
       </div>
       <div className="flex justify-between mt-3 overflow-x-auto gap-1">
-        {STEP_LABELS.slice(0, totalSteps - 1).map((label, i) => (
+        {stepKeys.slice(0, totalSteps - 1).map((key, i) => (
           <div key={i} className="flex flex-col items-center flex-shrink-0">
             <div className={`h-2 w-2 rounded-full ${i + 1 < currentStep ? 'bg-orange-500' : i + 1 === currentStep ? 'bg-orange-400 ring-2 ring-orange-200' : 'bg-slate-200'}`} />
-            <span className={`text-[9px] mt-1 font-medium hidden sm:block ${i + 1 <= currentStep ? 'text-orange-500' : 'text-slate-300'}`}>{label}</span>
+            <span className={`text-[9px] mt-1 font-medium hidden sm:block ${i + 1 <= currentStep ? 'text-orange-500' : 'text-slate-300'}`}>{t(key)}</span>
           </div>
         ))}
       </div>
