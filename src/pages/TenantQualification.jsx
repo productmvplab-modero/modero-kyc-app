@@ -82,11 +82,12 @@ export default function TenantQualification() {
 
   // Welcome screen
   if (!welcomed) {
+    const idealista = formData.idealista_id || 'N/A';
     const welcomeText = {
-      en: { title: 'Welcome! Begin your application process', subtitle: 'You are just 8 steps away from qualifying for your apartment.', btn: 'Get Started' },
-      es: { title: '¡Bienvenido! Comienza tu proceso de solicitud', subtitle: 'Estás a solo 8 pasos de calificarte para tu apartamento.', btn: 'Empezar' },
-      pt: { title: 'Bem-vindo! Inicie o seu processo de candidatura', subtitle: 'Está a apenas 8 passos de se qualificar para o seu apartamento.', btn: 'Começar' },
-      it: { title: 'Benvenuto! Inizia il tuo processo di candidatura', subtitle: 'Sei a soli 8 passi dal qualificarti per il tuo appartamento.', btn: 'Inizia' },
+      en: { title: 'Welcome! Begin your application process', subtitle: `You have applied to rent an Apartment in Alicante with Idealista reference ${idealista}. Please select your preferred language to begin the Qualification process.`, btn: 'Get Started' },
+      es: { title: '¡Bienvenido! Comienza tu proceso de solicitud', subtitle: `Ha solicitado alquilar un Apartamento en Alicante con referencia Idealista ${idealista}. Seleccione su idioma preferido para comenzar el proceso de Calificación.`, btn: 'Empezar' },
+      pt: { title: 'Bem-vindo! Inicie o seu processo de candidatura', subtitle: `Você solicitou alugar um Apartamento em Alicante com referência Idealista ${idealista}. Selecione seu idioma preferido para iniciar o processo de Qualificação.`, btn: 'Começar' },
+      it: { title: 'Benvenuto! Inizia il tuo processo di candidatura', subtitle: `Hai richiesto di affittare un Appartamento ad Alicante con riferimento Idealista ${idealista}. Seleziona la tua lingua preferita per iniziare il processo di Qualificazione.`, btn: 'Inizia' },
     }[lang];
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 flex items-center justify-center px-4">
