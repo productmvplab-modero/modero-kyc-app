@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { base44 } from "@/api/base44Client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, XCircle, AlertCircle } from "lucide-react";
+import { CheckCircle2, Clock, XCircle, AlertCircle, Trash2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import TenantDetailsDialog from "./TenantDetailsDialog";
 import PropertyDetailsDialog from "./PropertyDetailsDialog";
 import { useLanguage } from '@/components/LanguageContext';
