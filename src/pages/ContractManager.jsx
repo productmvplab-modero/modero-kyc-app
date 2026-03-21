@@ -34,16 +34,6 @@ export default function ContractManager() {
     queryFn: () => base44.entities.Property.list(),
   });
 
-  const getInquiryByContractId = (contractId) => {
-    const contract = contracts.find(c => c.id === contractId);
-    return contract ? inquiries.find(i => i.id === contract.inquiry_id) : null;
-  };
-
-  const getPropertyByContractId = (contractId) => {
-    const contract = contracts.find(c => c.id === contractId);
-    return contract ? properties.find(p => p.id === contract.property_id) : null;
-  };
-
   const createContractMutation = useMutation({
     mutationFn: async (formData) => {
       const inquiry = inquiries.find(i => i.id === formData.inquiryId);
@@ -109,6 +99,10 @@ export default function ContractManager() {
 
   const viewingContract = viewingContractId ? contracts.find(c => c.id === viewingContractId) : null;
   const isAlreadySigned = viewingContract && (signatureRole === 'tenant' ? viewingContract.tenant_signed : viewingContract.landlord_signed);
+  
+  // Get inquiry and property data for viewing contract
+  const viewingInquiry = viewingContract ? inquiries.find(i => i.id === viewingContract.inquiry_id) : null;
+  const viewingProperty = viewingContract ? properties.find(p => p.id === viewingContract.property_id) : null;
 
   if (contractsLoading) {
     return (
@@ -221,11 +215,13 @@ export default function ContractManager() {
 
                 <div className="p-6 space-y-6">
                    {/* Party Details */}
-                   <ContractPartyDetails 
-                     tenant={getInquiryByContractId(viewingContractId)}
-                     property={getPropertyByContractId(viewingContractId)}
-                     idealista_id={getInquiryByContractId(viewingContractId)?.idealista_id}
-                   />
+                   {viewingInquiry && viewingProperty && (
+                     <ContractPartyDetails 
+                       tenant={viewingInquiry} 
+                       property={viewingProperty}
+                       idealista_id={viewingInquiry.idealista_id}
+                     />
+                   )}
 
                    {/* Contract Content */}
                    <div>
@@ -325,18 +321,15 @@ export default function ContractManager() {
                       </div>
                     </div>
 
-                    {/* Send for Signing Button - for draft contracts */}
+                    {/* Send for Digital Signing Button */}
                     {viewingContract.status === 'draft' && (
                       <Button
-                        onClick={() => {
-                          sendContractMutation.mutate(viewingContractId);
-                          setViewingContractId(null);
-                        }}
+                        onClick={() => sendContractMutation.mutate(viewingContract.id)}
                         disabled={sendContractMutation.isPending}
-                        className="w-full bg-orange-600 hover:bg-orange-700 h-11"
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                       >
                         <Send className="w-4 h-4 mr-2" />
-                        {sendContractMutation.isPending ? t('sending') : 'Send for Digital Signature'}
+                        {sendContractMutation.isPending ? 'Sending for Signature...' : 'Send for Digital Signing'}
                       </Button>
                     )}
                   </div>
