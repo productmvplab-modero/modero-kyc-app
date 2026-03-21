@@ -163,27 +163,33 @@ export default function ApartmentViewing() {
             </div>
 
             {/* Time Selection */}
-            {selectedDate && (
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-3">Available Times</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                  {TIME_SLOTS.map(time => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
-                      className={`p-3 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-2 ${
-                        selectedTime === time
-                          ? 'bg-orange-500 text-white'
-                          : 'bg-slate-100 text-slate-700 hover:bg-orange-100'
-                      }`}
-                    >
-                      <Clock className="w-4 h-4" />
-                      {time}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+             {selectedDate && timeSlots.length > 0 && (
+               <div>
+                 <label className="block text-sm font-semibold text-slate-700 mb-3">Available Times</label>
+                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                   {timeSlots.map(time => (
+                     <button
+                       key={time}
+                       onClick={() => setSelectedTime(time)}
+                       className={`p-3 rounded-lg text-center text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                         selectedTime === time
+                           ? 'bg-orange-500 text-white'
+                           : 'bg-slate-100 text-slate-700 hover:bg-orange-100'
+                       }`}
+                     >
+                       <Clock className="w-4 h-4" />
+                       {time}
+                     </button>
+                   ))}
+                 </div>
+               </div>
+             )}
+
+             {selectedDate && timeSlots.length === 0 && (
+               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                 <p className="text-sm text-yellow-800">No time slots available. Please contact the property owner.</p>
+               </div>
+             )}
 
             {/* Booking Summary */}
             {selectedDate && selectedTime && (
