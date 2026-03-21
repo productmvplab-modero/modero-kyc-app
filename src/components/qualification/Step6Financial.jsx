@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Banknote, Building2, CheckCircle2, TrendingUp } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import StepCard from './StepCard';
+import BankSelectionModal from './BankSelectionModal';
+import BankConnectingModal from './BankConnectingModal';
 
 export default function Step6Financial({ formData, updateForm, onNext, onBack, t }) {
   const [loading, setLoading] = useState(false);
-  const [connectingBank, setConnectingBank] = useState(false);
+  const [showBankSelect, setShowBankSelect] = useState(false);
+  const [selectedBank, setSelectedBank] = useState(null);
 
   const income = parseFloat(formData.monthly_income) || 0;
   const canContinue = income > 0;
