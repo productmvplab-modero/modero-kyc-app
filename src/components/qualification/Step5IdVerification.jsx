@@ -23,8 +23,9 @@ function VerificationItem({ icon, iconColor, title, desc, status, onAction, acti
               </span>
             ) : (
               <button type="button" onClick={onAction}
-                className="text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors shrink-0">
+                className="text-xs bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors shrink-0 flex items-center gap-1">
                 {actionLabel}
+                <Send className="w-3 h-3" />
               </button>
             )}
           </div>
