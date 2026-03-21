@@ -5,6 +5,7 @@ import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
 import PropertyOwnerSignup from './pages/PropertyOwnerSignup'
 import MyAccount from './pages/MyAccount'
+import Analytics from './pages/Analytics'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
