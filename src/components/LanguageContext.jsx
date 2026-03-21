@@ -129,6 +129,15 @@ const translations = {
     slack_connect_button: 'Connect to Slack',
     slack_connecting: 'Connecting...',
     slack_redirect_text: "You'll be redirected to authorize the Modero Slack app",
+    // Email Verification
+    email_verification_headline: 'One click away',
+    email_verification_subtitle: 'Verify your email to continue your application',
+    email_verification_sent_to: 'Verification code sent to',
+    email_verify_button: 'Verify Email',
+    email_verifying: 'Sending...',
+    email_verification_notice: 'Secure Link',
+    email_verification_security: 'This verification link is unique to you. Never share it or forward this email to others.',
+    email_verification_skip: 'Skip for now',
     },
     es: {
     my_account: 'Mi Cuenta', edit_profile: 'Editar Perfil', settings: 'Configuración',
