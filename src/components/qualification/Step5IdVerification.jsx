@@ -105,12 +105,60 @@ export default function Step5IdVerification({ formData, updateForm, onNext, onBa
       </VerificationItem>
 
       {/* ID Verification */}
+      {showIdModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden">
+            <div className="p-8 text-center space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900">Biometric ID Verification</h2>
+                <p className="text-sm text-slate-500 mt-2">Verify your identity using facial recognition powered by Identomat</p>
+              </div>
+              
+              {formData.id_verification_status === 'completed' ? (
+                <>
+                  <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-12 h-12 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-green-600">Verification Successful</h3>
+                    <p className="text-sm text-slate-600 mt-1">Your identity has been verified</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center mx-auto">
+                    <Camera className="w-12 h-12 text-blue-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">Ready to Verify</h3>
+                    <p className="text-sm text-slate-600 mt-1">We'll use your device's camera for a secure biometric check. Make sure you're in good lighting.</p>
+                  </div>
+                  <button
+                    onClick={simulateId}
+                    className="w-full h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                  >
+                    Start Biometric Verification
+                  </button>
+                </>
+              )}
+              
+              <button
+                onClick={() => setShowIdModal(false)}
+                className="w-full text-slate-600 hover:text-slate-900 font-medium text-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <VerificationItem
         icon={FileCheck} iconColor="text-violet-500"
         title={t('s5_id_title')} desc={t('s5_id_desc')}
         status={formData.id_verification_status === 'completed' ? 'done' : 'pending'}
-        onAction={simulateId}
-        actionLabel={simulating === 'id_verification_status' ? t('s5_processing') : t('s5_start_verification')}
+        onAction={() => setShowIdModal(true)}
+        actionLabel={simulating === 'id_verification_status' ? t('s5_processing') : 'Verify'}
         verifiedLabel={t('s5_verified')}
       />
 
