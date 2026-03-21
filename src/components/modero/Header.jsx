@@ -51,7 +51,7 @@ export default function Header() {
           </h1>
         </div>
 
-        <div className="flex items-center gap-6 sm:gap-8">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-fit sm:w-[140px] border-slate-200">
@@ -64,6 +64,43 @@ export default function Header() {
               <SelectItem value="it">Italiano</SelectItem>
             </SelectContent>
           </Select>
+
+          {/* User Menu */}
+          {isAuthenticated && user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                  <Avatar className="h-8 w-8 sm:h-9 sm:w-9">
+                    <AvatarImage src={user.profile_picture_url} />
+                    <AvatarFallback className="bg-gradient-to-br from-orange-400 to-amber-300 text-white text-sm font-semibold">
+                      {user.full_name?.charAt(0) || user.email?.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[120px] truncate">{user.full_name || user.email}</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuLabel className="text-xs text-slate-500 truncate">{user.email}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/MyAccount" className="flex items-center gap-2 cursor-pointer">
+                    <Settings className="w-4 h-4" />
+                    {t('settings')}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  {t('logout')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button variant="outline" size="sm" onClick={handleLogin} className="gap-2">
+              <LogIn className="w-4 h-4" />
+              <span className="hidden sm:inline">{t('login')}</span>
+            </Button>
+          )}
         </div>
       </div>
     </header>
