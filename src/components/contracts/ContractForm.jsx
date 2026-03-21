@@ -74,6 +74,8 @@ Both parties agree to the terms and conditions above.`;
 export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading, properties = [] }) {
   const { t } = useLanguage();
   const [selectedInquiry, setSelectedInquiry] = useState('');
+  const [templateOption, setTemplateOption] = useState('generate');
+  const [financingOffers, setFinancingOffers] = useState([]);
   const [formData, setFormData] = useState({
     lease_start_date: '',
     lease_end_date: '',
@@ -86,14 +88,30 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
 
   const handleInquiryChange = (inquiryId) => {
     setSelectedInquiry(inquiryId);
+    setTemplateOption('generate');
+    setFinancingOffers([]);
     
-    // Auto-fill with default template for now
     if (inquiryId) {
       setFormData(prev => ({
         ...prev,
         contract_content: DEFAULT_CONTRACT_TEMPLATE,
       }));
     }
+  };
+
+  const handleTemplateOptionChange = (option) => {
+    setTemplateOption(option);
+  };
+
+  const handlePdfUpload = (file) => {
+    // Handle PDF upload - in real app, would process the PDF
+    console.log('PDF uploaded:', file);
+  };
+
+  const toggleFinancingOffer = (offerId) => {
+    setFinancingOffers(prev =>
+      prev.includes(offerId) ? prev.filter(id => id !== offerId) : [...prev, offerId]
+    );
   };
 
   const handleSubmit = () => {
