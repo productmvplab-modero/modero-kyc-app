@@ -107,10 +107,10 @@ export default function EmailTemplateList({ templates, onEdit, onDelete, onView,
                         <p className="text-sm font-medium text-slate-600 mb-1">Available Variables:</p>
                         <div className="flex flex-wrap gap-2">
                           {template.variables.map((v, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded font-mono">
-                              {{{v.name}}}
-                            </span>
-                          ))}
+                                    <span key={idx} className="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded font-mono">
+                                      {`{{${v.name}}}`}
+                                    </span>
+                                  ))}
                         </div>
                       </div>
                     )}
