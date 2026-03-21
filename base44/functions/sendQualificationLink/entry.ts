@@ -30,14 +30,16 @@ Deno.serve(async (req) => {
     const appUrl = `${protocol}://${host}`;
     const qualificationLink = `${appUrl}/TenantQualification?token=${token}&property_id=${inquiry.property_id}&idealista_id=${inquiry.idealista_id || ''}`;
 
-    // Send message to tenant
-    const messageBody = `${user.full_name} has sent you a link to start your apartment qualification process:\n\n${qualificationLink}\n\nClick the link above to begin. It's quick, secure, and completely confidential.`;
+    // Send message to tenant via sendTenantMessage function
+    const messageBody = `Dear ${inquiry.tenant_name},\n\nThank you for your interest in our property. To proceed with your rental application, please complete the qualification process by clicking the link below:\n\n${qualificationLink}\n\nThis process takes only a few minutes and will help us verify your profile.\n\nBest regards,\nModero KYC Team`;
 
-    await base44.integrations.Core.SendEmail({
-      to: inquiry.tenant_email,
+    await base44.functions.invoke('sendTenantMessage', {
+      inquiry_id: inquiry_id,
+      tenant_name: inquiry.tenant_name,
+      tenant_email: inquiry.tenant_email,
       subject: `Complete Your Qualification - Apartment in ${inquiry.city || 'Our Properties'}`,
       body: messageBody,
-      from_name: user.full_name || 'Modero'
+      type: 'document_request',
     });
 
     return Response.json({ 
