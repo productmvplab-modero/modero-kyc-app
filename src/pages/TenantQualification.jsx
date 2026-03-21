@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Step1Profile from '@/components/qualification/Step1Profile';
 import Step2Personal from '@/components/qualification/Step2Personal';
 import Step3Employment from '@/components/qualification/Step3Employment';
