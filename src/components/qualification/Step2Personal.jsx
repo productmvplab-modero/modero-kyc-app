@@ -8,7 +8,7 @@ export default function Step2Personal({ formData, updateForm, onNext, onBack, t 
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const canContinue = formData.first_name && formData.last_name && formData.city && formData.country && formData.nationality && formData.dni_nie_number;
+  const canContinue = formData.first_name && formData.last_name && formData.city && formData.country && formData.nationality && formData.dni_nie_number && formData.national_tax_id;
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
