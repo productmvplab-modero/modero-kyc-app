@@ -12,6 +12,7 @@ import ContractCard from '@/components/contracts/ContractCard';
 import ContractPartyDetails from '@/components/contracts/ContractPartyDetails';
 import FinancialOverview from '@/components/contracts/FinancialOverview';
 import ContractRightPanel from '@/components/contracts/ContractRightPanel';
+import SendForSigningSection from '@/components/contracts/SendForSigningSection';
 
 export default function ContractManager() {
   const { t } = useLanguage();
@@ -360,7 +361,14 @@ export default function ContractManager() {
                   </div>
 
                   {/* Right Panel - Financial Overview & Company Info */}
-                  <div className="col-span-1 border-l border-slate-200 pl-6 overflow-y-auto">
+                  <div className="col-span-1 border-l border-slate-200 pl-6 overflow-y-auto space-y-4">
+                    <SendForSigningSection
+                      contract={viewingContract}
+                      tenantEmail={viewingContract.tenant_email}
+                      landlordEmail={viewingContract.landlord_email}
+                      onSend={() => sendContractMutation.mutate(viewingContract.id)}
+                      isSending={sendContractMutation.isPending}
+                    />
                     <ContractRightPanel 
                       contract={viewingContract}
                       onPreview={() => setShowPreview(true)}

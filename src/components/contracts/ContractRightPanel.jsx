@@ -207,3 +207,7 @@ export default function ContractRightPanel({ contract, onPreview, isProfessional
     </div>
   );
 }
+
+ContractRightPanel.defaultProps = {
+  isProfessional: false,
+};
