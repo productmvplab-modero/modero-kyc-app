@@ -57,6 +57,7 @@ export default function Header() {
             <BarChart3 className="w-4 h-4" />
             Analytics
           </Link>
+          {isAuthenticated && <NotificationsBell />}
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-fit sm:w-[140px] border-slate-200 gap-2">
