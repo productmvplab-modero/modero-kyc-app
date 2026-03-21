@@ -57,13 +57,15 @@ export default function TenantQualification() {
       status: 'screening',
       progress_step: step,
     };
-    // Convert number fields to actual numbers
-    if (payload.age) payload.age = Number(payload.age);
-    if (payload.monthly_income) payload.monthly_income = Number(payload.monthly_income);
-    if (payload.number_of_occupants) payload.number_of_occupants = Number(payload.number_of_occupants);
-    if (payload.credit_score) payload.credit_score = Number(payload.credit_score);
-    if (payload.modero_score) payload.modero_score = Number(payload.modero_score);
-    if (payload.qualification_score) payload.qualification_score = Number(payload.qualification_score);
+    // Convert number fields to actual numbers or remove empty ones
+    const numberFields = ['age', 'monthly_income', 'number_of_occupants', 'credit_score', 'modero_score', 'qualification_score'];
+    numberFields.forEach(field => {
+      if (payload[field] === '' || payload[field] === null || payload[field] === undefined) {
+        delete payload[field];
+      } else if (payload[field]) {
+        payload[field] = Number(payload[field]);
+      }
+    });
     // Don't override qualification_token if it exists
     if (!payload.qualification_token) {
       delete payload.qualification_token;
