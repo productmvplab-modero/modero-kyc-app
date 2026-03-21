@@ -25,10 +25,22 @@ const statusConfig = {
 
 export default function RecentInquiries({ inquiries, properties = [] }) {
   const { t } = useLanguage();
+  const queryClient = useQueryClient();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [propertyDialogOpen, setPropertyDialogOpen] = useState(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: (inquiryId) => base44.entities.Inquiry.delete(inquiryId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['inquiries'] });
+      toast.success('Inquiry deleted successfully');
+    },
+    onError: (error) => {
+      toast.error('Failed to delete inquiry');
+    }
+  });
 
   const recentInquiries = [...inquiries]
     .sort((a, b) => new Date(b.created_date) - new Date(a.created_date))
@@ -37,6 +49,13 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
   const handleRowClick = (inquiry) => {
     setSelectedInquiry(inquiry);
     setDialogOpen(true);
+  };
+
+  const handleDelete = (e, inquiryId) => {
+    e.stopPropagation();
+    if (confirm('Are you sure you want to delete this inquiry?')) {
+      deleteMutation.mutate(inquiryId);
+    }
   };
 
   return (
