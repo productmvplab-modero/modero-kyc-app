@@ -7,6 +7,7 @@ import PropertyOwnerSignup from './pages/PropertyOwnerSignup'
 import TenantQualification from './pages/TenantQualification'
 import MyAccount from './pages/MyAccount'
 import Analytics from './pages/Analytics'
+import ViewingBooking from './pages/ViewingBooking'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
