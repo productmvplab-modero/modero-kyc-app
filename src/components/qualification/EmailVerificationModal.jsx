@@ -42,16 +42,16 @@ export default function EmailVerificationModal({ email, onVerificationSent, onSk
           {/* Headline */}
           <div>
             <h2 className="text-3xl font-bold text-slate-950 mb-2">
-              One click away
+              {t('email_verification_headline')}
             </h2>
             <p className="text-slate-600 text-base">
-              Verify your email to continue your application
+              {t('email_verification_subtitle')}
             </p>
           </div>
 
           {/* Email Display */}
           <div className="bg-slate-50 border border-slate-200 rounded-lg px-4 py-3">
-            <p className="text-sm text-slate-600 mb-1">Verification code sent to</p>
+            <p className="text-sm text-slate-600 mb-1">{t('email_verification_sent_to')}</p>
             <p className="text-base font-semibold text-slate-900 break-all">{email}</p>
           </div>
 
@@ -64,10 +64,10 @@ export default function EmailVerificationModal({ email, onVerificationSent, onSk
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Sending...
+                {t('email_verifying')}
               </>
             ) : (
-              'Verify Email'
+              t('email_verify_button')
             )}
           </Button>
 
@@ -77,10 +77,10 @@ export default function EmailVerificationModal({ email, onVerificationSent, onSk
               <Lock className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
               <div className="text-left">
                 <p className="text-xs font-semibold text-amber-900 mb-1">
-                  🔒 Secure Link
+                  🔒 {t('email_verification_notice')}
                 </p>
                 <p className="text-xs text-amber-800">
-                  This verification link is unique to you. Never share it or forward this email to others.
+                  {t('email_verification_security')}
                 </p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export default function EmailVerificationModal({ email, onVerificationSent, onSk
             onClick={onSkip}
             className="text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors"
           >
-            Skip for now
+            {t('email_verification_skip')}
           </button>
         </div>
 
