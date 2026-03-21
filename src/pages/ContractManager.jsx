@@ -3,12 +3,13 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { FileText, AlertCircle, X, CheckCircle2 } from 'lucide-react';
+import { FileText, AlertCircle, X, CheckCircle2, Send } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
 import ContractCard from '@/components/contracts/ContractCard';
+import ContractPartyDetails from '@/components/contracts/ContractPartyDetails';
 
 export default function ContractManager() {
   const { t } = useLanguage();
@@ -32,6 +33,16 @@ export default function ContractManager() {
     queryKey: ['properties'],
     queryFn: () => base44.entities.Property.list(),
   });
+
+  const getInquiryByContractId = (contractId) => {
+    const contract = contracts.find(c => c.id === contractId);
+    return contract ? inquiries.find(i => i.id === contract.inquiry_id) : null;
+  };
+
+  const getPropertyByContractId = (contractId) => {
+    const contract = contracts.find(c => c.id === contractId);
+    return contract ? properties.find(p => p.id === contract.property_id) : null;
+  };
 
   const createContractMutation = useMutation({
     mutationFn: async (formData) => {
@@ -209,8 +220,15 @@ export default function ContractManager() {
                 </div>
 
                 <div className="p-6 space-y-6">
-                  {/* Contract Content */}
-                  <div>
+                   {/* Party Details */}
+                   <ContractPartyDetails 
+                     tenant={getInquiryByContractId(viewingContractId)}
+                     property={getPropertyByContractId(viewingContractId)}
+                     idealista_id={getInquiryByContractId(viewingContractId)?.idealista_id}
+                   />
+
+                   {/* Contract Content */}
+                   <div>
                     <h3 className="text-sm font-semibold text-slate-700 mb-3">{t('contract_terms_label')}</h3>
                     <div className="bg-slate-50 rounded-lg p-4 max-h-64 overflow-y-auto border border-slate-200">
                       <pre className="text-xs text-slate-700 whitespace-pre-wrap font-mono">
@@ -296,7 +314,7 @@ export default function ContractManager() {
                   {/* Status Summary */}
                   <div className="pt-4 border-t border-slate-200">
                     <h3 className="text-sm font-semibold text-slate-700 mb-3">{t('signature_status')}</h3>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3 mb-4">
                       <div className={`p-3 rounded-lg ${viewingContract.tenant_signed ? 'bg-green-50 border border-green-200' : 'bg-slate-50 border border-slate-200'}`}>
                         <p className="text-xs text-slate-600 mb-1">{t('tenant')}</p>
                         <p className="text-sm font-semibold text-slate-800">{viewingContract.tenant_signed ? '✓ ' + t('already_signed') : '○ ' + t('pending')}</p>
@@ -306,6 +324,21 @@ export default function ContractManager() {
                         <p className="text-sm font-semibold text-slate-800">{viewingContract.landlord_signed ? '✓ ' + t('already_signed') : '○ ' + t('pending')}</p>
                       </div>
                     </div>
+
+                    {/* Send for Signing Button - for draft contracts */}
+                    {viewingContract.status === 'draft' && (
+                      <Button
+                        onClick={() => {
+                          sendContractMutation.mutate(viewingContractId);
+                          setViewingContractId(null);
+                        }}
+                        disabled={sendContractMutation.isPending}
+                        className="w-full bg-orange-600 hover:bg-orange-700 h-11"
+                      >
+                        <Send className="w-4 h-4 mr-2" />
+                        {sendContractMutation.isPending ? t('sending') : 'Send for Digital Signature'}
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
