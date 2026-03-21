@@ -89,12 +89,12 @@ export default function TenantQualification() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Language selection screen
+  // Language selection screen (always first step)
   if (!lang) {
     return <LanguageSelect onSelect={setLang} />;
   }
 
-  // Welcome screen
+  // Welcome screen (after language selection)
   if (!welcomed) {
     const idealista = formData.idealista_id || 'N/A';
     const welcomeText = {
