@@ -147,8 +147,11 @@ export default function MessagingCenter() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Messaging Center</h1>
-          <p className="text-slate-600">Manage applicant communications, request documents, and schedule viewings</p>
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <h1 className="text-3xl font-bold text-slate-900">Messaging Center</h1>
+            <Badge className="bg-green-100 text-green-700 whitespace-nowrap">💬 WhatsApp API Available</Badge>
+          </div>
+          <p className="text-slate-600">Manage applicant communications via email or WhatsApp, request documents, and schedule viewings</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
