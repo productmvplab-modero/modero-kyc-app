@@ -12,6 +12,7 @@ import ApartmentViewing from './pages/ApartmentViewing'
 import ContractManager from './pages/ContractManager'
 import ContractSignature from './pages/ContractSignature'
 import MessagingCenter from './pages/MessagingCenter'
+import AdminEmailTemplates from './pages/AdminEmailTemplates'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
