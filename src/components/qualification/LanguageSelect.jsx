@@ -26,11 +26,11 @@ export default function LanguageSelect({ onSelect }) {
 
         <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
           <h2 className="text-xl font-bold text-slate-800 text-center mb-1">
-            {selected ? ({ en: 'Welcome to Modero', es: 'Bienvenido a Modero', pt: 'Bem-vindo ao Modero', it: 'Benvenuto in Modero' }[selected]) : 'Welcome to Modero'}
+            {selected ? ({ en: 'Welcome! Start your application process.', es: '¡Bienvenido! Comienza tu proceso de solicitud.', pt: 'Bem-vindo! Inicie o seu processo de candidatura.', it: 'Benvenuto! Inizia il tuo processo di candidatura.' }[selected]) : 'Welcome to Modero'}
           </h2>
           <p className="text-sm text-slate-500 text-center mb-6">
             {selected
-              ? ({ en: 'Please select your preferred language to begin', es: 'Por favor selecciona tu idioma preferido para comenzar', pt: 'Por favor selecione o seu idioma preferido para começar', it: 'Seleziona la tua lingua preferita per iniziare' }[selected])
+              ? ({ en: 'You have applied to rent an apartment. Please select your preferred language to begin the qualification process. You are just 7 steps away from being qualified!', es: 'Ha solicitado alquilar un apartamento. Seleccione su idioma preferido para comenzar el proceso de calificación. ¡Está a solo 7 pasos de ser calificado!', pt: 'Você solicitou alugar um apartamento. Selecione seu idioma preferido para iniciar o processo de qualificação. Você está a apenas 7 passos de ser qualificado!', it: 'Hai richiesto di affittare un appartamento. Seleziona la tua lingua preferita per iniziare il processo di qualificazione. Sei a soli 7 passi dalla qualificazione!' }[selected])
               : 'Please select your preferred language to begin'}
           </p>
 
