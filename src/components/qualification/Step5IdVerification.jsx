@@ -3,7 +3,8 @@ import { Shield, Mail, Briefcase, FileCheck, CheckCircle2, AlertCircle } from 'l
 import { Input } from '@/components/ui/input';
 import StepCard from './StepCard';
 
-function VerificationItem({ icon: Icon, iconColor, title, desc, status, onAction, actionLabel, children }) {
+function VerificationItem({ icon, iconColor, title, desc, status, onAction, actionLabel, children }) {
+  const Icon = icon;
   return (
     <div className={`rounded-xl border-2 p-4 transition-all ${status === 'done' ? 'border-green-300 bg-green-50' : 'border-slate-200 bg-white'}`}>
       <div className="flex items-start gap-3">
