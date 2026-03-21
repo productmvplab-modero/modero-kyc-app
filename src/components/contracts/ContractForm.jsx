@@ -151,29 +151,7 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
 
         {/* Tenant Profile Summary */}
         {selectedTenant && (
-          <div className="bg-slate-50 border border-slate-200 rounded-md p-4">
-            <h4 className="font-semibold text-slate-900 mb-3">Tenant Profile</h4>
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <p className="text-slate-600 text-xs mb-1">Status</p>
-                <p className="font-semibold text-slate-900 capitalize flex items-center gap-2">
-                  {selectedTenant.status} {selectedTenant.status === 'qualified' && <span className="text-orange-600">✓</span>}
-                </p>
-              </div>
-              <div>
-                <p className="text-slate-600 text-xs mb-1">Qualification Score</p>
-                <p className="font-semibold text-slate-900">{selectedTenant.qualification_score || 'N/A'}/100</p>
-              </div>
-              <div>
-                <p className="text-slate-600 text-xs mb-1">Employment</p>
-                <p className="font-semibold text-slate-900 capitalize">{selectedTenant.employment_status || 'N/A'}</p>
-              </div>
-              <div>
-                <p className="text-slate-600 text-xs mb-1">Monthly Income</p>
-                <p className="font-semibold text-slate-900">€{selectedTenant.monthly_income?.toLocaleString() || 'N/A'}</p>
-              </div>
-            </div>
-          </div>
+          <TenantProfileCard tenant={selectedTenant} />
         )}
 
         {selectedInquiry && (
