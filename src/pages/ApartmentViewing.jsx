@@ -125,7 +125,6 @@ export default function ApartmentViewing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
-      <Header />
       <div className="py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
