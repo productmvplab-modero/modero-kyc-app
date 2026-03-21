@@ -73,9 +73,11 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
       <div className="space-y-3 mb-6">
         <button
           onClick={() => handleSocialConnect('linkedin')}
-          className={`w-full h-11 flex items-center justify-center gap-2 rounded-md border text-sm font-medium transition-all ${formData.linkedin_connected ? 'border-green-400 bg-green-50 text-green-700' : 'border-slate-200 hover:border-orange-300 bg-white'}`}
+          disabled={loading || formData.linkedin_connected}
+          className={`w-full h-11 flex items-center justify-center gap-2 rounded-md border text-sm font-medium transition-all ${formData.linkedin_connected ? 'border-green-400 bg-green-50 text-green-700' : 'border-slate-200 hover:border-orange-300 bg-white disabled:opacity-50'}`}
         >
-          {formData.linkedin_connected ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <Linkedin className="w-5 h-5 text-[#0A66C2]" />}
+          {loading && !formData.linkedin_connected ? <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /> : 
+          formData.linkedin_connected ? <CheckCircle2 className="w-5 h-5 text-green-500" /> : <Linkedin className="w-5 h-5 text-[#0A66C2]" />}
           {formData.linkedin_connected ? t('s1_linkedin_done') : t('s1_linkedin')}
         </button>
         <button
