@@ -79,7 +79,9 @@ export default function Header() {
                       {user.full_name?.charAt(0) || user.email?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[120px] truncate">{user.full_name || user.email}</span>
+                  <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[120px] truncate">
+                    {[user.first_name, user.last_name].filter(Boolean).join(' ') || user.full_name || user.email}
+                  </span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
