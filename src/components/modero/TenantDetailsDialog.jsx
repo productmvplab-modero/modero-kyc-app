@@ -1158,6 +1158,9 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
             </Card>
           )}
 
+          {/* Messaging */}
+          <MessagingPanel inquiry={inquiry} />
+
           {/* Notes - editable */}
           <Card className="overflow-hidden border-0 shadow-md">
             <div className="h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300" />
