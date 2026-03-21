@@ -30,18 +30,10 @@ Deno.serve(async (req) => {
     const appUrl = `${protocol}://${host}`;
     const qualificationLink = `${appUrl}/TenantQualification?token=${token}&property_id=${inquiry.property_id}&idealista_id=${inquiry.idealista_id || ''}`;
 
-    // Send message to tenant - create message record and send email
+    // Create message record to log the qualification link sent
     const messageBody = `Dear ${inquiry.tenant_name},\n\nThank you for your interest in our property. To proceed with your rental application, please complete the qualification process by clicking the link below:\n\n${qualificationLink}\n\nThis process takes only a few minutes and will help us verify your profile.\n\nBest regards,\nModero KYC Team`;
 
-    // Send email via Core integration
-    await base44.integrations.Core.SendEmail({
-      to: inquiry.tenant_email,
-      subject: `Complete Your Qualification - Apartment in ${inquiry.city || 'Our Properties'}`,
-      body: messageBody,
-      from_name: 'Modero KYC'
-    });
-
-    // Save message record using service role to bypass any restrictions
+    // Save message record using service role
     await base44.asServiceRole.entities.Message.create({
       inquiry_id: inquiry_id,
       tenant_name: inquiry.tenant_name,
@@ -50,7 +42,7 @@ Deno.serve(async (req) => {
       body: messageBody,
       type: 'document_request',
       sent_by: user.email,
-      sent_via: ['email', 'in_app'],
+      sent_via: ['in_app'],
       status: 'sent',
     });
 
