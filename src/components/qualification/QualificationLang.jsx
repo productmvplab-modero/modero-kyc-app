@@ -19,7 +19,7 @@ export const qLangs = {
 
     // Step 1
     s1_title: 'Welcome! Begin your application process',
-    s1_subtitle: 'You are just 8 steps away from qualifying for your apartment.',
+    s1_subtitle: 'You are just 7 steps away from qualifying for your apartment.',
     s1_linkedin: 'Continue with LinkedIn',
     s1_linkedin_done: 'LinkedIn Connected ✓',
     s1_xing: 'Continue with XING',
@@ -200,7 +200,7 @@ export const qLangs = {
     of: 'de',
 
     s1_title: '¡Bienvenido! Comienza tu proceso de solicitud',
-    s1_subtitle: 'Estás a solo 8 pasos de calificar para tu apartamento.',
+    s1_subtitle: 'Estás a solo 7 pasos de calificar para tu apartamento.',
     s1_linkedin: 'Continuar con LinkedIn',
     s1_linkedin_done: 'LinkedIn Conectado ✓',
     s1_xing: 'Continuar con XING',
@@ -374,7 +374,7 @@ export const qLangs = {
     of: 'de',
 
     s1_title: 'Bem-vindo! Comece o seu processo de candidatura',
-    s1_subtitle: 'Está a apenas 8 passos de se qualificar para o seu apartamento.',
+    s1_subtitle: 'Está a apenas 7 passos de se qualificar para o seu apartamento.',
     s1_linkedin: 'Continuar com LinkedIn',
     s1_linkedin_done: 'LinkedIn Conectado ✓',
     s1_xing: 'Continuar com XING',
@@ -548,7 +548,7 @@ export const qLangs = {
     of: 'di',
 
     s1_title: 'Benvenuto! Inizia il tuo processo di candidatura',
-    s1_subtitle: 'Sei a soli 8 passi dalla qualificazione per il tuo appartamento.',
+    s1_subtitle: 'Sei a soli 7 passi dalla qualificazione per il tuo appartamento.',
     s1_linkedin: 'Continua con LinkedIn',
     s1_linkedin_done: 'LinkedIn Collegato ✓',
     s1_xing: 'Continua con XING',
