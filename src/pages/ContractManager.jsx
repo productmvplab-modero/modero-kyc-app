@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -71,6 +72,7 @@ TERMS AND CONDITIONS:
 Both parties agree to the terms and conditions above.`;
 
 export default function ContractManager() {
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [editingContract, setEditingContract] = useState(null);
@@ -141,8 +143,8 @@ export default function ContractManager() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-orange-600 mb-2">Rental Contracts</h1>
-          <p className="text-slate-600">Create, manage, and send rental contracts for signature</p>
+          <h1 className="text-4xl font-bold text-orange-600 mb-2">{t('rental_contracts')}</h1>
+          <p className="text-slate-600">{t('contracts_subtitle')}</p>
         </div>
 
         {/* Create New Contract Button */}
@@ -152,7 +154,7 @@ export default function ContractManager() {
             className="bg-orange-600 hover:bg-orange-700 text-white font-semibold h-11"
           >
             <FileText className="w-5 h-5 mr-2" />
-            Create New Contract
+            {t('create_new_contract')}
           </Button>
         </div>
 
@@ -160,18 +162,18 @@ export default function ContractManager() {
         {showNewForm && (
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle>Create New Rental Contract</CardTitle>
+              <CardTitle>{t('create_new_contract')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Select Qualified Tenant */}
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Select Tenant</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('select_tenant')}</label>
                 <select
                   value={selectedInquiry}
                   onChange={(e) => setSelectedInquiry(e.target.value)}
                   className="w-full h-10 px-4 border border-slate-200 rounded-md"
                 >
-                  <option value="">-- Choose a qualified tenant --</option>
+                  <option value="">-- {t('select_tenant')} --</option>
                   {inquiries.map(inq => (
                     <option key={inq.id} value={inq.id}>
                       {inq.tenant_name} ({inq.tenant_email})
@@ -184,7 +186,7 @@ export default function ContractManager() {
                 <>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Lease Start Date</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">{t('lease_start_date')}</label>
                       <Input
                         type="date"
                         value={editingContract?.lease_start_date || ''}
@@ -192,7 +194,7 @@ export default function ContractManager() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">Lease End Date</label>
+                      <label className="block text-sm font-medium text-slate-700 mb-2">{t('lease_end_date')}</label>
                       <Input
                         type="date"
                         value={editingContract?.lease_end_date || ''}
@@ -202,7 +204,7 @@ export default function ContractManager() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Security Deposit (€)</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">{t('security_deposit')}</label>
                     <Input
                       type="number"
                       placeholder="2000"
@@ -212,14 +214,14 @@ export default function ContractManager() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Contract Terms & Conditions</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">{t('contract_terms')}</label>
                     <Textarea
                       value={editingContract?.contract_content || DEFAULT_CONTRACT_TEMPLATE}
                       onChange={(e) => setEditingContract(prev => ({ ...prev, contract_content: e.target.value }))}
                       rows={12}
                       className="font-mono text-sm"
                     />
-                    <p className="text-xs text-slate-500 mt-2">You can customize the template or use the default terms.</p>
+                    <p className="text-xs text-slate-500 mt-2">{t('customize_template')}</p>
                   </div>
 
                   <div className="flex gap-3">
@@ -228,7 +230,7 @@ export default function ContractManager() {
                       disabled={createContractMutation.isPending || !editingContract?.lease_start_date}
                       className="flex-1 bg-orange-600 hover:bg-orange-700"
                     >
-                      {createContractMutation.isPending ? 'Creating...' : 'Create Contract'}
+                      {createContractMutation.isPending ? t('creating_contract') : t('create_contract')}
                     </Button>
                     <Button
                       onClick={() => {
@@ -239,7 +241,7 @@ export default function ContractManager() {
                       variant="outline"
                       className="flex-1"
                     >
-                      Cancel
+                      {t('cancel')}
                     </Button>
                   </div>
                 </>
@@ -267,18 +269,18 @@ export default function ContractManager() {
                         <AlertCircle className="w-5 h-5 text-slate-400" />
                       )}
                     </div>
-                    <p className="text-sm text-slate-600 mb-3">Tenant: {contract.tenant_name}</p>
+                    <p className="text-sm text-slate-600 mb-3">{t('tenant')}: {contract.tenant_name}</p>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className="text-slate-500">Monthly Rent:</span>
+                        <span className="text-slate-500">{t('monthly_rent')}:</span>
                         <p className="font-semibold text-slate-800">€{contract.monthly_rent}</p>
                       </div>
                       <div>
-                        <span className="text-slate-500">Lease Period:</span>
+                        <span className="text-slate-500">{t('lease_period')}:</span>
                         <p className="font-semibold text-slate-800">{format(new Date(contract.lease_start_date), 'MMM d')} - {format(new Date(contract.lease_end_date), 'MMM d, yyyy')}</p>
                       </div>
                       <div>
-                        <span className="text-slate-500">Status:</span>
+                        <span className="text-slate-500">{t('status')}:</span>
                         <p className="font-semibold text-slate-800 capitalize">{contract.status}</p>
                       </div>
                     </div>
@@ -286,19 +288,19 @@ export default function ContractManager() {
                     {/* Signing Status */}
                     <div className="mt-4 grid grid-cols-2 gap-3">
                       <div className={`p-3 rounded-lg ${contract.tenant_signed ? 'bg-green-50 border border-green-200' : 'bg-slate-50 border border-slate-200'}`}>
-                        <p className="text-xs text-slate-600">Tenant Signature</p>
+                        <p className="text-xs text-slate-600">{t('tenant_signature_label')}</p>
                         {contract.tenant_signed ? (
                           <p className="text-sm font-semibold text-green-700">{contract.tenant_signature} - {format(new Date(contract.tenant_signed_date), 'MMM d, yyyy')}</p>
                         ) : (
-                          <p className="text-sm text-slate-500">Pending</p>
+                          <p className="text-sm text-slate-500">{t('pending')}</p>
                         )}
                       </div>
                       <div className={`p-3 rounded-lg ${contract.landlord_signed ? 'bg-green-50 border border-green-200' : 'bg-slate-50 border border-slate-200'}`}>
-                        <p className="text-xs text-slate-600">Landlord Signature</p>
+                        <p className="text-xs text-slate-600">{t('landlord_signature_label')}</p>
                         {contract.landlord_signed ? (
                           <p className="text-sm font-semibold text-green-700">{contract.landlord_signature} - {format(new Date(contract.landlord_signed_date), 'MMM d, yyyy')}</p>
                         ) : (
-                          <p className="text-sm text-slate-500">Pending</p>
+                          <p className="text-sm text-slate-500">{t('pending')}</p>
                         )}
                       </div>
                     </div>
@@ -313,7 +315,7 @@ export default function ContractManager() {
                         className="bg-orange-600 hover:bg-orange-700 whitespace-nowrap"
                       >
                         <Send className="w-4 h-4 mr-1" />
-                        {sendContractMutation.isPending ? 'Sending...' : 'Send for Signature'}
+                        {sendContractMutation.isPending ? t('sending') : t('send_for_signature')}
                       </Button>
                     )}
                     {contract.status === 'tenant_signed' && (
@@ -322,7 +324,7 @@ export default function ContractManager() {
                         className="whitespace-nowrap"
                         disabled
                       >
-                        Awaiting Your Signature
+                        {t('awaiting_your_signature')}
                       </Button>
                     )}
                   </div>
