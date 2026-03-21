@@ -24,6 +24,11 @@ export default function ContractManager() {
     queryFn: () => base44.entities.Inquiry.filter({ status: 'qualified' }),
   });
 
+  const { data: properties = [] } = useQuery({
+    queryKey: ['properties'],
+    queryFn: () => base44.entities.Property.list(),
+  });
+
   const createContractMutation = useMutation({
     mutationFn: async (formData) => {
       const inquiry = inquiries.find(i => i.id === formData.inquiryId);
