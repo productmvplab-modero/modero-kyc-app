@@ -29,9 +29,9 @@ export default function SlackIntegration() {
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-400 flex items-center justify-center shadow-sm">
             <MessageCircle className="w-4 h-4 text-white" />
           </div>
-          Connect to Slack
+          {t('connect_to_slack')}
         </CardTitle>
-        <p className="text-sm text-slate-600 mt-1">Stay connected with our team for feedback and updates</p>
+        <p className="text-sm text-slate-600 mt-1">{t('slack_description')}</p>
       </CardHeader>
       <CardContent className="pt-6">
         <div className="space-y-4">
@@ -40,9 +40,9 @@ export default function SlackIntegration() {
             <div className="flex items-start gap-3 flex-1">
               <AlertCircle className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-sm font-medium text-slate-900">Not Connected</p>
+                <p className="text-sm font-medium text-slate-900">{t('slack_not_connected')}</p>
                 <p className="text-xs text-slate-600 mt-0.5">
-                  Connect your Slack account to receive notifications, share feedback, and communicate with our team in real-time.
+                  {t('slack_benefits_text')}
                 </p>
               </div>
             </div>
@@ -50,23 +50,23 @@ export default function SlackIntegration() {
 
           {/* Benefits */}
           <div className="space-y-2">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Benefits</p>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{t('slack_benefits_title')}</p>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2 text-slate-700">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Receive real-time notifications about applicants
+                {t('slack_benefit_1')}
               </li>
               <li className="flex items-center gap-2 text-slate-700">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Share feedback and collaborate with team members
+                {t('slack_benefit_2')}
               </li>
               <li className="flex items-center gap-2 text-slate-700">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Get instant alerts for important application status changes
+                {t('slack_benefit_3')}
               </li>
               <li className="flex items-center gap-2 text-slate-700">
                 <Check className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Communicate with the Modero support team
+                {t('slack_benefit_4')}
               </li>
             </ul>
           </div>
@@ -83,11 +83,11 @@ export default function SlackIntegration() {
               <path d="M99.8 47c7.5 0 13.6 6.1 13.6 13.6 0 7.5-6.1 13.6-13.6 13.6h-13.6V47h13.6zm-6.8 0c0 7.5-6.1 13.6-13.6 13.6-7.5 0-13.6-6.1-13.6-13.6V13.6C65.8 6.1 71.9 0 79.4 0c7.5 0 13.6 6.1 13.6 13.6v33.4z"/>
               <path d="M79.4 99.8c-7.5 0-13.6-6.1-13.6-13.6 0-7.5 6.1-13.6 13.6-13.6h13.6v13.6c0 7.5-6.1 13.6-13.6 13.6zm6.8 0c0-7.5 6.1-13.6 13.6-13.6 7.5 0 13.6 6.1 13.6 13.6v34c0 7.5-6.1 13.6-13.6 13.6-7.5 0-13.6-6.1-13.6-13.6v-34z"/>
             </svg>
-            {isConnecting ? 'Connecting...' : 'Connect to Slack'}
+            {isConnecting ? t('slack_connecting') : t('slack_connect_button')}
           </Button>
 
           <p className="text-xs text-slate-500 text-center">
-            You'll be redirected to authorize the Modero Slack app
+            {t('slack_redirect_text')}
           </p>
         </div>
       </CardContent>
