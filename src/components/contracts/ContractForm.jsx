@@ -251,14 +251,21 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
             {/* Contract Terms - Show only for generate/customize */}
             {(templateOption === 'generate' || templateOption === 'customize') && (
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">{t('contract_terms')}</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-slate-700">{t('contract_terms')}</label>
+                  <span className="text-xs text-slate-500">Editable</span>
+                </div>
                 <Textarea
                   value={formData.contract_content}
                   onChange={(e) => setFormData(prev => ({ ...prev, contract_content: e.target.value }))}
-                  rows={10}
-                  className="font-mono text-xs"
+                  rows={12}
+                  className="font-normal text-sm leading-relaxed p-4 bg-white border-2 border-slate-200 hover:border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 rounded-lg resize-none"
+                  placeholder="Edit your contract terms here..."
                 />
-                <p className="text-xs text-slate-500 mt-2">{t('customize_template')}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <p className="text-xs text-slate-500">{t('customize_template')}</p>
+                  <span className="text-xs text-orange-600 font-medium">• All changes will be saved to the contract</span>
+                </div>
               </div>
             )}
 
