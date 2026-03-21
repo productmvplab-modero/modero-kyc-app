@@ -54,8 +54,11 @@ export default function Header() {
         <div className="flex items-center gap-2 sm:gap-4">
           {/* Language Selector */}
           <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-fit sm:w-[140px] border-slate-200">
-              <Globe className="w-4 h-4" />
+            <SelectTrigger className="w-fit sm:w-[140px] border-slate-200 gap-2">
+              <Globe className="w-4 h-4 shrink-0" />
+              <span className="hidden sm:inline text-sm">
+                {{ en: 'English', es: 'Español', pt: 'Português', it: 'Italiano' }[language]}
+              </span>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="en">English</SelectItem>
