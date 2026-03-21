@@ -232,7 +232,7 @@ export default function Step1Profile({ formData, updateForm, onNext, t }) {
             )}
 
             {formData.mobile_verified && (
-              <div className="h-11 rounded-md bg-green-100 border border-green-300 flex items-center px-4">
+              <div className="h-11 rounded-md bg-green-100 border border-green-300 flex items-center justify-center px-4">
                 <CheckCircle2 className="w-5 h-5 text-green-600 mr-2" />
                 <span className="text-green-700 font-medium text-sm">{countryCode.code}{phoneInput} verified</span>
               </div>
