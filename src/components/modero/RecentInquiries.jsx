@@ -97,10 +97,10 @@ export default function RecentInquiries({ inquiries, properties = [] }) {
                     const isDeleting = deleteMutation.isPending && deleteMutation.variables === inquiry.id;
                     return (
                       <TableRow 
-                        key={inquiry.id} 
-                        className="hover:bg-slate-50 transition-colors cursor-pointer"
-                        onClick={() => handleRowClick(inquiry)}
-                      >
+                         key={inquiry.id} 
+                         className={`hover:bg-slate-50 transition-colors ${!isDeleting ? 'cursor-pointer' : ''}`}
+                         onClick={() => !isDeleting && handleRowClick(inquiry)}
+                       >
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <Avatar className="h-8 w-8 flex-shrink-0">
