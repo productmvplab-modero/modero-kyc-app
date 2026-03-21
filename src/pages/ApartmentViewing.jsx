@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
 import { format, addDays, startOfToday, getDay, isAfter, addHours } from 'date-fns';
+import Header from '@/components/modero/Header';
 
 export default function ApartmentViewing() {
   const queryClient = useQueryClient();
