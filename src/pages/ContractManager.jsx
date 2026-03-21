@@ -80,6 +80,25 @@ export default function ContractManager() {
     },
   });
 
+  const signContractMutation = useMutation({
+    mutationFn: async () => {
+      const response = await base44.functions.invoke('signContract', {
+        contract_id: viewingContractId,
+        role: signatureRole,
+        signature_name: signatureName,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contracts'] });
+      setViewingContractId(null);
+      setSignatureName('');
+    },
+  });
+
+  const viewingContract = viewingContractId ? contracts.find(c => c.id === viewingContractId) : null;
+  const isAlreadySigned = viewingContract && (signatureRole === 'tenant' ? viewingContract.tenant_signed : viewingContract.landlord_signed);
+
   if (contractsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
