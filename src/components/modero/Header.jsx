@@ -42,14 +42,14 @@ export default function Header() {
   return (
     <header className="bg-white border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
-        <div className="flex items-center gap-2 sm:gap-3">
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity">
           <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center flex-shrink-0">
             <span className="text-white text-2xl font-bold">M</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">
             Modero
           </h1>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-2 sm:gap-4">
           <Link to="/Analytics" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-orange-500 transition-colors">
