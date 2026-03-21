@@ -67,10 +67,26 @@ export default function MyAccount() {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
-        {activeTab === 'profile' && <ProfileEditor user={user} />}
-        {activeTab === 'kyc' && <KycRulesSettings userEmail={user?.email} />}
-      </div>
+       <div className="max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+         {activeTab === 'profile' && <ProfileEditor user={user} />}
+         {activeTab === 'kyc' && <KycRulesSettings userEmail={user?.email} />}
+         {activeTab === 'booking' && user?.email && (
+           <div className="space-y-6">
+             {userProperties && userProperties.length > 0 ? (
+               userProperties.map(property => (
+                 <div key={property.id}>
+                   <h3 className="text-lg font-semibold text-slate-900 mb-4">{property.title}</h3>
+                   <BookingRulesManager propertyId={property.id} ownerEmail={user.email} />
+                 </div>
+               ))
+             ) : (
+               <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 text-center">
+                 <p className="text-slate-600">No properties found. Create a property to manage booking rules.</p>
+               </div>
+             )}
+           </div>
+         )}
+       </div>
     </div>
   );
 }
