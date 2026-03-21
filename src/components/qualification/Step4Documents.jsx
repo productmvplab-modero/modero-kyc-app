@@ -53,8 +53,7 @@ export default function Step4Documents({ formData, updateForm, onNext, onBack, t
     { key: 'id_document_url', label: t('s4_id_doc'), desc: t('s4_id_doc_desc'), required: true, icon: '🪪' },
   ];
 
-  const requiredDocs = docTypes.filter(d => d.required);
-  const allRequired = requiredDocs.every(d => formData.documents[d.key]);
+  // Step 4 is optional - users can skip without uploading
 
   const handleUpload = (key, url) => {
     updateForm({ documents: { ...formData.documents, [key]: url } });
