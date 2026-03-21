@@ -65,8 +65,8 @@ export default function Dashboard() {
             <div className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300" />
             <CardContent className="bg-card border-b border-border p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-4">
-                <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-400 flex items-center justify-center shadow-sm flex-shrink-0">
-                  <Filter className="w-4 h-4 text-white" />
+                <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shadow-sm flex-shrink-0">
+                  <Filter className="w-4 h-4 text-primary-foreground" />
                 </div>
                 <Select
                   value={statusFilter}
