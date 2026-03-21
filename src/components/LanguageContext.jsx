@@ -522,6 +522,15 @@ const translations = {
     slack_connect_button: 'Connetti a Slack',
     slack_connecting: 'Connessione in corso...',
     slack_redirect_text: 'Verrai reindirizzato per autorizzare l\'app Modero Slack',
+    // Email Verification
+    email_verification_headline: 'A un clic di distanza',
+    email_verification_subtitle: 'Verifica la tua email per continuare la tua candidatura',
+    email_verification_sent_to: 'Codice di verifica inviato a',
+    email_verify_button: 'Verifica Email',
+    email_verifying: 'Invio in corso...',
+    email_verification_notice: 'Link Sicuro',
+    email_verification_security: 'Questo link di verifica è unico per te. Non condividerlo mai e non inoltrarla a nessun altro.',
+    email_verification_skip: 'Salta per ora',
     },
     };
 
