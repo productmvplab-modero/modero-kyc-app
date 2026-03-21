@@ -134,7 +134,7 @@ export default function TenantQualification() {
           {step === 5 && <Step5IdVerification {...stepProps} />}
           {step === 6 && <Step6Financial {...stepProps} />}
           {step === 7 && <Step7CreditCheck {...stepProps} />}
-          {step === 8 && <Step8Complete {...stepProps} />}
+          {step === 8 && <Step8Complete {...stepProps} inquiryId={inquiryId} />}
         </div>
       </div>
     </div>
