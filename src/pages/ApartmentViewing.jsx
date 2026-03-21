@@ -37,19 +37,32 @@ export default function ApartmentViewing() {
     }
   }, [inquiry]);
 
-  // Generate available dates (next 30 days, weekdays only)
+  // Fetch booking rules for property
+  const { data: bookingRules } = useQuery({
+    queryKey: ['bookingRules', tenantData?.property_id],
+    queryFn: () => tenantData?.property_id ? 
+      base44.entities.BookingRules.filter({ property_id: tenantData.property_id }).then(r => r[0]) : null,
+    enabled: !!tenantData?.property_id,
+  });
+
+  // Generate available dates based on booking rules
   const availableDates = useMemo(() => {
     const dates = [];
     const today = startOfToday();
-    for (let i = 0; i < 30; i++) {
+    const windowDays = bookingRules?.booking_window_days || 30;
+    const availableWeekdays = bookingRules?.available_weekdays || [1, 2, 3, 4, 5]; // Default Mon-Fri
+
+    for (let i = 0; i < windowDays; i++) {
       const date = addDays(today, i);
       const dayOfWeek = getDay(date);
-      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      if (availableWeekdays.includes(dayOfWeek)) {
         dates.push(date);
       }
     }
     return dates;
-  }, []);
+  }, [bookingRules]);
+
+  const timeSlots = bookingRules?.available_time_slots || [];
 
   // Create booking mutation
   const bookingMutation = useMutation({
