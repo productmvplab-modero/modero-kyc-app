@@ -1124,8 +1124,8 @@ export default function TenantDetailsDialog({ inquiry, open, onOpenChange, prope
                         : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/30'
                     }`}
                   >
-                    <div className="h-12 w-12 sm:h-14 sm:w-14 bg-gradient-to-br from-red-600 to-red-500 rounded-lg flex items-center justify-center shrink-0 shadow-sm">
-                      <span className="text-white font-bold text-sm">S</span>
+                    <div className="h-12 w-12 sm:h-14 sm:w-14 bg-[#EC0000] rounded-xl flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+                      <span className="text-white font-black text-xl tracking-tight">S</span>
                     </div>
                     <div className="flex-1 text-left min-w-0">
                       <p className="font-semibold text-sm sm:text-base text-slate-900">Santander</p>
