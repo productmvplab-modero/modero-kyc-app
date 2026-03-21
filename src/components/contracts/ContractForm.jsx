@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { X, ChevronDown, Send } from 'lucide-react';
+import { X, ChevronDown, Send, Mail, Phone, MapPin } from 'lucide-react';
 import TenantProfileCard from './TenantProfileCard';
 import ContractTemplateSelector from './ContractTemplateSelector';
 import FinancingOffers from './FinancingOffers';
@@ -85,6 +85,10 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
     lease_end_date: '',
     deposit_amount: '',
     contract_content: DEFAULT_CONTRACT_TEMPLATE,
+    landlord_name: '',
+    landlord_email: '',
+    landlord_phone: '',
+    landlord_address: '',
   });
 
   const selectedTenant = inquiries.find(i => i.id === selectedInquiry);
@@ -96,9 +100,14 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
     setFinancingOffers([]);
     
     if (inquiryId) {
+      const property = properties.find(p => p.id === inquiries.find(i => i.id === inquiryId)?.property_id);
       setFormData(prev => ({
         ...prev,
         contract_content: DEFAULT_CONTRACT_TEMPLATE,
+        landlord_name: property?.property_owner || '',
+        landlord_email: property?.owner_email || '',
+        landlord_phone: property?.agent_phone || '',
+        landlord_address: property?.address || '',
       }));
     }
   };
@@ -195,7 +204,7 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
           </div>
         </div>
 
-        {/* Tenant and Owner Details */}
+        {/* Party Details - Read Only View */}
         {selectedTenant && (
           <>
             <TenantProfileCard tenant={selectedTenant} />
@@ -208,8 +217,55 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
         )}
 
         {selectedInquiry && (
-          <>
-            <div className="grid grid-cols-2 gap-4">
+           <>
+             {/* Editable Landlord/Owner Information */}
+             <div className="bg-orange-50 border-2 border-orange-200 rounded-lg p-4">
+               <h3 className="text-sm font-semibold text-orange-900 mb-4 flex items-center gap-2">
+                 <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Editable</Badge>
+                 Landlord/Owner Information
+               </h3>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                 <div>
+                   <label className="block text-xs font-medium text-orange-700 mb-1">Name</label>
+                   <Input
+                     value={formData.landlord_name}
+                     onChange={(e) => setFormData(prev => ({ ...prev, landlord_name: e.target.value }))}
+                     placeholder="Landlord name"
+                     className="text-sm"
+                   />
+                 </div>
+                 <div>
+                   <label className="block text-xs font-medium text-orange-700 mb-1">Email</label>
+                   <Input
+                     value={formData.landlord_email}
+                     onChange={(e) => setFormData(prev => ({ ...prev, landlord_email: e.target.value }))}
+                     placeholder="landlord@email.com"
+                     type="email"
+                     className="text-sm"
+                   />
+                 </div>
+                 <div>
+                   <label className="block text-xs font-medium text-orange-700 mb-1">Phone</label>
+                   <Input
+                     value={formData.landlord_phone}
+                     onChange={(e) => setFormData(prev => ({ ...prev, landlord_phone: e.target.value }))}
+                     placeholder="+34 XXX XXX XXX"
+                     className="text-sm"
+                   />
+                 </div>
+                 <div>
+                   <label className="block text-xs font-medium text-orange-700 mb-1">Address</label>
+                   <Input
+                     value={formData.landlord_address}
+                     onChange={(e) => setFormData(prev => ({ ...prev, landlord_address: e.target.value }))}
+                     placeholder="Landlord address"
+                     className="text-sm"
+                   />
+                 </div>
+               </div>
+             </div>
+
+             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">{t('lease_start_date')}</label>
                 <Input
