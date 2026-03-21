@@ -73,12 +73,14 @@ export default function Header() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                  <Avatar className="h-8 w-8 sm:h-9 sm:w-9">
-                    <AvatarImage src={user.profile_picture_url} />
-                    <AvatarFallback className="bg-gradient-to-br from-orange-400 to-amber-300 text-white text-sm font-semibold">
-                      {user.full_name?.charAt(0) || user.email?.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <div className="rounded-full p-[2px] bg-gradient-to-br from-orange-500 via-amber-400 to-yellow-300 shadow-md shadow-orange-200/50">
+                    <Avatar className="h-8 w-8 sm:h-9 sm:w-9 ring-2 ring-white">
+                      <AvatarImage src={user.profile_picture_url} />
+                      <AvatarFallback className="bg-gradient-to-br from-orange-400 to-amber-300 text-white text-sm font-semibold">
+                        {user.full_name?.charAt(0) || user.email?.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
                   <span className="hidden sm:block text-sm font-medium text-slate-700 max-w-[120px] truncate">
                     {[user.first_name, user.last_name].filter(Boolean).join(' ') || user.full_name || user.email}
                   </span>
