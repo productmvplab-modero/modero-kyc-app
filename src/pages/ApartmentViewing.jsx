@@ -489,7 +489,7 @@ export default function ApartmentViewing() {
       <div className="py-8 px-4">
       <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-3 gap-6">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 lg:col-span-3">
           <div>
             <h1 className="text-3xl font-bold text-orange-600 mb-2">Schedule Your Apartment Viewing</h1>
             <p className="text-slate-500">Select a convenient date and time to visit the property</p>
@@ -497,7 +497,17 @@ export default function ApartmentViewing() {
           <Button variant="outline" onClick={() => setAdminMode(true)}>Admin Mode</Button>
         </div>
 
-        <Card>
+        {/* Calendar - Left sidebar */}
+        <div className="lg:col-span-1 order-2 lg:order-1">
+          <ViewingCalendar 
+            bookings={propertyBookings} 
+            currentDate={calendarMonth}
+            onDateChange={setCalendarMonth}
+          />
+        </div>
+
+        {/* Booking Form - Right content */}
+        <Card className="lg:col-span-2 order-1 lg:order-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-orange-500" />
