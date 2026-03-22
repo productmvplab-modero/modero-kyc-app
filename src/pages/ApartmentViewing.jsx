@@ -425,14 +425,14 @@ export default function ApartmentViewing() {
                       {adminBookingMutation.isPending ? 'Confirming...' : 'Confirm Booking'}
                     </Button>
                   </div>
-                </CardContent>
-                </Card>
-                </div>
-                </div>
-                </div>
-                </div>
-                );
-                }
+                  </CardContent>
+                  </Card>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  );
+                  }
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
