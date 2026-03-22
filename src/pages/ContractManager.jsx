@@ -405,21 +405,15 @@ export default function ContractManager() {
                     </div>
                   </div>
 
-                  {/* Right Panel - Financial Overview & Company Info */}
-                  <div className="col-span-1 border-l border-slate-200 pl-6 overflow-y-auto space-y-4">
-                    <SendForSigningSection
-                      contract={viewingContract}
-                      tenantEmail={viewingContract.tenant_email}
-                      landlordEmail={viewingContract.landlord_email}
-                      onSend={() => sendContractMutation.mutate(viewingContract.id)}
-                      isSending={sendContractMutation.isPending}
-                    />
+                  {/* Right Panel */}
+                  <div className="col-span-1 border-l border-slate-200 pl-6 space-y-4">
                     <ContractRightPanel 
                       contract={viewingContract}
                       onPreview={() => setShowPreview(true)}
                       isProfessional={true}
                     />
                   </div>
+                </div>
                 </div>
               </div>
             </div>
