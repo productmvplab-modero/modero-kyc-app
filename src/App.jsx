@@ -80,6 +80,7 @@ const AuthenticatedApp = () => {
       <Route path="/MessagingCenter" element={<LayoutWrapper currentPageName="MessagingCenter"><MessagingCenter /></LayoutWrapper>} />
       <Route path="/EmailTemplateManager" element={<LayoutWrapper currentPageName="EmailTemplateManager"><EmailTemplateManager /></LayoutWrapper>} />
       <Route path="/invite/:token" element={<TenantContractSigning />} />
+      <Route path="/ContractEdit" element={<ContractEdit />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
