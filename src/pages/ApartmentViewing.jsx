@@ -608,9 +608,10 @@ export default function ApartmentViewing() {
               </div>
             )}
           </CardContent>
-        </Card>
-      </div>
-      </div>
-    </div>
-  );
-}
+          </Card>
+          </div>
+          </div>
+          </div>
+          </div>
+          );
+          }
