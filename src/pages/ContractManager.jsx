@@ -22,6 +22,7 @@ export default function ContractManager() {
   const [signatureName, setSignatureName] = useState('');
   const [signatureRole, setSignatureRole] = useState('landlord');
   const [showPreview, setShowPreview] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
 
   const { data: contracts = [], isLoading: contractsLoading } = useQuery({
     queryKey: ['contracts'],
