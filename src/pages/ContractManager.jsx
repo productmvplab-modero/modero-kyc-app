@@ -327,7 +327,13 @@ export default function ContractManager() {
                   {activeTab === 'contract' && (
                     <div className="space-y-4">
                       <div className="flex justify-end">
-                        <Button onClick={() => setShowPreview(true)} variant="outline" size="sm">
+                        <Button onClick={async () => {
+                          const response = await base44.functions.invoke('generateContractPDF', { contract_id: viewingContract.id });
+                          const link = document.createElement('a');
+                          link.href = response.data.pdf_url;
+                          link.download = response.data.pdf_name || `contract_${viewingContract.tenant_name}.pdf`;
+                          link.click();
+                        }} variant="outline" size="sm">
                           <FileDown className="w-4 h-4 mr-2" /> Download PDF
                         </Button>
                       </div>
