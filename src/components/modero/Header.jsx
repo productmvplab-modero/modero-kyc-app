@@ -77,9 +77,6 @@ export default function Header() {
                  <Link to="/ViewingBooking">Viewing Booking</Link>
                </DropdownMenuItem>
                <DropdownMenuItem asChild>
-                 <Link to="/ApartmentViewing">Apartment Viewing</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
                  <Link to="/ContractManager">Contract Manager</Link>
                </DropdownMenuItem>
                <DropdownMenuItem asChild>
