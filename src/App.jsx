@@ -13,6 +13,7 @@ import ContractManager from './pages/ContractManager'
 import MessagingCenter from './pages/MessagingCenter'
 import EmailTemplateManager from './pages/EmailTemplateManager'
 import TenantContractSigning from './pages/TenantContractSigning'
+import ContractEdit from './pages/ContractEdit'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
