@@ -136,9 +136,9 @@ export default function SendForSigningSection({ contract, tenantEmail, landlordE
         <div className="pt-2 border-t border-orange-200">
           <Button
             onClick={() => setShowForm(!showForm)}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white"
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold h-11"
           >
-            <Mail className="w-4 h-4 mr-2" />
+            <Mail className="w-5 h-5 mr-2" />
             Send for Signature
           </Button>
 
