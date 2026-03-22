@@ -8,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
 import ContractCard from '@/components/contracts/ContractCard';
-import ContractRightPanel from '@/components/contracts/ContractRightPanel';
 import ContractSigningPanel from '@/components/contracts/ContractSigningPanel';
 
 export default function ContractManager() {
