@@ -428,6 +428,8 @@ export default function ApartmentViewing() {
                   </CardContent>
                   </Card>
                   </div>
+                  </div>
+                  </div>
                   );
                   }
 
