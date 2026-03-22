@@ -36,15 +36,7 @@ export default function Dashboard() {
     queryFn: () => base44.entities.PropertyOwner.list('-created_date'),
   });
 
-  const { data: contracts = [] } = useQuery({
-    queryKey: ['contracts'],
-    queryFn: () => base44.entities.RentalContract.list('-created_date'),
-  });
 
-  const { data: viewingBookings = [] } = useQuery({
-    queryKey: ['viewingBookings'],
-    queryFn: () => base44.entities.ViewingBooking.list('-created_date'),
-  });
 
   const filteredInquiries = statusFilter === 'all' 
     ? inquiries 
