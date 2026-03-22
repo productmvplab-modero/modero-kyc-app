@@ -12,6 +12,7 @@ import ApartmentViewing from './pages/ApartmentViewing'
 import ContractManager from './pages/ContractManager'
 import MessagingCenter from './pages/MessagingCenter'
 import EmailTemplateManager from './pages/EmailTemplateManager'
+import TenantContractSigning from './pages/TenantContractSigning'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -77,6 +78,7 @@ const AuthenticatedApp = () => {
       <Route path="/ContractManager" element={<LayoutWrapper currentPageName="ContractManager"><ContractManager /></LayoutWrapper>} />
       <Route path="/MessagingCenter" element={<LayoutWrapper currentPageName="MessagingCenter"><MessagingCenter /></LayoutWrapper>} />
       <Route path="/EmailTemplateManager" element={<LayoutWrapper currentPageName="EmailTemplateManager"><EmailTemplateManager /></LayoutWrapper>} />
+      <Route path="/invite/:token" element={<TenantContractSigning />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
