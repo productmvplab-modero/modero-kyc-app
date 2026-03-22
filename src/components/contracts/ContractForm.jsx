@@ -238,16 +238,30 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">{t('security_deposit')}</label>
-              <div className="flex items-center gap-2">
-                <span className="text-slate-600">€</span>
-                <Input
-                  type="number"
-                  placeholder="2000"
-                  value={formData.deposit_amount}
-                  onChange={(e) => setFormData(prev => ({ ...prev, deposit_amount: parseFloat(e.target.value) }))}
-                />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Monthly Rent (€)</label>
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-600">€</span>
+                  <Input
+                    type="number"
+                    placeholder="1200"
+                    value={formData.monthly_rent}
+                    onChange={(e) => setFormData(prev => ({ ...prev, monthly_rent: parseFloat(e.target.value) }))}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('security_deposit')} (€)</label>
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-600">€</span>
+                  <Input
+                    type="number"
+                    placeholder="2000"
+                    value={formData.deposit_amount}
+                    onChange={(e) => setFormData(prev => ({ ...prev, deposit_amount: parseFloat(e.target.value) }))}
+                  />
+                </div>
               </div>
             </div>
 
