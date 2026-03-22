@@ -220,9 +220,31 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
 
         {selectedInquiry && (
            <>
+             {/* Landlord Info - shown when property data is missing */}
              <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">{t('lease_start_date')}</label>
+               <div>
+                 <label className="block text-sm font-medium text-slate-700 mb-2">Landlord Name</label>
+                 <Input
+                   type="text"
+                   placeholder="Full name"
+                   value={formData.landlord_name}
+                   onChange={(e) => setFormData(prev => ({ ...prev, landlord_name: e.target.value }))}
+                 />
+               </div>
+               <div>
+                 <label className="block text-sm font-medium text-slate-700 mb-2">Landlord Email</label>
+                 <Input
+                   type="email"
+                   placeholder="email@example.com"
+                   value={formData.landlord_email}
+                   onChange={(e) => setFormData(prev => ({ ...prev, landlord_email: e.target.value }))}
+                 />
+               </div>
+             </div>
+
+             <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">{t('lease_start_date')}</label>
                 <Input
                   type="date"
                   value={formData.lease_start_date}
