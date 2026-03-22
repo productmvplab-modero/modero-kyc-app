@@ -18,6 +18,15 @@ export default function ContractRightPanel({ contract, onPreview, isProfessional
     companyLogo: null,
     taxId: 'ES12345678A',
     bankAccount: 'ES91 2100 0418 4502 0005 1332',
+    customFields: [],
+  });
+
+  const addCustomField = () => setEditData(prev => ({ ...prev, customFields: [...prev.customFields, { label: '', value: '' }] }));
+  const removeCustomField = (i) => setEditData(prev => ({ ...prev, customFields: prev.customFields.filter((_, idx) => idx !== i) }));
+  const updateCustomField = (i, key, val) => setEditData(prev => {
+    const updated = [...prev.customFields];
+    updated[i] = { ...updated[i], [key]: val };
+    return { ...prev, customFields: updated };
   });
 
   const financialData = {
