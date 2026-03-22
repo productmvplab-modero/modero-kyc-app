@@ -41,7 +41,7 @@ export default function ContractManager() {
   const createContractMutation = useMutation({
     mutationFn: async (formData) => {
       const inquiry = inquiries.find(i => i.id === formData.inquiryId);
-      const property = await base44.entities.Property.get(inquiry.property_id);
+      const property = properties.find(p => p.id === inquiry.property_id);
 
       const contractData = {
         property_id: inquiry.property_id,
