@@ -26,7 +26,7 @@ export default function ContractEdit() {
   const [formData, setFormData] = useState(null);
 
   // Initialise form once contract loads
-  React.useEffect(() => {
+  useEffect(() => {
     if (contract && !formData) {
       setFormData({
         tenant_name: contract.tenant_name || '',
