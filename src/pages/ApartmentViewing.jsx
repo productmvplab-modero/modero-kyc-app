@@ -22,6 +22,7 @@ export default function ApartmentViewing() {
   const [adminSelectedDate, setAdminSelectedDate] = useState(null);
   const [adminSelectedTime, setAdminSelectedTime] = useState(null);
   const [step, setStep] = useState('select'); // 'select', 'confirm', 'success'
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
 
   // Get inquiry ID from URL
   React.useEffect(() => {
