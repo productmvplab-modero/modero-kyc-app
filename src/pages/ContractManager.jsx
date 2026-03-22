@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { FileText, AlertCircle, X, FileDown } from 'lucide-react';
+import { FileText, AlertCircle, X, FileDown, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
