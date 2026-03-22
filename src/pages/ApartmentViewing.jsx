@@ -487,7 +487,8 @@ export default function ApartmentViewing() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
       <Header />
       <div className="py-8 px-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid lg:grid-cols-3 gap-6">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-orange-600 mb-2">Schedule Your Apartment Viewing</h1>
