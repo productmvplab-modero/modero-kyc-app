@@ -142,7 +142,7 @@ export default function ContractPartyDetails({ tenant, property }) {
       {/* Landlord/Owner Information */}
       <div className="border-2 border-orange-200 rounded-xl p-5 bg-orange-50">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
-          <h3 className="text-lg font-bold text-orange-900">Real Estate Agent</h3>
+          <h3 className="text-lg font-bold text-orange-900">Landlord/Owner Information</h3>
           <Button
             onClick={() => setIsEditingLandlord(!isEditingLandlord)}
             size="sm"
