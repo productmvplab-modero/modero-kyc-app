@@ -84,6 +84,7 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
   const [formData, setFormData] = useState({
     lease_start_date: '',
     lease_end_date: '',
+    monthly_rent: '',
     deposit_amount: '',
     contract_content: DEFAULT_CONTRACT_TEMPLATE,
     landlord_name: '',
