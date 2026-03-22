@@ -12,7 +12,7 @@ import ContractCard from '@/components/contracts/ContractCard';
 import ContractPartyDetails from '@/components/contracts/ContractPartyDetails';
 import FinancialOverview from '@/components/contracts/FinancialOverview';
 import ContractRightPanel from '@/components/contracts/ContractRightPanel';
-import SendForSigningSection from '@/components/contracts/SendForSigningSection';
+import ContractSigningPanel from '@/components/contracts/ContractSigningPanel';
 
 export default function ContractManager() {
   const { t } = useLanguage();
