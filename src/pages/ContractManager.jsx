@@ -65,6 +65,15 @@ export default function ContractManager() {
     },
   });
 
+  const updateContractMutation = useMutation({
+    mutationFn: async (data) => {
+      return await base44.entities.RentalContract.update(viewingContractId, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contracts'] });
+    },
+  });
+
   const sendContractMutation = useMutation({
     mutationFn: async (contractId) => {
       return await base44.functions.invoke('sendContractForSignature', { contract_id: contractId });
