@@ -270,9 +270,20 @@ export default function ContractManager() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-3 gap-6 p-6 h-full">
+                <div className="p-6 space-y-6 overflow-y-auto">
+
+                  {/* Digital Signing Section - Full Width, Top */}
+                  <SendForSigningSection
+                    contract={viewingContract}
+                    tenantEmail={viewingContract.tenant_email}
+                    landlordEmail={viewingContract.landlord_email}
+                    onSend={() => sendContractMutation.mutate(viewingContract.id)}
+                    isSending={sendContractMutation.isPending}
+                  />
+
+                <div className="grid grid-cols-3 gap-6">
                   {/* Left Section - Contract Content */}
-                  <div className="col-span-2 space-y-6 overflow-y-auto">
+                  <div className="col-span-2 space-y-6">
                     {/* Party Details */}
                     {viewingInquiry && viewingProperty && (
                       <ContractPartyDetails 
