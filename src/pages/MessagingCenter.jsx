@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { MessageSquare, Send, FileText, CheckCircle2, AlertCircle, Clock, Zap, Search, Filter } from 'lucide-react';
+import { MessageSquare, Send, FileText, CheckCircle2, AlertCircle, Clock, Zap, Search, Filter, Smartphone, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
+import Header from '@/components/modero/Header';
 
 const TEMPLATES = [
   {
