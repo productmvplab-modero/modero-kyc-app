@@ -5,7 +5,6 @@ import { useLanguage } from '@/components/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { FileText, AlertCircle, X, FileDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
 import ContractCard from '@/components/contracts/ContractCard';
