@@ -313,15 +313,6 @@ export default function ContractManager() {
                     />
                   )}
 
-                  {/* EDIT TAB */}
-                  {activeTab === 'edit' && (
-                    <ContractEditForm
-                      contract={viewingContract}
-                      onSave={(data) => updateContractMutation.mutate(data)}
-                      isSaving={updateContractMutation.isPending}
-                    />
-                  )}
-
                   {/* AUDIT TAB */}
                   {activeTab === 'audit' && (
                     <div className="space-y-4">
