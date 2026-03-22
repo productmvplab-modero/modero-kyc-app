@@ -123,6 +123,10 @@ export default function Dashboard() {
           </div>
 
           <div>
+            <PropertyCalendar contracts={contracts} viewingBookings={viewingBookings} properties={properties} />
+          </div>
+
+          <div>
             <PropertyPerformance
               properties={properties}
               inquiries={inquiries}
