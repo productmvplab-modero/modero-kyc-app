@@ -129,6 +129,14 @@ export default function ApartmentViewing() {
     enabled: !!adminPropertyId,
   });
 
+  // Fetch all bookings for the property calendar in tenant mode
+  const { data: propertyBookings = [] } = useQuery({
+    queryKey: ['propertyBookings', tenantData?.property_id],
+    queryFn: () => tenantData?.property_id ? 
+      base44.entities.ViewingBooking.filter({ property_id: tenantData.property_id }) : [],
+    enabled: !!tenantData?.property_id,
+  });
+
   const adminBookedDates = adminBookings.map(b => b.viewing_date);
   const adminBookedTimes = adminBookings
     .filter(b => adminSelectedDate && b.viewing_date === format(adminSelectedDate, 'yyyy-MM-dd'))
