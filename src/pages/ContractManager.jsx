@@ -9,7 +9,6 @@ import Header from '@/components/modero/Header';
 import ContractForm from '@/components/contracts/ContractForm';
 import ContractCard from '@/components/contracts/ContractCard';
 import ContractSigningPanel from '@/components/contracts/ContractSigningPanel';
-import ContractEditForm from '@/components/contracts/ContractEditForm';
 
 export default function ContractManager() {
   const { t } = useLanguage();
