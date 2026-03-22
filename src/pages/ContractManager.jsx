@@ -283,6 +283,7 @@ export default function ContractManager() {
                     { key: 'signing', label: '✍️ Signing' },
                     { key: 'contract', label: '📄 Contract Text' },
                     { key: 'edit', label: '✏️ Edit' },
+                    { key: 'audit', label: '🔍 Audit' },
                   ].map(tab => (
                     <button
                       key={tab.key}
