@@ -187,7 +187,7 @@ export default function ContractManager() {
                   key={contract.id}
                   contract={contract}
                   onSend={(id) => sendContractMutation.mutate(id)}
-                  onView={(id) => { setViewingContractId(id); setActiveTab('overview'); }}
+                  onView={(id) => { setViewingContractId(id); setActiveTab('signing'); }}
                   onDelete={(id) => {
                     if (confirm('Are you sure you want to delete this contract?')) {
                       deleteContractMutation.mutate(id);
