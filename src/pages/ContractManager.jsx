@@ -259,161 +259,157 @@ export default function ContractManager() {
             </div>
           )}
 
-          {/* Contract Signature Modal */}
+          {/* Contract Modal */}
           {viewingContract && !showPreview && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-slate-200 flex items-center justify-between p-4">
-                  <h2 className="text-xl font-semibold text-slate-800">{t('sign_rental_contract')}</h2>
-                  <button onClick={() => setViewingContractId(null)} className="text-slate-400 hover:text-slate-600">
-                    <X className="w-6 h-6" />
+            <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl">
+
+                {/* Modal Header */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 flex-shrink-0">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900">Rental Contract</h2>
+                    <p className="text-sm text-slate-500">{viewingContract.tenant_name} · {viewingContract.property_address || 'No address'}</p>
+                  </div>
+                  <button onClick={() => { setViewingContractId(null); setSignatureName(''); }} className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors">
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div className="p-6 space-y-6 overflow-y-auto">
+                {/* Tab Bar */}
+                <div className="flex border-b border-slate-200 flex-shrink-0 px-6">
+                  {['overview', 'contract', 'financials'].map(tab => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`py-3 px-4 text-sm font-medium capitalize border-b-2 transition-colors -mb-px ${
+                        activeTab === tab
+                          ? 'border-orange-500 text-orange-600'
+                          : 'border-transparent text-slate-500 hover:text-slate-700'
+                      }`}
+                    >
+                      {tab === 'overview' ? '📋 Overview' : tab === 'contract' ? '📄 Contract' : '💰 Financials'}
+                    </button>
+                  ))}
+                </div>
 
-                  {/* Digital Signing Section - Full Width, Top */}
-                  <SendForSigningSection
-                    contract={viewingContract}
-                    tenantEmail={viewingContract.tenant_email}
-                    landlordEmail={viewingContract.landlord_email}
-                    onSend={() => sendContractMutation.mutate(viewingContract.id)}
-                    isSending={sendContractMutation.isPending}
-                  />
+                {/* Tab Content */}
+                <div className="flex-1 overflow-y-auto p-6">
 
-                <div className="grid grid-cols-3 gap-6">
-                  {/* Left Section - Contract Content */}
-                  <div className="col-span-2 space-y-6">
-                    {/* Party Details */}
-                    {viewingInquiry && viewingProperty && (
-                      <ContractPartyDetails 
-                        tenant={viewingInquiry} 
-                        property={viewingProperty}
-                        idealista_id={viewingInquiry.idealista_id}
-                      />
-                    )}
-
-                    {/* Contract Content */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-slate-700 mb-3">{t('contract_terms_label')}</h3>
-                      <div className="bg-slate-50 rounded-lg p-4 max-h-64 overflow-y-auto border border-slate-200">
-                        <pre className="text-xs text-slate-700 whitespace-pre-wrap font-mono">
-                          {viewingContract.contract_content}
-                        </pre>
-                      </div>
-                    </div>
-
-                    {/* Role Selection */}
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Signing as</label>
-                      <select
-                        value={signatureRole}
-                        onChange={(e) => setSignatureRole(e.target.value)}
-                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
-                      >
-                        <option value="landlord">{t('landlord')}</option>
-                        <option value="tenant">{t('tenant')}</option>
-                      </select>
-                    </div>
-
-                    {/* Signature Section */}
-                    {isAlreadySigned ? (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <div className="flex items-center gap-3 text-green-700">
-                          <CheckCircle2 className="w-6 h-6 shrink-0" />
-                          <div>
-                            <p className="font-semibold">{t('already_signed')}</p>
-                            <p className="text-sm text-green-600">{t('you_have_signed')}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div>
-                          <label className="block text-sm font-semibold text-slate-700 mb-2">{t('type_full_name')}</label>
-                          <Input
-                            type="text"
-                            placeholder={t('enter_full_name')}
-                            value={signatureName}
-                            onChange={(e) => setSignatureName(e.target.value)}
-                            className="text-lg h-12"
-                          />
-                        </div>
-
-                        <div className="bg-slate-50 rounded-lg p-4 border-2 border-dashed border-slate-300">
-                          <p className="text-sm text-slate-600 mb-2">{t('your_signature')}:</p>
-                          <p className="text-lg text-slate-800" style={{ fontStyle: 'italic', fontFamily: 'cursive' }}>
-                            {signatureName || t('your_signature_preview')}
-                          </p>
-                        </div>
-
-                        <Button
-                          onClick={() => signContractMutation.mutate()}
-                          disabled={!signatureName.trim() || signContractMutation.isPending}
-                          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold h-12"
-                        >
-                          {signContractMutation.isPending ? t('signing_contract') : t('sign_contract_btn')}
-                        </Button>
-
-                        {signContractMutation.isSuccess && (
-                          <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                            <div className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
-                              <div>
-                                <p className="font-semibold text-green-700">{t('contract_signed_success')}</p>
-                                <p className="text-sm text-green-600 mt-1">
-                                  {signatureRole === 'tenant' ? t('tenant_will_sign_next') : t('both_parties_signed')}
-                                </p>
-                              </div>
+                  {/* OVERVIEW TAB */}
+                  {activeTab === 'overview' && (
+                    <div className="space-y-5">
+                      {/* Signing Status Cards */}
+                      <div>
+                        <h3 className="text-sm font-semibold text-slate-700 mb-3">Signature Status</h3>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className={`p-4 rounded-xl border-2 flex items-center gap-3 ${viewingContract.tenant_signed ? 'bg-green-50 border-green-300' : 'bg-slate-50 border-slate-200'}`}>
+                            <div className={`w-9 h-9 rounded-full flex items-center justify-center ${viewingContract.tenant_signed ? 'bg-green-100' : 'bg-white border-2 border-slate-300'}`}>
+                              {viewingContract.tenant_signed ? <CheckCircle2 className="w-5 h-5 text-green-600" /> : <span className="text-slate-400 text-sm">T</span>}
+                            </div>
+                            <div>
+                              <p className="text-xs text-slate-500">Tenant</p>
+                              <p className="text-sm font-semibold text-slate-800">{viewingContract.tenant_name}</p>
+                              <p className={`text-xs font-medium ${viewingContract.tenant_signed ? 'text-green-600' : 'text-slate-400'}`}>{viewingContract.tenant_signed ? '✓ Signed' : 'Awaiting signature'}</p>
                             </div>
                           </div>
-                        )}
-
-                        {signContractMutation.isError && (
-                          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                            <p className="text-red-700 text-sm">{signContractMutation.error.message || 'Error signing contract'}</p>
+                          <div className={`p-4 rounded-xl border-2 flex items-center gap-3 ${viewingContract.landlord_signed ? 'bg-green-50 border-green-300' : 'bg-slate-50 border-slate-200'}`}>
+                            <div className={`w-9 h-9 rounded-full flex items-center justify-center ${viewingContract.landlord_signed ? 'bg-green-100' : 'bg-white border-2 border-slate-300'}`}>
+                              {viewingContract.landlord_signed ? <CheckCircle2 className="w-5 h-5 text-green-600" /> : <span className="text-slate-400 text-sm">L</span>}
+                            </div>
+                            <div>
+                              <p className="text-xs text-slate-500">Landlord</p>
+                              <p className="text-sm font-semibold text-slate-800">{viewingContract.landlord_name || 'Landlord'}</p>
+                              <p className={`text-xs font-medium ${viewingContract.landlord_signed ? 'text-green-600' : 'text-slate-400'}`}>{viewingContract.landlord_signed ? '✓ Signed' : 'Awaiting signature'}</p>
+                            </div>
                           </div>
-                        )}
-                      </>
-                    )}
-
-                    {/* Status Summary */}
-                    <div className="pt-4 border-t border-slate-200">
-                      <h3 className="text-sm font-semibold text-slate-700 mb-3">{t('signature_status')}</h3>
-                      <div className="grid grid-cols-2 gap-3 mb-4">
-                        <div className={`p-3 rounded-lg ${viewingContract.tenant_signed ? 'bg-green-50 border border-green-200' : 'bg-slate-50 border border-slate-200'}`}>
-                          <p className="text-xs text-slate-600 mb-1">{t('tenant')}</p>
-                          <p className="text-sm font-semibold text-slate-800">{viewingContract.tenant_signed ? '✓ ' + t('already_signed') : '○ ' + t('pending')}</p>
-                        </div>
-                        <div className={`p-3 rounded-lg ${viewingContract.landlord_signed ? 'bg-green-50 border border-green-200' : 'bg-slate-50 border border-slate-200'}`}>
-                          <p className="text-xs text-slate-600 mb-1">{t('landlord')}</p>
-                          <p className="text-sm font-semibold text-slate-800">{viewingContract.landlord_signed ? '✓ ' + t('already_signed') : '○ ' + t('pending')}</p>
                         </div>
                       </div>
 
-                      {/* Send for Digital Signing Button */}
-                      {viewingContract.status === 'draft' && (
-                        <Button
-                          onClick={() => sendContractMutation.mutate(viewingContract.id)}
-                          disabled={sendContractMutation.isPending}
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                        >
-                          <Send className="w-4 h-4 mr-2" />
-                          {sendContractMutation.isPending ? 'Sending for Signature...' : 'Send for Digital Signing'}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
+                      {/* Send for Signing */}
+                      <SendForSigningSection
+                        contract={viewingContract}
+                        tenantEmail={viewingContract.tenant_email}
+                        landlordEmail={viewingContract.landlord_email}
+                        onSend={() => sendContractMutation.mutate(viewingContract.id)}
+                        isSending={sendContractMutation.isPending}
+                      />
 
-                  {/* Right Panel */}
-                  <div className="col-span-1 border-l border-slate-200 pl-6 space-y-4">
-                    <ContractRightPanel 
+                      {/* Sign Here (Admin) */}
+                      <div className="bg-slate-50 rounded-xl border border-slate-200 p-5 space-y-4">
+                        <h3 className="text-sm font-semibold text-slate-700">Sign as Admin</h3>
+                        <div>
+                          <label className="block text-xs font-medium text-slate-600 mb-1">Signing as</label>
+                          <select
+                            value={signatureRole}
+                            onChange={(e) => setSignatureRole(e.target.value)}
+                            className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                          >
+                            <option value="landlord">Landlord</option>
+                            <option value="tenant">Tenant</option>
+                          </select>
+                        </div>
+
+                        {isAlreadySigned ? (
+                          <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-lg p-3">
+                            <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
+                            <p className="text-sm font-semibold text-green-700">Already signed as {signatureRole}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div>
+                              <label className="block text-xs font-medium text-slate-600 mb-1">Type your full name to sign</label>
+                              <Input
+                                type="text"
+                                placeholder="Your full name"
+                                value={signatureName}
+                                onChange={(e) => setSignatureName(e.target.value)}
+                                className="h-11"
+                              />
+                            </div>
+                            {signatureName && (
+                              <div className="bg-white border-2 border-dashed border-slate-300 rounded-lg px-4 py-3">
+                                <p className="text-xs text-slate-400 mb-1">Signature preview</p>
+                                <p className="text-xl text-slate-800" style={{ fontStyle: 'italic', fontFamily: 'cursive' }}>{signatureName}</p>
+                              </div>
+                            )}
+                            <Button
+                              onClick={() => signContractMutation.mutate()}
+                              disabled={!signatureName.trim() || signContractMutation.isPending}
+                              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold h-11"
+                            >
+                              {signContractMutation.isPending ? 'Signing...' : `Sign as ${signatureRole === 'landlord' ? 'Landlord' : 'Tenant'}`}
+                            </Button>
+                            {signContractMutation.isError && (
+                              <p className="text-red-600 text-sm">{signContractMutation.error.message || 'Error signing contract'}</p>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CONTRACT TAB */}
+                  {activeTab === 'contract' && (
+                    <div className="space-y-4">
+                      <div className="flex justify-end">
+                        <Button onClick={() => setShowPreview(true)} variant="outline" size="sm">
+                          <FileDown className="w-4 h-4 mr-2" /> Download PDF
+                        </Button>
+                      </div>
+                      <div className="bg-white border-2 border-slate-200 rounded-xl p-6 whitespace-pre-wrap text-sm leading-relaxed text-slate-800 font-mono">
+                        {viewingContract.contract_content}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* FINANCIALS TAB */}
+                  {activeTab === 'financials' && (
+                    <ContractRightPanel
                       contract={viewingContract}
                       onPreview={() => setShowPreview(true)}
-                      isProfessional={true}
                     />
-                  </div>
-                </div>
+                  )}
+
                 </div>
               </div>
             </div>
