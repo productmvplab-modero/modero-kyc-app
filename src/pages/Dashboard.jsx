@@ -13,6 +13,7 @@ import RevenueChart from "../components/modero/RevenueChart";
 import PropertyDetailsDialog from "../components/modero/PropertyDetailsDialog";
 import Header from "../components/modero/Header";
 import SlackIntegration from "../components/modero/SlackIntegration";
+import PropertyCalendar from "../components/dashboard/PropertyCalendar";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function Dashboard() {
