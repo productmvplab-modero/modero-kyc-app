@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, Clock, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
 import { format, addDays, startOfToday, getDay, isAfter, addHours } from 'date-fns';
 import Header from '@/components/modero/Header';
+import ViewingCalendar from '@/components/apartment/ViewingCalendar';
 
 const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
 
