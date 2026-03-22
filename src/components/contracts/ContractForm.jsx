@@ -130,14 +130,14 @@ export default function ContractForm({ inquiries, onSubmit, onCancel, isLoading,
   };
 
   const handleSubmit = () => {
-    if (!selectedInquiry || !formData.lease_start_date) {
-      alert(t('pending'));
+    if (!selectedInquiry || !formData.lease_start_date || !formData.landlord_name) {
+      alert('Please fill in all required fields including Landlord Name.');
       return;
     }
     onSubmit({ inquiryId: selectedInquiry, ...formData });
   };
 
-  const isValid = selectedInquiry && formData.lease_start_date && formData.lease_end_date && formData.deposit_amount;
+  const isValid = selectedInquiry && formData.lease_start_date && formData.lease_end_date && formData.deposit_amount && formData.landlord_name;
 
   return (
     <Card>
