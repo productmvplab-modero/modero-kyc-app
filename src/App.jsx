@@ -75,7 +75,6 @@ const AuthenticatedApp = () => {
       <Route path="/ViewingBooking" element={<LayoutWrapper currentPageName="ViewingBooking"><ViewingBooking /></LayoutWrapper>} />
       <Route path="/ApartmentViewing" element={<LayoutWrapper currentPageName="ApartmentViewing"><ApartmentViewing /></LayoutWrapper>} />
       <Route path="/ContractManager" element={<LayoutWrapper currentPageName="ContractManager"><ContractManager /></LayoutWrapper>} />
-      <Route path="/ContractSignature" element={<ContractSignature />} />
       <Route path="/MessagingCenter" element={<LayoutWrapper currentPageName="MessagingCenter"><MessagingCenter /></LayoutWrapper>} />
       <Route path="/EmailTemplateManager" element={<LayoutWrapper currentPageName="EmailTemplateManager"><EmailTemplateManager /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
