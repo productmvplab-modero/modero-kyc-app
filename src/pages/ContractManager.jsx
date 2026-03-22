@@ -281,8 +281,6 @@ export default function ContractManager() {
                 <div className="flex border-b border-slate-200 flex-shrink-0 px-6">
                   {[
                     { key: 'signing', label: '✍️ Signing' },
-                    { key: 'contract', label: '📄 Contract Text' },
-                    { key: 'edit', label: '✏️ Edit' },
                     { key: 'audit', label: '🔍 Audit' },
                   ].map(tab => (
                     <button
