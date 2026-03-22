@@ -8,7 +8,6 @@ import TenantQualification from './pages/TenantQualification'
 import MyAccount from './pages/MyAccount'
 import Analytics from './pages/Analytics'
 import ViewingBooking from './pages/ViewingBooking'
-import ApartmentViewing from './pages/ApartmentViewing'
 import ContractManager from './pages/ContractManager'
 import MessagingCenter from './pages/MessagingCenter'
 import EmailTemplateManager from './pages/EmailTemplateManager'
@@ -75,7 +74,6 @@ const AuthenticatedApp = () => {
       <Route path="/Analytics" element={<LayoutWrapper currentPageName="Analytics"><Analytics /></LayoutWrapper>} />
       <Route path="/TenantQualification" element={<TenantQualification />} />
       <Route path="/ViewingBooking" element={<LayoutWrapper currentPageName="ViewingBooking"><ViewingBooking /></LayoutWrapper>} />
-      <Route path="/ApartmentViewing" element={<LayoutWrapper currentPageName="ApartmentViewing"><ApartmentViewing /></LayoutWrapper>} />
       <Route path="/ContractManager" element={<LayoutWrapper currentPageName="ContractManager"><ContractManager /></LayoutWrapper>} />
       <Route path="/MessagingCenter" element={<LayoutWrapper currentPageName="MessagingCenter"><MessagingCenter /></LayoutWrapper>} />
       <Route path="/EmailTemplateManager" element={<LayoutWrapper currentPageName="EmailTemplateManager"><EmailTemplateManager /></LayoutWrapper>} />
