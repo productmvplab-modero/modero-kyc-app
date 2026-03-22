@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import { CreditCard, CheckCircle2, Clock, AlertCircle, Eye, Upload, Edit2, Save, X, Plus, Trash2 } from 'lucide-react';
 
 const statusConfig = {
