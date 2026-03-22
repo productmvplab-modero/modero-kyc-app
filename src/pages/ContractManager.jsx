@@ -255,13 +255,13 @@ export default function ContractManager() {
           {/* Contract Modal */}
           {viewingContract && !showPreview && (
             <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl">
+              <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl">
 
                 {/* Modal Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 flex-shrink-0">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900">Rental Contract</h2>
-                    <p className="text-sm text-slate-500">{viewingContract.tenant_name} · {viewingContract.property_address || 'No address'}</p>
+                    <h2 className="text-lg font-bold text-slate-900">{viewingContract.property_address || 'Rental Contract'}</h2>
+                    <p className="text-sm text-slate-500">Tenant: {viewingContract.tenant_name} · Landlord: {viewingContract.landlord_name || '—'}</p>
                   </div>
                   <button onClick={() => { setViewingContractId(null); setSignatureName(''); }} className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors">
                     <X className="w-5 h-5" />
@@ -270,17 +270,20 @@ export default function ContractManager() {
 
                 {/* Tab Bar */}
                 <div className="flex border-b border-slate-200 flex-shrink-0 px-6">
-                  {['overview', 'contract', 'financials'].map(tab => (
+                  {[
+                    { key: 'signing', label: '✍️ Signing' },
+                    { key: 'contract', label: '📄 Contract Text' },
+                  ].map(tab => (
                     <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`py-3 px-4 text-sm font-medium capitalize border-b-2 transition-colors -mb-px ${
-                        activeTab === tab
+                      key={tab.key}
+                      onClick={() => setActiveTab(tab.key)}
+                      className={`py-3 px-4 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                        activeTab === tab.key
                           ? 'border-orange-500 text-orange-600'
                           : 'border-transparent text-slate-500 hover:text-slate-700'
                       }`}
                     >
-                      {tab === 'overview' ? '📋 Overview' : tab === 'contract' ? '📄 Contract' : '💰 Financials'}
+                      {tab.label}
                     </button>
                   ))}
                 </div>
@@ -288,8 +291,8 @@ export default function ContractManager() {
                 {/* Tab Content */}
                 <div className="flex-1 overflow-y-auto p-6">
 
-                  {/* OVERVIEW TAB */}
-                  {activeTab === 'overview' && (
+                  {/* SIGNING TAB */}
+                  {activeTab === 'signing' && (
                     <ContractSigningPanel
                       contract={viewingContract}
                       signatureName={signatureName}
@@ -301,7 +304,7 @@ export default function ContractManager() {
                     />
                   )}
 
-                  {/* CONTRACT TAB */}
+                  {/* CONTRACT TEXT TAB */}
                   {activeTab === 'contract' && (
                     <div className="space-y-4">
                       <div className="flex justify-end">
@@ -309,18 +312,10 @@ export default function ContractManager() {
                           <FileDown className="w-4 h-4 mr-2" /> Download PDF
                         </Button>
                       </div>
-                      <div className="bg-white border-2 border-slate-200 rounded-xl p-6 whitespace-pre-wrap text-sm leading-relaxed text-slate-800 font-mono">
+                      <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 whitespace-pre-wrap text-sm leading-relaxed text-slate-800">
                         {viewingContract.contract_content}
                       </div>
                     </div>
-                  )}
-
-                  {/* FINANCIALS TAB */}
-                  {activeTab === 'financials' && (
-                    <ContractRightPanel
-                      contract={viewingContract}
-                      onPreview={() => setShowPreview(true)}
-                    />
                   )}
 
                 </div>
