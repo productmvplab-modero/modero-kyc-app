@@ -454,7 +454,18 @@ export default function ApartmentViewing() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-600">Property:</span>
-                      <span className="font-semibold">{adminPropertyData.address}</span>
+                      <div className="text-right">
+                        <div className="font-semibold">{adminPropertyData.address}</div>
+                        <div className="text-xs text-slate-500 mt-1">
+                          {adminPropertyData.agent_first_name && (
+                            <>
+                              <p>{adminPropertyData.agent_first_name} {adminPropertyData.agent_last_name}</p>
+                              {adminPropertyData.agent_phone && <p>{adminPropertyData.agent_phone}</p>}
+                              {adminPropertyData.agent_email && <p>{adminPropertyData.agent_email}</p>}
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-600">Date & Time:</span>
