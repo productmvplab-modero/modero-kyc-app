@@ -28,6 +28,26 @@ const EditField = ({ label, value, onChange, placeholder }) => (
 export default function ContractPartyDetails({ tenant, property }) {
   const [isEditingLandlord, setIsEditingLandlord] = useState(false);
   const [isEditingTenant, setIsEditingTenant] = useState(false);
+  const [isEditingAgent, setIsEditingAgent] = useState(false);
+
+  const [agentInfo, setAgentInfo] = useState({
+    firstName: property?.agent_first_name || '',
+    lastName: property?.agent_last_name || '',
+    agency: property?.agent_agency || '',
+    phone: property?.agent_phone || '',
+    email: property?.agent_email || '',
+    city: property?.agent_city || '',
+    customFields: []
+  });
+
+  const updateAgent = (field, value) => setAgentInfo(prev => ({ ...prev, [field]: value }));
+  const addAgentField = () => setAgentInfo(prev => ({ ...prev, customFields: [...prev.customFields, { label: '', value: '' }] }));
+  const removeAgentField = (i) => setAgentInfo(prev => ({ ...prev, customFields: prev.customFields.filter((_, idx) => idx !== i) }));
+  const updateAgentCustomField = (i, key, val) => setAgentInfo(prev => {
+    const updated = [...prev.customFields];
+    updated[i] = { ...updated[i], [key]: val };
+    return { ...prev, customFields: updated };
+  });
 
   const [landlordInfo, setLandlordInfo] = useState({
     name: property?.property_owner || '',
