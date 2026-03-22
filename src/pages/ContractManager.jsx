@@ -324,6 +324,38 @@ export default function ContractManager() {
                     />
                   )}
 
+                  {/* AUDIT TAB */}
+                  {activeTab === 'audit' && (
+                    <div className="space-y-4">
+                      <div className="bg-orange-50 border border-orange-200 rounded-xl p-5">
+                        <h3 className="font-bold text-slate-800 flex items-center gap-2 mb-3"><Shield className="w-4 h-4 text-orange-500" /> Audit Trail</h3>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between"><span className="text-slate-500">Audit ID</span><span className="font-mono font-bold text-slate-800">{viewingContract.audit_id || '—'}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-500">Status</span><span className="font-semibold capitalize text-slate-800">{viewingContract.status}</span></div>
+                        </div>
+                      </div>
+                      {viewingContract.landlord_signed && (
+                        <div className="bg-white border border-slate-200 rounded-xl p-4 text-sm space-y-1">
+                          <p className="font-semibold text-slate-700 mb-2">Landlord Signature</p>
+                          <div className="flex justify-between"><span className="text-slate-400">Name</span><span>{viewingContract.landlord_signature}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-400">Signed At</span><span>{viewingContract.landlord_signed_date ? new Date(viewingContract.landlord_signed_date).toLocaleString() : '—'}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-400">IP Address</span><span className="font-mono text-xs">{viewingContract.landlord_signed_ip || '—'}</span></div>
+                        </div>
+                      )}
+                      {viewingContract.tenant_signed && (
+                        <div className="bg-white border border-slate-200 rounded-xl p-4 text-sm space-y-1">
+                          <p className="font-semibold text-slate-700 mb-2">Tenant Signature</p>
+                          <div className="flex justify-between"><span className="text-slate-400">Name</span><span>{viewingContract.tenant_signature}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-400">Signed At</span><span>{viewingContract.tenant_signed_date ? new Date(viewingContract.tenant_signed_date).toLocaleString() : '—'}</span></div>
+                          <div className="flex justify-between"><span className="text-slate-400">IP Address</span><span className="font-mono text-xs">{viewingContract.tenant_signed_ip || '—'}</span></div>
+                        </div>
+                      )}
+                      {!viewingContract.landlord_signed && !viewingContract.tenant_signed && (
+                        <p className="text-sm text-slate-400 text-center py-4">No signatures recorded yet.</p>
+                      )}
+                    </div>
+                  )}
+
                   {/* CONTRACT TEXT TAB */}
                   {activeTab === 'contract' && (
                     <div className="space-y-4">
