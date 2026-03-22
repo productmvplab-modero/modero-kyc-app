@@ -100,11 +100,6 @@ export default function ContractManager() {
   });
 
   const viewingContract = viewingContractId ? contracts.find(c => c.id === viewingContractId) : null;
-  const isAlreadySigned = viewingContract && (signatureRole === 'tenant' ? viewingContract.tenant_signed : viewingContract.landlord_signed);
-  
-  // Get inquiry and property data for viewing contract
-  const viewingInquiry = viewingContract ? inquiries.find(i => i.id === viewingContract.inquiry_id) : null;
-  const viewingProperty = viewingContract ? properties.find(p => p.id === viewingContract.property_id) : null;
 
   if (contractsLoading) {
     return (
