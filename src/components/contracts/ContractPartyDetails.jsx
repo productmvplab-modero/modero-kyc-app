@@ -217,6 +217,70 @@ export default function ContractPartyDetails({ tenant, property }) {
         )}
       </div>
 
+      {/* Real Estate Agent */}
+      <div className="md:col-span-2 border-2 border-orange-200 rounded-xl p-5 bg-orange-50">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
+          <h3 className="text-lg font-bold text-orange-900">Real Estate Agent</h3>
+          <Button
+            onClick={() => setIsEditingAgent(!isEditingAgent)}
+            size="sm"
+            className={isEditingAgent ? 'bg-orange-600 hover:bg-orange-700 text-white' : 'border border-orange-300 bg-white text-orange-700 hover:bg-orange-100'}
+            variant="outline"
+          >
+            {isEditingAgent ? 'Save' : 'Edit'}
+          </Button>
+        </div>
+
+        {isEditingAgent ? (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <EditField label="First Name" value={agentInfo.firstName} onChange={v => updateAgent('firstName', v)} placeholder="Agent first name" />
+              <EditField label="Last Name" value={agentInfo.lastName} onChange={v => updateAgent('lastName', v)} placeholder="Agent last name" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <EditField label="Agency" value={agentInfo.agency} onChange={v => updateAgent('agency', v)} placeholder="Agency name" />
+              <EditField label="City" value={agentInfo.city} onChange={v => updateAgent('city', v)} placeholder="City" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <EditField label="Phone" value={agentInfo.phone} onChange={v => updateAgent('phone', v)} placeholder="+34 XXX XXX XXX" />
+              <EditField label="Email" value={agentInfo.email} onChange={v => updateAgent('email', v)} placeholder="agent@email.com" />
+            </div>
+
+            {agentInfo.customFields.map((field, i) => (
+              <div key={i} className="flex gap-2 items-end border-t border-orange-200 pt-3">
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Field Name</label>
+                  <Input value={field.label} onChange={e => updateAgentCustomField(i, 'label', e.target.value)} placeholder="e.g. License No." className="text-sm" />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-semibold text-orange-700 mb-1">Value</label>
+                  <Input value={field.value} onChange={e => updateAgentCustomField(i, 'value', e.target.value)} placeholder="Value" className="text-sm" />
+                </div>
+                <Button onClick={() => removeAgentField(i)} variant="ghost" size="sm" className="text-red-500 hover:bg-red-50 mb-0.5">
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+
+            <Button onClick={addAgentField} variant="outline" className="w-full text-orange-600 border-orange-300 hover:bg-orange-100 mt-1">
+              <Plus className="w-4 h-4 mr-2" /> Add Field
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <FieldBox label="First Name" value={agentInfo.firstName} />
+            <FieldBox label="Last Name" value={agentInfo.lastName} />
+            <FieldBox label="Agency" value={agentInfo.agency} />
+            <FieldBox label="Phone" value={agentInfo.phone} icon={Phone} />
+            <FieldBox label="Email" value={agentInfo.email} icon={Mail} />
+            <FieldBox label="City" value={agentInfo.city} icon={MapPin} />
+            {agentInfo.customFields.filter(f => f.label).map((field, i) => (
+              <FieldBox key={i} label={field.label} value={field.value} />
+            ))}
+          </div>
+        )}
+      </div>
+
     </div>
   );
 }
