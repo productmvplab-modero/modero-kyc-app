@@ -106,8 +106,7 @@ export default function ContractRightPanel({ contract, onPreview, isProfessional
         </CardContent>
       </Card>
 
-      {/* Real Estate Agent */}
-      <div className="border-2 border-orange-200 rounded-xl p-5 bg-orange-50">
+      {/* Preview Button */}
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-orange-200">
           <h3 className="text-lg font-bold text-orange-900">Real Estate Agent</h3>
           <Button
