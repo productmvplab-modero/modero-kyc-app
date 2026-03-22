@@ -92,7 +92,7 @@ export default function ContractEdit() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50/30">
       <Header />
-      <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-8">
 
         <Link to="/ContractManager" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-orange-600 transition-colors mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to Contracts
