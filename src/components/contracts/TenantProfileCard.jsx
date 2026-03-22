@@ -22,9 +22,12 @@ export default function TenantProfileCard({ tenant }) {
       {/* Header */}
       <div className="flex items-start justify-between pb-3 border-b border-orange-200">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-orange-200 flex items-center justify-center flex-shrink-0">
-            <User className="w-5 h-5 text-orange-700" />
-          </div>
+          <Avatar className="h-10 w-10 flex-shrink-0">
+            <AvatarImage src={tenant.profile_picture_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${tenant.tenant_name}`} />
+            <AvatarFallback className="bg-orange-200 text-orange-700 text-sm font-semibold">
+              {tenant.tenant_name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
           <div>
             <h3 className="text-lg font-bold text-orange-900">{tenant.tenant_name}</h3>
             <p className="text-sm text-orange-700">{tenant.tenant_email}</p>
