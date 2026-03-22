@@ -474,14 +474,13 @@ export default function ApartmentViewing() {
                 >
                   Book Another Viewing
                 </Button>
-                </CardContent>
-                </Card>
-                </div>
-                </div>
-                </div>
-                </div>
-                );
-                }
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Tenant mode view
   return (
