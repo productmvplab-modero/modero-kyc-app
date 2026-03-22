@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { CreditCard, CheckCircle2, Clock, AlertCircle, Eye, Upload, Edit2, Save, X } from 'lucide-react';
+import { CreditCard, CheckCircle2, Clock, AlertCircle, Eye, Upload, Edit2, Save, X, Plus, Trash2 } from 'lucide-react';
 
 const statusConfig = {
   paid: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50', label: 'Paid' },
