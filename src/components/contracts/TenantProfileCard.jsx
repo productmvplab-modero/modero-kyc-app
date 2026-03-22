@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle2, AlertCircle, User } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 export default function TenantProfileCard({ tenant }) {
   const score = tenant.qualification_score;
