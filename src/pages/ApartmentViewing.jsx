@@ -430,7 +430,6 @@ export default function ApartmentViewing() {
                   </div>
                   </div>
                   </div>
-                  </div>
                   );
                   }
 
