@@ -77,11 +77,20 @@ export default function Header() {
                  <Link to="/ViewingBooking">Viewing Booking</Link>
                </DropdownMenuItem>
                <DropdownMenuItem asChild>
-                 <Link to="/ContractManager">Contract Manager</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                 <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
-               </DropdownMenuItem>
+                  <Link to="/ContractManager">Contract Manager</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/ContractEdit">Contract Edit</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/MessagingCenter">Messaging Center</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/EmailTemplateManager">Email Templates</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
+                </DropdownMenuItem>
                <DropdownMenuItem asChild>
                  <Link to="/TenantQualification">Tenant Qualification</Link>
                </DropdownMenuItem>
