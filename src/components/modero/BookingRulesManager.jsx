@@ -85,136 +85,122 @@ export default function BookingRulesManager({ propertyId, ownerEmail }) {
   }
 
   return (
-    <>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-orange-500" />
-          Booking Rules & Availability
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Available Weekdays */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-3">Available Days</label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {dayLabels.map((label, day) => (
-              <label key={day} className="flex items-center gap-2 cursor-pointer">
-                <Checkbox
-                  checked={formData.available_weekdays.includes(day)}
-                  onChange={() => toggleWeekday(day)}
-                />
-                <span className="text-sm text-slate-700">{label}</span>
-              </label>
-            ))}
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="w-5 h-5 text-orange-500" />
+            Booking Rules & Availability
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Available Weekdays */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-3">Available Days</label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {dayLabels.map((label, day) => (
+                <label key={day} className="flex items-center gap-2 cursor-pointer">
+                  <Checkbox
+                    checked={formData.available_weekdays.includes(day)}
+                    onChange={() => toggleWeekday(day)}
+                  />
+                  <span className="text-sm text-slate-700">{label}</span>
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Available Time Slots */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-3">Available Time Slots</label>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-            {allTimeSlots.map(time => (
-              <button
-                key={time}
-                onClick={() => toggleTimeSlot(time)}
-                className={`p-2 rounded-lg text-xs font-medium transition-all ${
-                  formData.available_time_slots.includes(time)
-                    ? 'bg-orange-500 text-white'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                <Clock className="w-3 h-3 inline mr-1" />
-                {time}
-              </button>
-            ))}
+          {/* Available Time Slots */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-3">Available Time Slots</label>
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+              {allTimeSlots.map(time => (
+                <button
+                  key={time}
+                  onClick={() => toggleTimeSlot(time)}
+                  className={`p-2 rounded-lg text-xs font-medium transition-all ${
+                    formData.available_time_slots.includes(time)
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  }`}
+                >
+                  <Clock className="w-3 h-3 inline mr-1" />
+                  {time}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Booking Window */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            Booking Window (days in advance)
-          </label>
-          <Input
-            type="number"
-            min="1"
-            max="180"
-            value={formData.booking_window_days}
-            onChange={(e) => setFormData(prev => ({
-              ...prev,
-              booking_window_days: parseInt(e.target.value) || 30
-            }))}
-            className="max-w-xs"
-          />
-          <p className="text-xs text-slate-500 mt-1">How many days in advance can tenants book viewings?</p>
-        </div>
+          {/* Booking Window */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
+              Booking Window (days in advance)
+            </label>
+            <Input
+              type="number"
+              min="1"
+              max="180"
+              value={formData.booking_window_days}
+              onChange={(e) => setFormData(prev => ({ ...prev, booking_window_days: parseInt(e.target.value) || 30 }))}
+              className="max-w-xs"
+            />
+            <p className="text-xs text-slate-500 mt-1">How many days in advance can tenants book viewings?</p>
+          </div>
 
-        {/* Min Advance Hours */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            Minimum Advance Hours
-          </label>
-          <Input
-            type="number"
-            min="1"
-            max="168"
-            value={formData.min_advance_hours}
-            onChange={(e) => setFormData(prev => ({
-              ...prev,
-              min_advance_hours: parseInt(e.target.value) || 24
-            }))}
-            className="max-w-xs"
-          />
-          <p className="text-xs text-slate-500 mt-1">Bookings must be made at least this many hours in advance</p>
-        </div>
+          {/* Min Advance Hours */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
+              Minimum Advance Hours
+            </label>
+            <Input
+              type="number"
+              min="1"
+              max="168"
+              value={formData.min_advance_hours}
+              onChange={(e) => setFormData(prev => ({ ...prev, min_advance_hours: parseInt(e.target.value) || 24 }))}
+              className="max-w-xs"
+            />
+            <p className="text-xs text-slate-500 mt-1">Bookings must be made at least this many hours in advance</p>
+          </div>
 
-        {/* Max Concurrent Bookings */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            Max Concurrent Bookings per Slot
-          </label>
-          <Input
-            type="number"
-            min="1"
-            max="10"
-            value={formData.max_concurrent_bookings}
-            onChange={(e) => setFormData(prev => ({
-              ...prev,
-              max_concurrent_bookings: parseInt(e.target.value) || 1
-            }))}
-            className="max-w-xs"
-          />
-          <p className="text-xs text-slate-500 mt-1">How many tenants can book the same time slot?</p>
-        </div>
+          {/* Max Concurrent Bookings */}
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
+              Max Concurrent Bookings per Slot
+            </label>
+            <Input
+              type="number"
+              min="1"
+              max="10"
+              value={formData.max_concurrent_bookings}
+              onChange={(e) => setFormData(prev => ({ ...prev, max_concurrent_bookings: parseInt(e.target.value) || 1 }))}
+              className="max-w-xs"
+            />
+            <p className="text-xs text-slate-500 mt-1">How many tenants can book the same time slot?</p>
+          </div>
 
-        {/* Save Button */}
-        <Button
-          onClick={() => saveMutation.mutate()}
-          disabled={saveMutation.isPending}
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white flex items-center justify-center gap-2"
-        >
-          {saveMutation.isPending ? (
-            <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Saving...
-            </>
-          ) : (
-            <>
-              <Save className="w-4 h-4" />
-              Save Booking Rules
-            </>
+          {/* Save Button */}
+          <Button
+            onClick={() => saveMutation.mutate()}
+            disabled={saveMutation.isPending}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white flex items-center justify-center gap-2"
+          >
+            {saveMutation.isPending ? (
+              <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Saving...</>
+            ) : (
+              <><Save className="w-4 h-4" />Save Booking Rules</>
+            )}
+          </Button>
+
+          {saveMutation.isSuccess && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+              <p className="text-sm text-green-700">✓ Booking rules updated successfully</p>
+            </div>
           )}
-        </Button>
+        </CardContent>
+      </Card>
 
-        {saveMutation.isSuccess && (
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-            <p className="text-sm text-green-700">✓ Booking rules updated successfully</p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-
-    <CalendarSync />
-  </>
+      <CalendarSync />
+    </div>
   );
 }
