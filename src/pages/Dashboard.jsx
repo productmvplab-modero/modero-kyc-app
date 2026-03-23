@@ -13,6 +13,7 @@ import RevenueChart from "../components/modero/RevenueChart";
 import PropertyDetailsDialog from "../components/modero/PropertyDetailsDialog";
 import Header from "../components/modero/Header";
 import SlackIntegration from "../components/modero/SlackIntegration";
+import ConfirmedBookings from "../components/modero/ConfirmedBookings";
 import { useLanguage } from "@/components/LanguageContext";
 
 export default function Dashboard() {
@@ -125,6 +126,7 @@ export default function Dashboard() {
             <RecentInquiries inquiries={filteredInquiries} properties={properties} />
           </div>
 
+          <ConfirmedBookings />
           <SlackIntegration />
         </div>
       </div>

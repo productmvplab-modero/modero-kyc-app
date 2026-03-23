@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar, Clock, Save } from 'lucide-react';
+import CalendarSync from './CalendarSync';
 
 export default function BookingRulesManager({ propertyId, ownerEmail }) {
   const queryClient = useQueryClient();
@@ -84,7 +85,7 @@ export default function BookingRulesManager({ propertyId, ownerEmail }) {
   }
 
   return (
-    <Card>
+    <>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calendar className="w-5 h-5 text-orange-500" />
@@ -212,5 +213,8 @@ export default function BookingRulesManager({ propertyId, ownerEmail }) {
         )}
       </CardContent>
     </Card>
+
+    <CalendarSync />
+  </>
   );
 }
