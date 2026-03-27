@@ -59,43 +59,43 @@ export default function Header() {
              <DropdownMenuTrigger asChild>
                <button className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-md border border-slate-200 text-sm font-medium text-slate-600 hover:text-orange-500 hover:border-orange-300 transition-colors bg-slate-50 hover:bg-slate-100 w-[140px]">
                  <LayoutGrid className="w-4 h-4" />
-                 Pages
+                 {t('nav_pages')}
                  <ChevronDown className="w-4 h-4 ml-auto" />
                </button>
              </DropdownMenuTrigger>
              <DropdownMenuContent align="start" className="w-48">
-               <DropdownMenuItem asChild>
-                 <Link to="/">Dashboard</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                 <Link to="/MyAccount">My Account</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                 <Link to="/Analytics">Analytics</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                 <Link to="/ViewingBooking">Viewing Booking</Link>
-               </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                  <Link to="/ContractManager">Contract Manager</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/ContractEdit">Contract Edit</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/MessagingCenter">Messaging Center</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/EmailTemplateManager">Email Templates</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/PropertyOwnerSignup">Property Owner Signup</Link>
-                </DropdownMenuItem>
-               <DropdownMenuItem asChild>
-                 <Link to="/TenantQualification">Tenant Qualification</Link>
-               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/">{t('nav_dashboard')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/MyAccount">{t('nav_my_account')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/Analytics">{t('nav_analytics')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ViewingBooking">{t('nav_viewing_booking')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ContractManager">{t('nav_contract_manager')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/ContractEdit">{t('nav_contract_edit')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/MessagingCenter">{t('nav_messaging_center')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/EmailTemplateManager">{t('nav_email_templates')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/PropertyOwnerSignup">{t('nav_property_owner_signup')}</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/TenantQualification">{t('nav_tenant_qualification')}</Link>
+              </DropdownMenuItem>
              </DropdownMenuContent>
-           </DropdownMenu>
+             </DropdownMenu>
            {/* Language Selector */}
            <Select value={language} onValueChange={setLanguage}>
             <SelectTrigger className="w-fit sm:w-[140px] border-slate-200 gap-2">

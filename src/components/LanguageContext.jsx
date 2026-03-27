@@ -138,6 +138,12 @@ const translations = {
     email_verification_notice: 'Secure Link',
     email_verification_security: 'This verification link is unique to you. Never share it or forward this email to others.',
     email_verification_skip: 'Skip for now',
+    // Navigation
+    nav_dashboard: 'Dashboard', nav_my_account: 'My Account', nav_analytics: 'Analytics',
+    nav_viewing_booking: 'Viewing Booking', nav_contract_manager: 'Contract Manager',
+    nav_property_owner_signup: 'Property Owner Signup', nav_tenant_qualification: 'Tenant Qualification',
+    nav_contract_edit: 'Contract Edit', nav_messaging_center: 'Messaging Center',
+    nav_email_templates: 'Email Templates', nav_pages: 'Pages',
     },
     es: {
     my_account: 'Mi Cuenta', edit_profile: 'Editar Perfil', settings: 'Configuración',
@@ -269,6 +275,12 @@ const translations = {
     email_verification_notice: 'Enlace Seguro',
     email_verification_security: 'Este enlace de verificación es único para usted. Nunca lo comparta ni reenvíe este correo a otros.',
     email_verification_skip: 'Omitir por ahora',
+    // Navigation
+    nav_dashboard: 'Panel', nav_my_account: 'Mi Cuenta', nav_analytics: 'Analíticas',
+    nav_viewing_booking: 'Reserva de Visita', nav_contract_manager: 'Gestor de Contratos',
+    nav_property_owner_signup: 'Registro de Propietario', nav_tenant_qualification: 'Calificación de Inquilino',
+    nav_contract_edit: 'Editar Contrato', nav_messaging_center: 'Centro de Mensajes',
+    nav_email_templates: 'Plantillas de Email', nav_pages: 'Páginas',
     },
     pt: {
     my_account: 'Minha Conta', edit_profile: 'Editar Perfil', settings: 'Configurações',
@@ -400,6 +412,12 @@ const translations = {
     email_verification_notice: 'Link Seguro',
     email_verification_security: 'Este link de verificação é único para você. Nunca o compartilhe nem encaminhe este email para outros.',
     email_verification_skip: 'Pular por enquanto',
+    // Navigation
+    nav_dashboard: 'Painel', nav_my_account: 'Minha Conta', nav_analytics: 'Análises',
+    nav_viewing_booking: 'Reserva de Visita', nav_contract_manager: 'Gestor de Contratos',
+    nav_property_owner_signup: 'Registo de Proprietário', nav_tenant_qualification: 'Qualificação de Inquilino',
+    nav_contract_edit: 'Editar Contrato', nav_messaging_center: 'Centro de Mensagens',
+    nav_email_templates: 'Modelos de Email', nav_pages: 'Páginas',
     },
     it: {
     my_account: 'Il Mio Account', edit_profile: 'Modifica Profilo', settings: 'Impostazioni',
@@ -531,6 +549,12 @@ const translations = {
     email_verification_notice: 'Link Sicuro',
     email_verification_security: 'Questo link di verifica è unico per te. Non condividerlo mai e non inoltrarla a nessun altro.',
     email_verification_skip: 'Salta per ora',
+    // Navigation
+    nav_dashboard: 'Dashboard', nav_my_account: 'Il Mio Account', nav_analytics: 'Analisi',
+    nav_viewing_booking: 'Prenotazione Visita', nav_contract_manager: 'Gestione Contratti',
+    nav_property_owner_signup: 'Registrazione Proprietario', nav_tenant_qualification: 'Qualificazione Inquilino',
+    nav_contract_edit: 'Modifica Contratto', nav_messaging_center: 'Centro Messaggi',
+    nav_email_templates: 'Modelli Email', nav_pages: 'Pagine',
     },
     };
 
