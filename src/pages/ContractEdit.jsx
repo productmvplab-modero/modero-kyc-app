@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Save, Loader2, X } from 'lucide-react';
+import { ArrowLeft, Save, Loader2, X, Download, Eye } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import TenantProfileCard from '@/components/contracts/TenantProfileCard';
 import ContractPartyDetails from '@/components/contracts/ContractPartyDetails';
@@ -248,24 +248,116 @@ export default function ContractEdit() {
 
       {/* Preview Modal */}
       {showPreview && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-            <CardHeader className="flex flex-row items-center justify-between border-b">
-              <CardTitle>Contract Preview</CardTitle>
-              <button onClick={() => setShowPreview(false)} className="text-slate-400 hover:text-slate-600">
-                <X className="w-5 h-5" />
-              </button>
-            </CardHeader>
-            <CardContent className="overflow-y-auto flex-1 p-6">
-              <div className="bg-white border border-slate-200 rounded-lg p-8 whitespace-pre-wrap font-normal text-sm leading-relaxed text-slate-800">
-                {formData.contract_content}
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-4xl max-h-[92vh] overflow-hidden flex flex-col rounded-2xl shadow-2xl border border-slate-200 bg-white">
+
+            {/* Modero-branded header */}
+            <div className="bg-gradient-to-r from-orange-600 to-orange-500 px-6 py-4 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-lg bg-white/20 flex items-center justify-center">
+                  <span className="text-white text-xl font-bold">M</span>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-base leading-tight">Modero</p>
+                  <p className="text-orange-100 text-xs">Contract Preview</p>
+                </div>
               </div>
-            </CardContent>
-            <div className="border-t p-4 flex gap-3 bg-slate-50">
-              <Button onClick={() => setShowPreview(false)} variant="outline" className="flex-1">Close Preview</Button>
-              <Button onClick={() => setShowPreview(false)} className="flex-1 bg-orange-600 hover:bg-orange-700">Continue Editing</Button>
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:block text-orange-100 text-xs">
+                  {contract?.tenant_name && `For: ${contract.tenant_name}`}
+                </span>
+                <button
+                  onClick={() => setShowPreview(false)}
+                  className="h-8 w-8 rounded-full bg-white/20 hover:bg-white/30 transition-colors flex items-center justify-center"
+                >
+                  <X className="w-4 h-4 text-white" />
+                </button>
+              </div>
             </div>
-          </Card>
+
+            {/* Document meta strip */}
+            <div className="bg-slate-50 border-b border-slate-200 px-6 py-2.5 flex items-center gap-6 text-xs text-slate-500 flex-shrink-0">
+              {contract?.property_address && <span>📍 {contract.property_address}</span>}
+              {contract?.monthly_rent && <span>💶 €{Number(contract.monthly_rent).toLocaleString()}/mo</span>}
+              {contract?.lease_start_date && <span>📅 {new Date(contract.lease_start_date).toLocaleDateString('en-GB')}</span>}
+              <span className="ml-auto flex items-center gap-1"><Eye className="w-3 h-3" /> Preview mode</span>
+            </div>
+
+            {/* Document body */}
+            <div className="overflow-y-auto flex-1 p-6 bg-slate-100">
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 max-w-3xl mx-auto">
+                {/* Doc header */}
+                <div className="px-10 pt-10 pb-6 border-b border-slate-100 text-center">
+                  <div className="inline-flex items-center gap-2 mb-4">
+                    <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
+                      <span className="text-white text-lg font-bold">M</span>
+                    </div>
+                    <span className="text-xl font-bold bg-gradient-to-r from-orange-500 to-orange-400 bg-clip-text text-transparent">Modero</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-slate-900 uppercase tracking-wide">Residential Rental Agreement</h2>
+                  <div className="h-0.5 w-24 bg-orange-400 mx-auto mt-3 rounded-full" />
+                  <p className="text-xs text-slate-400 mt-2">{new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                </div>
+
+                {/* Parties */}
+                {(contract?.landlord_name || contract?.tenant_name) && (
+                  <div className="px-10 py-6 border-b border-slate-100">
+                    <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-3">Parties</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-slate-50 rounded-lg p-4">
+                        <p className="text-xs text-slate-400 mb-1">LANDLORD</p>
+                        <p className="font-semibold text-slate-800 text-sm">{formData.landlord_name || '—'}</p>
+                        <p className="text-xs text-slate-500">{formData.landlord_email || '—'}</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-4">
+                        <p className="text-xs text-slate-400 mb-1">TENANT</p>
+                        <p className="font-semibold text-slate-800 text-sm">{contract?.tenant_name || '—'}</p>
+                        <p className="text-xs text-slate-500">{contract?.tenant_email || '—'}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Financials */}
+                {(formData.monthly_rent || formData.deposit_amount) && (
+                  <div className="px-10 py-5 border-b border-slate-100 bg-orange-50/50">
+                    <div className="flex gap-8">
+                      <div>
+                        <p className="text-xs text-slate-400">Monthly Rent</p>
+                        <p className="text-2xl font-bold text-orange-600">€{Number(formData.monthly_rent || 0).toLocaleString()}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400">Security Deposit</p>
+                        <p className="text-2xl font-bold text-slate-800">€{Number(formData.deposit_amount || 0).toLocaleString()}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Contract body text */}
+                <div className="px-10 py-8">
+                  <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-4">Terms & Conditions</p>
+                  <div className="whitespace-pre-wrap font-normal text-sm leading-relaxed text-slate-700">
+                    {formData.contract_content || <span className="text-slate-400 italic">No contract content yet.</span>}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="px-10 py-4 bg-slate-50 border-t border-slate-100 rounded-b-xl flex items-center justify-between">
+                  <span className="text-xs text-orange-500 font-semibold">Modero</span>
+                  <span className="text-xs text-slate-400">www.moderokyc.com · Legally binding once signed</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action bar */}
+            <div className="border-t border-slate-200 px-6 py-4 flex gap-3 bg-white flex-shrink-0">
+              <Button onClick={() => setShowPreview(false)} variant="outline" className="flex-1">Close Preview</Button>
+              <Button onClick={() => setShowPreview(false)} className="flex-1 bg-orange-600 hover:bg-orange-700">
+                <Save className="w-4 h-4 mr-2" /> Continue Editing
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>
